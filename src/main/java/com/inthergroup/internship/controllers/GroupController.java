@@ -39,4 +39,30 @@ public class GroupController {
         }
         return "Succesfully added todo to user!";
     }
+    
+    // You must delete group only after you deleted it from all
+    // users that contained it.
+    @RequestMapping("/delete-group")
+    @ResponseBody
+    public String deleteGroup(long id) {
+        try {
+            groupService.deleteById(id);
+        } catch (Exception ex) {
+            return "Error deleting the group by id #" + id + ": " + ex.toString();
+        }
+        return "Group succesfully deleted!";
+    }
+    
+    @RequestMapping("/remove-group-from-user")
+    @ResponseBody
+    @Transactional
+    public String removeGroupFromUser(long userId, long groupId) {
+        try {
+            groupService.removeGroupFromUser(userId, groupId);
+        } catch (Exception ex) {
+            return "Error removing group from user: " + ex.toString();
+        }
+        return "Succesfully removed group from user!";
+    }
+    
 } // class GroupController

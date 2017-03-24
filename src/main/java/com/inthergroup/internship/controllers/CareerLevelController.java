@@ -37,4 +37,8 @@ public class CareerLevelController {
         }
         return "Succesfully updated user's career level!";
     }
+    
+    // TODO deleteCareerLevel
+    // TODO removeCareerLevelFromUser
+    
 } // class CareerLevelController

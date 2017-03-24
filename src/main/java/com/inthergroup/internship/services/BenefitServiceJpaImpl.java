@@ -48,9 +48,16 @@ public class BenefitServiceJpaImpl implements BenefitService {
     
     @Override
     @Transactional
-    public void addBenefitToUser(long userId, long benefitId) {
+    public void addBenefitToUser(Long userId, Long benefitId) {
         Benefit benefit = benefitRepo.findOne(benefitId);
         User user = userRepo.findOne(userId);
         user.addBenefit(benefit);
+    }
+    
+    @Override
+    public void removeBenefitFromUser(Long userId, Long benefitId) {
+        Benefit benefit = benefitRepo.findOne(benefitId);
+        User user = userRepo.findOne(userId);
+        user.removeBenefit(benefit);
     }
 }

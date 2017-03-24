@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inthergroup.internship.models.Todo;
 import com.inthergroup.internship.models.User;
@@ -45,9 +46,18 @@ public class TodoServiceJpaImpl implements TodoService {
         this.todoRepo.delete(id);
     }
     
+    @Override
+    @Transactional
     public void addTodoToUser(Long userId, Long todoId) {
         Todo todo = todoRepo.findOne(todoId);
         User user = userRepo.findOne(userId);
         user.addTodo(todo);
+    }
+    
+    @Override
+    public void removeTodoFromUser(Long userId, Long todoId) {
+        Todo todo = todoRepo.findOne(todoId);
+        User user = userRepo.findOne(userId);
+        user.removeTodo(todo);
     }
 }

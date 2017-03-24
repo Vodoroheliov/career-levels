@@ -39,4 +39,30 @@ public class TodoController {
         }
         return "Succesfully added todo to user!";
     }
+
+    // You must delete todo only after you deleted it from all
+    // users that contained it.
+    @RequestMapping("/delete-todo")
+    @ResponseBody
+    public String deleteTodo(long id) {
+        try {
+            todoService.deleteById(id);
+        } catch (Exception ex) {
+            return "Error deleting the todo by id #" + id + ": " + ex.toString();
+        }
+        return "Todo succesfully deleted!";
+    }
+    
+    @RequestMapping("/remove-todo-from-user")
+    @ResponseBody
+    @Transactional
+    public String removeTodoFromUser(long userId, long todoId) {
+        try {
+            todoService.removeTodoFromUser(userId, todoId);
+        } catch (Exception ex) {
+            return "Error removing todo from user: " + ex.toString();
+        }
+        return "Succesfully removed todo from user!";
+    }
+    
 } // class GroupController

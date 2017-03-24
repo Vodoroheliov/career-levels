@@ -15,5 +15,7 @@ public interface BenefitService {
 
     void deleteById(Long id);
     
-    void addBenefitToUser(long userId, long benefitId);
+    void addBenefitToUser(Long userId, Long benefitId);
+
+    void removeBenefitFromUser(Long userId, Long benefitId);
 }

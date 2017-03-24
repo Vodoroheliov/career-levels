@@ -39,4 +39,30 @@ public class BenefitController {
         }
         return "Succesfully added benefit to user!";
     }
+    
+    // You must delete benefit only after you deleted it from all
+    // users that contained it.
+    @RequestMapping("/delete-benefit")
+    @ResponseBody
+    public String deleteBenefit(long id) {
+        try {
+            benefitService.deleteById(id);
+        } catch (Exception ex) {
+            return "Error deleting the benefit by id #" + id + ": " + ex.toString();
+        }
+        return "Benefit succesfully deleted!";
+    }
+    
+    @RequestMapping("/remove-benefit-from-user")
+    @ResponseBody
+    @Transactional
+    public String removeBenefitFromUser(long userId, long benefitId) {
+        try {
+            benefitService.removeBenefitFromUser(userId, benefitId);
+        } catch (Exception ex) {
+            return "Error removing benefit from user: " + ex.toString();
+        }
+        return "Succesfully removed benefit from user!";
+    }
+    
 } // class BenefitController
