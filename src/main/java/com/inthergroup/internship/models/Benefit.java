@@ -1,9 +1,12 @@
 package com.inthergroup.internship.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +28,11 @@ public class Benefit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
     private String benefitName;
+    
+    @ManyToMany(mappedBy="benefits")
+    private List<User> users;
     
     // ------------------------
     // PUBLIC METHODS
@@ -36,6 +43,10 @@ public class Benefit {
 
     public Benefit(long id) {
         this.id = id;
+    }
+    
+    public Benefit(String benefitName) {
+        this.benefitName = benefitName;
     }
 
     public Benefit(long id, String benefitName) {
@@ -59,5 +70,21 @@ public class Benefit {
 
     public void setBenefitName(String benefitName) {
         this.benefitName = benefitName;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+    
+    public void addUser(User user) {        
+        users.add(user);
+        
+        if (!user.getBenefits().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            user.getBenefits().add(this);
+        }
     }
 }

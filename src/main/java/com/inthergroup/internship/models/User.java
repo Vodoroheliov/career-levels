@@ -1,5 +1,7 @@
 package com.inthergroup.internship.models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -55,6 +59,30 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="career_level_id", nullable = false)
     private CareerLevel careerLevel;
+    
+    // The user's benefits
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_benefits",
+            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="benefit_id", referencedColumnName="id"))
+    private List<Benefit> benefits;
+    
+    // The user's todos
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_todos",
+            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="id"))
+    private List<Todo> todos;
+    
+ // The user's groups
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_groups",
+            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="group_id", referencedColumnName="id"))
+    private List<Group> groups;
 
     // ------------------------
     // PUBLIC METHODS
@@ -140,6 +168,54 @@ public class User {
         if (!careerLevel.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
             careerLevel.getUsers().add(this); 
         }
-    } 
+    }
+
+    public List<Benefit> getBenefits() {
+        return benefits;
+    }
+
+    public void setBenefits(List<Benefit> benefits) {
+        this.benefits = benefits;
+    }
+    
+    public void addBenefit(Benefit benefit) {        
+        benefits.add(benefit);
+        
+        if (!benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            benefit.getUsers().add(this);
+        }
+    }
+
+    public List<Todo> getTodos() {
+        return todos;
+    }
+
+    public void setTodos(List<Todo> todos) {
+        this.todos = todos;
+    }
+    
+    public void addTodo(Todo todo) {        
+        todos.add(todo);
+        
+        if (!todo.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            todo.getUsers().add(this);
+        }
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+    
+    public void addGroup(Group group) {        
+        groups.add(group);
+        
+        if (!group.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            group.getUsers().add(this);
+        }
+    }
     
 } // class User

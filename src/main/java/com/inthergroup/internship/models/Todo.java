@@ -1,9 +1,12 @@
 package com.inthergroup.internship.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +28,11 @@ public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
     private String task;
+    
+    @ManyToMany(mappedBy="todos")
+    private List<User> users;
     
     // ------------------------
     // PUBLIC METHODS
@@ -36,6 +43,10 @@ public class Todo {
 
     public Todo(long id) {
         this.id = id;
+    }
+    
+    public Todo(String task) {
+        this.task = task;
     }
 
     public Todo(long id, String task) {
@@ -60,5 +71,20 @@ public class Todo {
     public void setTask(String task) {
         this.task = task;
     }
+    
+    public List<User> getUsers() {
+        return users;
+    }
 
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+    
+    public void addUser(User user) {        
+        users.add(user);
+        
+        if (!user.getTodos().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            user.getTodos().add(this);
+        }
+    }
 }

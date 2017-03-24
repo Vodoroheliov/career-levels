@@ -7,13 +7,18 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.inthergroup.internship.models.Todo;
+import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.repositories.TodoRepository;
+import com.inthergroup.internship.repositories.UserRepository;
 
 @Service
 @Primary
 public class TodoServiceJpaImpl implements TodoService {
     @Autowired
     private TodoRepository todoRepo;
+    
+    @Autowired
+    private UserRepository userRepo;
 
     @Override
     public List<Todo> findAll() {
@@ -38,5 +43,11 @@ public class TodoServiceJpaImpl implements TodoService {
     @Override
     public void deleteById(Long id) {
         this.todoRepo.delete(id);
+    }
+    
+    public void addTodoToUser(Long userId, Long todoId) {
+        Todo todo = todoRepo.findOne(todoId);
+        User user = userRepo.findOne(userId);
+        user.addTodo(todo);
     }
 }

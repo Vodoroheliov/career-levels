@@ -7,13 +7,18 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.inthergroup.internship.models.Group;
+import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.repositories.GroupRepository;
+import com.inthergroup.internship.repositories.UserRepository;
 
 @Service
 @Primary
 public class GroupServiceJpaImpl implements GroupService {
     @Autowired
     private GroupRepository groupRepo;
+    
+    @Autowired
+    private UserRepository userRepo;
 
     @Override
     public List<Group> findAll() {
@@ -38,5 +43,12 @@ public class GroupServiceJpaImpl implements GroupService {
     @Override
     public void deleteById(Long id) {
         this.groupRepo.delete(id);
+    }
+    
+    @Override
+    public void addGroupToUser(Long userId, Long groupId) {
+        Group group = groupRepo.findOne(groupId);
+        User user = userRepo.findOne(userId);
+        user.addGroup(group);
     }
 }

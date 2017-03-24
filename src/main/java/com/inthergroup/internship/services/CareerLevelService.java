@@ -14,4 +14,6 @@ public interface CareerLevelService {
     CareerLevel edit(CareerLevel careerLevel);
 
     void deleteById(Long id);
+    
+    void updateUserCareerLevel(long userId, long careerLevelId);
 }

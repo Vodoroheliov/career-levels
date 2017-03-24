@@ -5,15 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inthergroup.internship.models.Benefit;
+import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.repositories.BenefitRepository;
+import com.inthergroup.internship.repositories.UserRepository;
 
 @Service
 @Primary
 public class BenefitServiceJpaImpl implements BenefitService {
     @Autowired
     private BenefitRepository benefitRepo;
+    
+    @Autowired
+    private UserRepository userRepo;
 
     @Override
     public List<Benefit> findAll() {
@@ -38,5 +44,13 @@ public class BenefitServiceJpaImpl implements BenefitService {
     @Override
     public void deleteById(Long id) {
         this.benefitRepo.delete(id);
+    }
+    
+    @Override
+    @Transactional
+    public void addBenefitToUser(long userId, long benefitId) {
+        Benefit benefit = benefitRepo.findOne(benefitId);
+        User user = userRepo.findOne(userId);
+        user.addBenefit(benefit);
     }
 }

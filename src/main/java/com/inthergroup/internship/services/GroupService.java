@@ -14,4 +14,6 @@ public interface GroupService {
     Group edit(Group group);
 
     void deleteById(Long id);
+
+    void addGroupToUser(Long userId, Long groupId);
 }

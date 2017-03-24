@@ -14,4 +14,6 @@ public interface BenefitService {
     Benefit edit(Benefit benefit);
 
     void deleteById(Long id);
+    
+    void addBenefitToUser(long userId, long benefitId);
 }
