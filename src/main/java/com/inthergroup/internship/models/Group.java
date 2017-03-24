@@ -7,15 +7,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * An entity CareerLevels composed by two fields (id, benefitName). The Entity
+ * An entity Groups composed by two fields (id, group_name). The Entity
  * annotation indicates that this class is a JPA entity. The Table annotation
  * specifies the name for the table in the db.
  *
  * @author interns
  */
 @Entity
-@Table(name = "career_levels")
-public class CareerLevels {
+@Table(name = "groups")
+public class Group {
 
     // ------------------------
     // PRIVATE FIELDS
@@ -25,22 +25,24 @@ public class CareerLevels {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String levelName;
-    
+    private String groupName;
+
     // ------------------------
     // PUBLIC METHODS
     // ------------------------
 
-    public CareerLevels() {
+    public Group() {
     }
 
-    public CareerLevels(long id) {
+    public Group(long id) {
+        super();
         this.id = id;
     }
 
-    public CareerLevels(long id, String levelName) {
+    public Group(long id, String groupName) {
+        super();
         this.id = id;
-        this.levelName = levelName;
+        this.groupName = groupName;
     }
     
     // Getter and setter methods
@@ -53,11 +55,12 @@ public class CareerLevels {
         this.id = id;
     }
 
-    public String getLevelName() {
-        return levelName;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setLevelName(String levelName) {
-        this.levelName = levelName;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
-}
+
+} // class Groups

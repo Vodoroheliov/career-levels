@@ -13,8 +13,9 @@ import javax.persistence.Table;
  *
  * @author interns
  */
+@Deprecated
 @Entity
-@Table(name = "user_todo")
+@Table(name = "users_todos")
 public class UserTodo {
 
     // ------------------------

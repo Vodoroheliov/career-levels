@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>HELLO</title>
+</head>
+<body>
+<!-- <p th:text="${message}"></p> -->
+    <table border="1">
+    <tr>
+        <th th:each="cl : ${careerLevels}">
+            <p class="careerLevel" th:text="${cl.levelName}"></p>
+        </th>
+    </tr>
+    <tr>
+        <td th:each="cl : ${careerLevels}">
+            <ul><li th:each="b : ${benefits}">
+                <p class="benefitName" th:text="${b.benefitName}"></p>
+            </li></ul>
+        </td>
+    </tr>
+    <tr>
+        <td th:each="cl : ${careerLevels}">
+            <ul><li th:each="t : ${todos}">
+                <p class="task" th:text="${t.task}"></p>
+            </li></ul>
+        </td>
+    </tr>
+    </table>
+</body>
+</html>

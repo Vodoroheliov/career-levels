@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author interns
  */
 @Entity
-@Table(name = "todo")
+@Table(name = "todos")
 public class Todo {
 
     // ------------------------

@@ -1,7 +1,8 @@
 package com.inthergroup.internship.controllers;
 
+import com.inthergroup.internship.models.CareerLevel;
 import com.inthergroup.internship.models.User;
-import com.inthergroup.internship.models.UserDao;
+import com.inthergroup.internship.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,27 +16,35 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class UserController {
+    
+    // ------------------------
+    // PRIVATE FIELDS
+    // ------------------------
+    
+    @Autowired
+    private UserService userService;
 
   // ------------------------
   // PUBLIC METHODS
   // ------------------------
   
   /**
-   * /create  --> Create a new user and save it in the database.
+   * /create-user  --> Create a new user and save it in the database.
    * 
    * @param email User's email
    * @param name User's name
    * @return A string describing if the user is succesfully created or not.
    */
-  @RequestMapping("/create")
+  @RequestMapping("/create-user")
   @ResponseBody
-  public String create(String lastName, String firstName, String login,
-                       String password, String email, String careerLevel) {
+  public String createUser(String lastName, String firstName, String login,
+                       String password, String email, String levelName) {
     User user = null;
+    CareerLevel careerLevel = new CareerLevel(levelName);
     try {
       user = new User(lastName, firstName, login,
                       password, email, careerLevel);
-      userDao.save(user);
+      userService.create(user);
     }
     catch (Exception ex) {
       return "Error creating the user: " + ex.toString();
@@ -44,42 +53,21 @@ public class UserController {
   }
   
   /**
-   * /delete  --> Delete the user having the passed id.
+   * /delete-user  --> Delete the user having the passed id.
    * 
    * @param id The id of the user to delete
    * @return A string describing if the user is succesfully deleted or not.
    */
-  @RequestMapping("/delete")
+  @RequestMapping("/delete-user")
   @ResponseBody
-  public String delete(long id) {
+  public String deleteUser(long id) {
     try {
-      User user = new User(id);
-      userDao.delete(user);
+      userService.deleteById(id);
     }
     catch (Exception ex) {
-      return "Error deleting the user: " + ex.toString();
+      return "Error deleting the user by id #" + id + ": " + ex.toString();
     }
     return "User succesfully deleted!";
-  }
-  
-  /**
-   * /get-by-email  --> Return the id for the user having the passed email.
-   * 
-   * @param email The email to search in the database.
-   * @return The user id or a message error if the user is not found.
-   */
-  @RequestMapping("/get-by-email")
-  @ResponseBody
-  public String getByEmail(String email) {
-    String userId;
-    try {
-      User user = userDao.findByEmail(email);
-      userId = String.valueOf(user.getId());
-    }
-    catch (Exception ex) {
-      return "User not found";
-    }
-    return "The user id is: " + userId;
   }
   
   /**
@@ -89,12 +77,12 @@ public class UserController {
    * @return A message with information about the user or a message error
    * if the user is not found.
    */
-  @RequestMapping("/get-by-id")
+  @RequestMapping("/get-user-by-id")
   @ResponseBody
-  public String getById(long id) {
+  public String getUserById(long id) {
       User user = null;
       try {
-          user = userDao.findById(id);
+          user = userService.findById(id);
       }
       catch (Exception ex) {
           return "User not found";
@@ -105,7 +93,7 @@ public class UserController {
   }
   
   /**
-   * /update  --> Update the email and the name for the user in the database 
+   * /update-user  --> Update the email and the name for the user in the database 
    * having the passed id.
    * 
    * @param id The id for the user to update.
@@ -113,31 +101,25 @@ public class UserController {
    * @param name The new name.
    * @return A string describing if the user is succesfully updated or not.
    */
-  @RequestMapping("/update")
+  @RequestMapping("/update-user")
   @ResponseBody
   public String updateUser(long id, String lastName, String firstName, String login,
-                           String password, String email, String careerLevel) {
+                           String password, String email, String levelName) {
     try {
-      User user = userDao.findOne(id);
+      CareerLevel careerLevel = new CareerLevel(levelName);
+      // careerLevelService.create(careerLevel);
+      User user = userService.findById(id);
       user.setLastName(lastName);
       user.setFirstName(firstName);
       user.setLogin(login);
       user.setPassword(password);
       user.setEmail(email);
-      user.setCareerLevel(careerLevel);
-      userDao.save(user);
+      user.getCareerLevel().setLevelName(levelName);
+      userService.create(user);
     }
     catch (Exception ex) {
       return "Error updating the user: " + ex.toString();
     }
     return "User succesfully updated!";
-  }
-
-  // ------------------------
-  // PRIVATE FIELDS
-  // ------------------------
-
-  @Autowired
-  private UserDao userDao;
-  
+  }  
 } // class UserController

@@ -1,15 +1,15 @@
 package com.inthergroup.internship.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * An entity User composed by three fields (id, email, name).
@@ -32,27 +32,29 @@ public class User {
     private long id;
     
     // The user's last name
-    @Value("${lastName:#{null}}")
+    @Column(length = 64)
     private String lastName;
     
     // The user's first name
+    @Column(length = 64)
     private String firstName;
     
     // The user's login
-    @NotNull
-    @Column(unique = true)
+    @Column(nullable = false, length = 64, unique = true)
     private String login;
     
     // The user's password
-    @Size(min = 4, max = 16)
+    @Column(length = 64)
     private String password;
     
     // The user's email
-    @Column(unique = true)
+    @Column(length = 64, unique = true)
     private String email;
     
     // The user's career level
-    private String careerLevel;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="career_level_id", nullable = false)
+    private CareerLevel careerLevel;
 
     // ------------------------
     // PUBLIC METHODS
@@ -65,7 +67,7 @@ public class User {
     }
     
     public User(String lastName, String firstName, String login,
-                String password, String email, String careerLevel) {
+                String password, String email, CareerLevel careerLevel) {
         super();
         this.lastName = lastName;
         this.firstName = firstName;
@@ -125,12 +127,19 @@ public class User {
         this.email = email;
     }
 
-    public String getCareerLevel() {
+    public CareerLevel getCareerLevel() {
         return careerLevel;
     }
 
-    public void setCareerLevel(String careerLevel) {
+    public void setCareerLevel(CareerLevel careerLevel) {
+        if (this.careerLevel.getUsers().contains(this)) {
+            this.careerLevel.getUsers().remove(this);
+        }
+        
         this.careerLevel = careerLevel;
+        if (!careerLevel.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            careerLevel.getUsers().add(this); 
+        }
     } 
     
 } // class User

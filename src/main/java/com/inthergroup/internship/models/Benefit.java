@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "benefits")
-public class Benefits {
+public class Benefit {
 
     // ------------------------
     // PRIVATE FIELDS
@@ -31,14 +31,14 @@ public class Benefits {
     // PUBLIC METHODS
     // ------------------------
 
-    public Benefits() {
+    public Benefit() {
     }
 
-    public Benefits(long id) {
+    public Benefit(long id) {
         this.id = id;
     }
 
-    public Benefits(long id, String benefitName) {
+    public Benefit(long id, String benefitName) {
         this.id = id;
         this.benefitName = benefitName;
     }

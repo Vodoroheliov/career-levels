@@ -7,15 +7,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * An entity Groups composed by two fields (id, group_name). The Entity
+ * An entity UserBenefits composed by two fields (id, benefitName). The Entity
  * annotation indicates that this class is a JPA entity. The Table annotation
  * specifies the name for the table in the db.
  *
  * @author interns
  */
+@Deprecated
 @Entity
-@Table(name = "groups")
-public class Groups {
+@Table(name = "users_benefits")
+public class UserBenefit {
 
     // ------------------------
     // PRIVATE FIELDS
@@ -25,24 +26,25 @@ public class Groups {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String groupName;
-
+    private long userId;
+    private long benefitId;
+    
     // ------------------------
     // PUBLIC METHODS
     // ------------------------
 
-    public Groups() {
+
+    public UserBenefit() {
     }
 
-    public Groups(long id) {
-        super();
+    public UserBenefit(long id) {
         this.id = id;
     }
 
-    public Groups(long id, String groupName) {
-        super();
+    public UserBenefit(long id, long userId, long benefitId) {
         this.id = id;
-        this.groupName = groupName;
+        this.userId = userId;
+        this.benefitId = benefitId;
     }
     
     // Getter and setter methods
@@ -55,12 +57,20 @@ public class Groups {
         this.id = id;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-} // class Groups
+    public long getBenefitId() {
+        return benefitId;
+    }
+
+    public void setBenefitId(long benefitId) {
+        this.benefitId = benefitId;
+    }
+
+}

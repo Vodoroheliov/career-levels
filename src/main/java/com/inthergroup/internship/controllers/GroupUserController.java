@@ -1,7 +1,7 @@
 package com.inthergroup.internship.controllers;
 
-import com.inthergroup.internship.models.GroupsUsers;
-import com.inthergroup.internship.models.GroupsUsersDao;
+import com.inthergroup.internship.models.GroupUser;
+import com.inthergroup.internship.services.GroupUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,15 +13,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author interns
  */
+@Deprecated
 @Controller
-public class GroupsUsersController {
+public class GroupUserController {
+
+    // ------------------------
+    // PRIVATE FIELDS
+    // ------------------------
+    
+    @Autowired
+    private GroupUserService groupUserService;
+//    private GroupUserDao groupsUsersDao;
 
   // ------------------------
   // PUBLIC METHODS
   // ------------------------
   
   /**
-   * /create  --> Create a new GroupsUsers and save it in the database.
+   * /create-groups-users  --> Create a new GroupsUsers and save it in the database.
    * 
    * @param groupId Group's id
    * @param userId User's id
@@ -30,10 +39,10 @@ public class GroupsUsersController {
   @RequestMapping("/create-groups-users")
   @ResponseBody
   public String create(long groupId, long userId) {
-    GroupsUsers groupsUsers = null;
+    GroupUser groupsUsers = null;
     try {
-      groupsUsers = new GroupsUsers(groupId, userId);
-      groupsUsersDao.save(groupsUsers);
+      groupsUsers = new GroupUser(groupId, userId);
+      groupUserService.create(groupsUsers);
     }
     catch (Exception ex) {
       return "Error creating the GroupsUsers: " + ex.toString();
@@ -42,7 +51,7 @@ public class GroupsUsersController {
   }
   
   /**
-   * /delete  --> Delete the GroupsUsers having the passed id.
+   * /delete-groups-users  --> Delete the GroupsUsers having the passed id.
    * 
    * @param id The id of the GroupsUsers to delete
    * @return A string describing if the GroupsUsers is succesfully deleted or not.
@@ -51,8 +60,7 @@ public class GroupsUsersController {
   @ResponseBody
   public String delete(long id) {
     try {
-      GroupsUsers groupsUsers = new GroupsUsers(id);
-      groupsUsersDao.delete(groupsUsers);
+      groupUserService.deleteById(id);
     }
     catch (Exception ex) {
       return "Error deleting the GroupsUsers: " + ex.toString();
@@ -61,7 +69,7 @@ public class GroupsUsersController {
   }
   
   /**
-   * /update  --> Update the GroupsUsers in the database 
+   * /update-groups-users  --> Update the GroupsUsers in the database 
    * having the passed id.
    * 
    * @param id The id for the GroupsUsers to update.
@@ -73,22 +81,14 @@ public class GroupsUsersController {
   @ResponseBody
   public String updateGroupsUsers(long id, long groupId, long userId) {
     try {
-      GroupsUsers groupsUsers = groupsUsersDao.findOne(id);
+      GroupUser groupsUsers = groupUserService.findById(id);
       groupsUsers.setGroupId(groupId);
       groupsUsers.setUserId(userId);
-      groupsUsersDao.save(groupsUsers);
+      groupUserService.create(groupsUsers);
     }
     catch (Exception ex) {
       return "Error updating the GroupsUsers: " + ex.toString();
     }
     return "GroupsUsers succesfully updated!";
-  }
-
-  // ------------------------
-  // PRIVATE FIELDS
-  // ------------------------
-
-  @Autowired
-  private GroupsUsersDao groupsUsersDao;
-  
-} // class UserController
+  }  
+} // class GroupUserController
