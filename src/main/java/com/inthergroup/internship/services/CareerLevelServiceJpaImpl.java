@@ -54,4 +54,9 @@ public class CareerLevelServiceJpaImpl implements CareerLevelService {
         User user = userRepo.findOne(userId);
         user.setCareerLevel(careerLevel);
     }
+    
+    @Override
+    public List<CareerLevel> findAllByOrderByIdAsc() {
+        return careerLevelRepo.findAllByOrderByIdAsc();
+    }
 }

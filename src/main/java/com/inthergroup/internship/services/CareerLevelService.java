@@ -16,4 +16,6 @@ public interface CareerLevelService {
     void deleteById(Long id);
     
     void updateUserCareerLevel(long userId, long careerLevelId);
+
+    List<CareerLevel> findAllByOrderByIdAsc();
 }
