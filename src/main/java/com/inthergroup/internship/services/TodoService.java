@@ -18,4 +18,10 @@ public interface TodoService {
     void addTodoToUser(Long userId, Long todoId);
 
     void removeTodoFromUser(Long userId, Long todoId);
+
+    void addTodoToCareerLevel(Long careerLevelId, Long todoId);
+
+    void removeTodoFromCareerLevel(Long careerLevelId, Long todoId);
+
+    List<String> findTodosFromLevel(Long id);
 }

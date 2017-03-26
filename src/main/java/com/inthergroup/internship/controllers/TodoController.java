@@ -27,19 +27,7 @@ public class TodoController {
         }
         return "Todo succesfully created! (id = " + todo.getId() + ")";
     }
-
-    @RequestMapping("/add-todo-to-user")
-    @ResponseBody
-    @Transactional
-    public String addTodoToUser(long userId, long todoId) {
-        try {
-            todoService.addTodoToUser(userId, todoId);
-        } catch (Exception ex) {
-            return "Error adding todo to user: " + ex.toString();
-        }
-        return "Succesfully added todo to user!";
-    }
-
+    
     // You must delete todo only after you deleted it from all
     // users that contained it.
     @RequestMapping("/delete-todo")
@@ -52,6 +40,18 @@ public class TodoController {
         }
         return "Todo succesfully deleted!";
     }
+
+    @RequestMapping("/add-todo-to-user")
+    @ResponseBody
+    @Transactional
+    public String addTodoToUser(long userId, long todoId) {
+        try {
+            todoService.addTodoToUser(userId, todoId);
+        } catch (Exception ex) {
+            return "Error adding todo to user: " + ex.toString();
+        }
+        return "Succesfully added todo to user!";
+    }
     
     @RequestMapping("/remove-todo-from-user")
     @ResponseBody
@@ -63,6 +63,30 @@ public class TodoController {
             return "Error removing todo from user: " + ex.toString();
         }
         return "Succesfully removed todo from user!";
+    }
+    
+    @RequestMapping("/add-todo-to-career-level")
+    @ResponseBody
+    @Transactional
+    public String addTodoToCareerLevel(long careerLevelId, long todoId) {
+        try {
+            todoService.addTodoToCareerLevel(careerLevelId, todoId);
+        } catch (Exception ex) {
+            return "Error adding todo to career level: " + ex.toString();
+        }
+        return "Succesfully added todo to career level!";
+    }
+    
+    @RequestMapping("/remove-todo-from-career-level")
+    @ResponseBody
+    @Transactional
+    public String removeTodoFromCareerLevel(long careerLevelId, long todoId) {
+        try {
+            todoService.removeTodoFromCareerLevel(careerLevelId, todoId);
+        } catch (Exception ex) {
+            return "Error removing todo from career level: " + ex.toString();
+        }
+        return "Succesfully removed todo from career level!";
     }
     
 } // class GroupController

@@ -37,6 +37,9 @@ public class Todo {
     @ManyToMany(mappedBy="todos")
     private List<User> users;
     
+    @ManyToMany(mappedBy="todos")
+    private List<CareerLevel> careerLevels;
+    
     // ------------------------
     // PUBLIC METHODS
     // ------------------------
@@ -89,5 +92,13 @@ public class Todo {
         if (!user.getTodos().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
             user.getTodos().add(this);
         }
+    }
+
+    public List<CareerLevel> getCareerLevels() {
+        return careerLevels;
+    }
+
+    public void setCareerLevels(List<CareerLevel> careerLevels) {
+        this.careerLevels = careerLevels;
     }
 }

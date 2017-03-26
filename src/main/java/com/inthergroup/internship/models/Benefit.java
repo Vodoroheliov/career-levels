@@ -37,6 +37,9 @@ public class Benefit {
     @ManyToMany(mappedBy="benefits")
     private List<User> users;
     
+    @ManyToMany(mappedBy="benefits")
+    private List<CareerLevel> careerLevels;
+    
     // ------------------------
     // PUBLIC METHODS
     // ------------------------
@@ -89,5 +92,13 @@ public class Benefit {
         if (!user.getBenefits().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
             user.getBenefits().add(this);
         }
+    }
+
+    public List<CareerLevel> getCareerLevels() {
+        return careerLevels;
+    }
+
+    public void setCareerLevels(List<CareerLevel> careerLevels) {
+        this.careerLevels = careerLevels;
     }
 }

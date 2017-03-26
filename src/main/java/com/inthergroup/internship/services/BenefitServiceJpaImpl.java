@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.inthergroup.internship.models.Benefit;
+import com.inthergroup.internship.models.CareerLevel;
 import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.repositories.BenefitRepository;
+import com.inthergroup.internship.repositories.CareerLevelRepository;
 import com.inthergroup.internship.repositories.UserRepository;
 
 @Service
@@ -20,6 +22,9 @@ public class BenefitServiceJpaImpl implements BenefitService {
     
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+    private CareerLevelRepository careerLevelRepo;
 
     @Override
     public List<Benefit> findAll() {
@@ -59,5 +64,24 @@ public class BenefitServiceJpaImpl implements BenefitService {
         Benefit benefit = benefitRepo.findOne(benefitId);
         User user = userRepo.findOne(userId);
         user.removeBenefit(benefit);
+    }
+
+    @Override
+    public void addBenefitToCareerLevel(Long careerLevelId, Long benefitId) {
+        Benefit benefit = benefitRepo.findOne(benefitId);
+        CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
+        careerLevel.addBenefit(benefit);
+    }
+
+    @Override
+    public void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitId) {
+        Benefit benefit = benefitRepo.findOne(benefitId);
+        CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
+        careerLevel.removeBenefit(benefit);
+    }
+
+    @Override
+    public List<String> findBenefitsFromLevel(Long id) {
+        return this.benefitRepo.findBenefitsFromLevel(id);
     }
 }

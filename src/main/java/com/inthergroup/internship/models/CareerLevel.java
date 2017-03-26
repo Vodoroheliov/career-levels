@@ -2,11 +2,16 @@ package com.inthergroup.internship.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,6 +41,22 @@ public class CareerLevel {
     
     @OneToMany(mappedBy="careerLevel")
     private List<User> users;
+    
+    // The career level's benefits
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "career_levels_benefits",
+            joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="benefit_id", referencedColumnName="id"))
+    private List<Benefit> benefits;
+    
+    // The career level's todos
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "career_levels_todos",
+            joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="id"))
+    private List<Todo> todos;
     
     // ------------------------
     // PUBLIC METHODS
@@ -90,6 +111,54 @@ public class CareerLevel {
         }
     }
     
+    public List<Benefit> getBenefits() {
+        return benefits;
+    }
+
+    public void setBenefits(List<Benefit> benefits) {
+        this.benefits = benefits;
+    }
+    
+    public void addBenefit(Benefit benefit) {        
+        benefits.add(benefit);
+        
+        if (!benefit.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            benefit.getCareerLevels().add(this);
+        }
+    }
+    
+    public void removeBenefit(Benefit benefit) {        
+        benefits.remove(benefit);
+        
+        if (benefit.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            benefit.getCareerLevels().remove(this);
+        }
+    }
+
+    public List<Todo> getTodos() {
+        return todos;
+    }
+
+    public void setTodos(List<Todo> todos) {
+        this.todos = todos;
+    }
+    
+    public void addTodo(Todo todo) {        
+        todos.add(todo);
+        
+        if (!todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            todo.getCareerLevels().add(this);
+        }
+    }
+    
+    public void removeTodo(Todo todo) {
+        todos.remove(todo);
+        
+        if (todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            todo.getCareerLevels().remove(this);
+        }
+    }
+
     @Override
     public String toString() {
         return this.levelName;

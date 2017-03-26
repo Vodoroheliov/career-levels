@@ -7,8 +7,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.inthergroup.internship.models.CareerLevel;
 import com.inthergroup.internship.models.Todo;
 import com.inthergroup.internship.models.User;
+import com.inthergroup.internship.repositories.CareerLevelRepository;
 import com.inthergroup.internship.repositories.TodoRepository;
 import com.inthergroup.internship.repositories.UserRepository;
 
@@ -20,6 +22,9 @@ public class TodoServiceJpaImpl implements TodoService {
     
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+    private CareerLevelRepository careerLevelRepo;
 
     @Override
     public List<Todo> findAll() {
@@ -59,5 +64,24 @@ public class TodoServiceJpaImpl implements TodoService {
         Todo todo = todoRepo.findOne(todoId);
         User user = userRepo.findOne(userId);
         user.removeTodo(todo);
+    }
+
+    @Override
+    public void addTodoToCareerLevel(Long careerLevelId, Long todoId) {
+        Todo todo = todoRepo.findOne(todoId);
+        CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
+        careerLevel.addTodo(todo);
+    }
+
+    @Override
+    public void removeTodoFromCareerLevel(Long careerLevelId, Long todoId) {
+        Todo todo = todoRepo.findOne(todoId);
+        CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
+        careerLevel.removeTodo(todo);
+    }
+
+    @Override
+    public List<String> findTodosFromLevel(Long id) {
+        return this.todoRepo.findTodosFromLevel(id);
     }
 }

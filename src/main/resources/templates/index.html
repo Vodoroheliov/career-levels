@@ -12,18 +12,16 @@
         </th>
     </tr>
     <tr>
-        <td th:each="cl : ${careerLevels}">
-            Benefits:
-            <ul><li class="benefitName" th:each="b : ${benefits}"
-                    th:text="${b.benefitName}">
+        <td valign="top" th:each="bs : ${benefits}">
+            <b>Benefits:</b>
+            <ul><li class="benefitName" th:each="b : ${bs}" th:text="${b}">
             </li></ul>
         </td>
     </tr>
     <tr>
-        <td th:each="cl : ${careerLevels}">
-            To do:
-            <ul><li class="task" th:each="t : ${todos}"
-                    th:text="${t.task}">
+        <td valign="top" th:each="ts : ${todos}">
+            <b>To do:</b>
+            <ul><li class="task" th:each="t : ${ts}" th:text="${t}">
             </li></ul>
         </td>
     </tr>

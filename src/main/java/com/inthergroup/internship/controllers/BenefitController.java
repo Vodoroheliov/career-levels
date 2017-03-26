@@ -28,18 +28,6 @@ public class BenefitController {
         return "Benefit succesfully created! (id = " + benefit.getId() + ")";
     }
     
-    @RequestMapping("/add-benefit-to-user")
-    @ResponseBody
-    @Transactional
-    public String addBenefitToUser(long userId, long benefitId) {
-        try {
-            benefitService.addBenefitToUser(userId, benefitId);
-        } catch (Exception ex) {
-            return "Error adding benefit to user: " + ex.toString();
-        }
-        return "Succesfully added benefit to user!";
-    }
-    
     // You must delete benefit only after you deleted it from all
     // users that contained it.
     @RequestMapping("/delete-benefit")
@@ -53,6 +41,18 @@ public class BenefitController {
         return "Benefit succesfully deleted!";
     }
     
+    @RequestMapping("/add-benefit-to-user")
+    @ResponseBody
+    @Transactional
+    public String addBenefitToUser(long userId, long benefitId) {
+        try {
+            benefitService.addBenefitToUser(userId, benefitId);
+        } catch (Exception ex) {
+            return "Error adding benefit to user: " + ex.toString();
+        }
+        return "Succesfully added benefit to user!";
+    }
+    
     @RequestMapping("/remove-benefit-from-user")
     @ResponseBody
     @Transactional
@@ -63,6 +63,30 @@ public class BenefitController {
             return "Error removing benefit from user: " + ex.toString();
         }
         return "Succesfully removed benefit from user!";
+    }
+    
+    @RequestMapping("/add-benefit-to-career-level")
+    @ResponseBody
+    @Transactional
+    public String addBenefitToCareerLevel(long careerLevelId, long benefitId) {
+        try {
+            benefitService.addBenefitToCareerLevel(careerLevelId, benefitId);
+        } catch (Exception ex) {
+            return "Error adding benefit to career level: " + ex.toString();
+        }
+        return "Succesfully added benefit to career level!";
+    }
+    
+    @RequestMapping("/remove-benefit-from-career-level")
+    @ResponseBody
+    @Transactional
+    public String removeBenefitFromCareerLevel(long careerLevelId, long benefitId) {
+        try {
+            benefitService.removeBenefitFromCareerLevel(careerLevelId, benefitId);
+        } catch (Exception ex) {
+            return "Error removing benefit from career level: " + ex.toString();
+        }
+        return "Succesfully removed benefit from career level!";
     }
     
 } // class BenefitController

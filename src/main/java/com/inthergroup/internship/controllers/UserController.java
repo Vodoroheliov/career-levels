@@ -75,7 +75,7 @@ public class UserController {
     }
 
     /**
-     * /get-by-id --> Return information about user using his id.
+     * /get-user-by-id --> Return information about user using his id.
      * 
      * @param id
      *            The id to search in the database.

@@ -18,4 +18,10 @@ public interface BenefitService {
     void addBenefitToUser(Long userId, Long benefitId);
 
     void removeBenefitFromUser(Long userId, Long benefitId);
+
+    void addBenefitToCareerLevel(Long careerLevelId, Long benefitId);
+
+    void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitId);
+
+    List<String> findBenefitsFromLevel(Long id);
 }

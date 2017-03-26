@@ -38,7 +38,17 @@ public class CareerLevelController {
         return "Succesfully updated user's career level!";
     }
     
-    // TODO deleteCareerLevel
-    // TODO removeCareerLevelFromUser
+    // You must delete career level only after you deleted it from all
+    // users that contained it.
+    @RequestMapping("/delete-career-level")
+    @ResponseBody
+    public String deleteCareerLevel(long id) {
+        try {
+            careerLevelService.deleteById(id);
+        } catch (Exception ex) {
+            return "Error deleting the career level by id #" + id + ": " + ex.toString();
+        }
+        return "Career level succesfully deleted!";
+    }
     
 } // class CareerLevelController
