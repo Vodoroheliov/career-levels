@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.inthergroup.internship.models.CareerLevel;
-import com.inthergroup.internship.models.Todo;
 import com.inthergroup.internship.services.BenefitService;
 import com.inthergroup.internship.services.CareerLevelService;
 import com.inthergroup.internship.services.TodoService;
