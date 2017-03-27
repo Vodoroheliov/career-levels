@@ -10,11 +10,6 @@ import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.services.CareerLevelService;
 import com.inthergroup.internship.services.UserService;
 
-/**
- * A class to test interactions with the MySQL database using the UserDao class.
- *
- * @author interns
- */
 @Controller
 public class UserController {
 
@@ -33,18 +28,14 @@ public class UserController {
     // ------------------------
 
     /**
-     * /create-user --> Create a new user and save it in the database.
+     * /create  --> Create a new user and save it in the database.
      * 
-     * @param email
-     *            User's email
-     * @param name
-     *            User's name
      * @return A string describing if the user is succesfully created or not.
      */
     @RequestMapping("/create-user")
     @ResponseBody
-    public String createUser(String lastName, String firstName, String login, String password, String email,
-            long careerLevelId) {
+    public String createUser(String lastName, String firstName, String login,
+            String password, String email, long careerLevelId) {
         User user = null;
         CareerLevel careerLevel = careerLevelService.findById(careerLevelId);
         try {
@@ -59,8 +50,7 @@ public class UserController {
     /**
      * /delete-user --> Delete the user having the passed id.
      * 
-     * @param id
-     *            The id of the user to delete
+     * @param id The id of the user to delete
      * @return A string describing if the user is succesfully deleted or not.
      */
     @RequestMapping("/delete-user")
@@ -77,8 +67,7 @@ public class UserController {
     /**
      * /get-user-by-id --> Return information about user using his id.
      * 
-     * @param id
-     *            The id to search in the database.
+     * @param id The id to search in the database.
      * @return A message with information about the user or a message error if
      *         the user is not found.
      */
@@ -98,12 +87,6 @@ public class UserController {
     /**
      * /update-user --> Update the user in the database.
      * 
-     * @param id
-     *            The id for the user to update.
-     * @param email
-     *            The new email.
-     * @param name
-     *            The new name.
      * @return A string describing if the user is succesfully updated or not.
      */
     @RequestMapping("/update-user")
