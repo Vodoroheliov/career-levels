@@ -236,6 +236,7 @@ drop table if exists `users_todos`;
 CREATE TABLE `users_todos` (
   `user_id` int(20) not null AUTO_INCREMENT,
   `todo_id` int (20) not null,
+  `done` boolean not null DEFAULT false,
   PRIMARY KEY (`user_id`, `todo_id`)
 );
 
@@ -346,7 +347,6 @@ drop table if exists `todos`;
 CREATE TABLE `todos` (
   `id` int(20) not null AUTO_INCREMENT,
   `task` varchar(64) not null,
-  `done` boolean not null DEFAULT false,
   PRIMARY KEY (`id`),
   UNIQUE (`task`)
 );
