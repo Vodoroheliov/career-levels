@@ -346,6 +346,7 @@ drop table if exists `todos`;
 CREATE TABLE `todos` (
   `id` int(20) not null AUTO_INCREMENT,
   `task` varchar(64) not null,
+  `done` boolean not null DEFAULT false,
   PRIMARY KEY (`id`),
   UNIQUE (`task`)
 );

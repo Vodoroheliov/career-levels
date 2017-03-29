@@ -3,26 +3,37 @@
 <head>
     <meta charset="UTF-8" />
     <title>HELLO</title>
+    <link rel="stylesheet" href="../public/css/styles.css"
+    th:href="@{/css/styles.css}" />
 </head>
 <body>
-    <table border="1">
+    <table border="0" cellspacing="0" cellpadding="0">
+<!--     <tr> -->
+<!--         <th class="careerLevel" th:each="cl : ${careerLevels}" -->
+<!--                 th:text="${cl.levelName}"> -->
+<!--         </th> -->
+<!--     </tr> -->
     <tr>
-        <th class="careerLevel" th:each="cl : ${careerLevels}"
-                th:text="${cl.levelName}">
-        </th>
-    </tr>
-    <tr>
-        <td valign="top" th:each="bs : ${benefits}">
+        <td th:class="'benefits benefits' + ${bsStat.count}" valign="top"
+                th:each="bs : ${benefits}">
+            <b th:text="${careerLevels[bsStat.index].levelName}"></b>
+            <br />
             <b>Benefits:</b>
             <ul><li class="benefitName" th:each="b : ${bs}" th:text="${b}">
             </li></ul>
         </td>
     </tr>
     <tr>
-        <td valign="top" th:each="ts : ${todos}">
+        <td th:class="'todos todos' + ${tsStat.count}" valign="top"
+                th:each="ts : ${todos}">
             <b>To do:</b>
             <ul><li class="task" th:each="t : ${ts}" th:text="${t}">
             </li></ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            
         </td>
     </tr>
     </table>
