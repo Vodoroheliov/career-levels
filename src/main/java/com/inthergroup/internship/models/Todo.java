@@ -36,7 +36,6 @@ public class Todo {
     
 //    @Column(nullable = false, columnDefinition = "boolean default false")
 //    private boolean done;
-    
     @ManyToMany(mappedBy="todos")
     private List<User> users;
     
@@ -80,7 +79,7 @@ public class Todo {
     public void setTask(String task) {
         this.task = task;
     }
-
+    
     public List<User> getUsers() {
         return users;
     }
