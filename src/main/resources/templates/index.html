@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <meta charset="UTF-8" />
+    <title>HELLO</title>
+
+</head>
+<body>
+<div class="header">
+
+</div>
+  
+
+<!--         <div class="careerLevel" th:each="cl : ${careerLevels}" -->
+<!--                 th:text="${cl.levelName}"> -->
+<!--         </div> -->
+
+        <div th:class="'benefits benefits' + ${bsStat.count}" valign="top" 
+                th:each="bs : ${benefits}">
+                   <div class = "cl_header"  th:text="${careerLevels[bsStat.index].levelName}"></div> 
+                   <br/>
+            <div class="ben">Benefits:</div>
+           <div > <ul class="benefitName"><li th:each="b : ${bs}" th:text="${b}">
+            </li></ul></div>
+        </div>
+    
+        <div th:class="'todos todos' + ${tsStat.count}" valign="top"
+                th:each="ts : ${todos}">
+           <div class="tod"><b>To do:</b></div> 
+            <ul class="todosName"><li class="task" th:each="t : ${ts}" th:text="${t}">
+            </li></ul>
+    </div>
+   
+</body>
+</html>
