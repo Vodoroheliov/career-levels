@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -28,6 +27,3 @@ nbdist/
 .mvn/
 mvnw
 mvnw.cmd
-=======
-/target/
->>>>>>> dev_alex
