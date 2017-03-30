@@ -10,6 +10,11 @@ import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.services.CareerLevelService;
 import com.inthergroup.internship.services.UserService;
 
+/**
+ * A class to test interactions with the MySQL database using the UserDao class.
+ *
+ * @author interns
+ */
 @Controller
 public class UserController {
 

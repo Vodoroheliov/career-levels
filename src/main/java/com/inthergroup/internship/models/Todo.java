@@ -34,6 +34,8 @@ public class Todo {
     @Column(nullable = false, unique = true)
     private String task;
     
+//    @Column(nullable = false, columnDefinition = "boolean default false")
+//    private boolean done;
     @ManyToMany(mappedBy="todos")
     private List<User> users;
     
