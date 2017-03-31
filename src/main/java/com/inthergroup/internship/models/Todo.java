@@ -1,13 +1,17 @@
 package com.inthergroup.internship.models;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -36,8 +40,17 @@ public class Todo {
     
 //    @Column(nullable = false, columnDefinition = "boolean default false")
 //    private boolean done;
-    @ManyToMany(mappedBy="todos")
-    private List<User> users;
+    
+//    @ManyToMany(mappedBy="todos")
+//    private List<User> users;
+    
+//    @OneToMany(mappedBy="todo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<UserTodoAssociation> users;
+    
+    // The todo's userTodos
+    @OneToMany(mappedBy = "primaryKey.todo", orphanRemoval=true,
+            cascade = CascadeType.ALL)
+    private Set<UserTodo> userTodos = new HashSet<UserTodo>();
     
     @ManyToMany(mappedBy="todos")
     private List<CareerLevel> careerLevels;
@@ -46,8 +59,7 @@ public class Todo {
     // PUBLIC METHODS
     // ------------------------
 
-    public Todo() {
-    }
+    public Todo() { }
 
     public Todo(long id) {
         this.id = id;
@@ -79,21 +91,25 @@ public class Todo {
     public void setTask(String task) {
         this.task = task;
     }
+
     
-    public List<User> getUsers() {
-        return users;
+    
+    // This code snippet is for old implementation of User class.
+    // But it can be useful for creating a new code.
+    //  public void addUser(User user) {        
+    //  users.add(user);
+    //  
+    //  if (!user.getTodos().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+    //      user.getTodos().add(this);
+    //  }
+    //}
+
+    public Set<UserTodo> getUserTodos() {
+        return userTodos;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-    
-    public void addUser(User user) {        
-        users.add(user);
-        
-        if (!user.getTodos().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            user.getTodos().add(this);
-        }
+    public void setUserTodos(Set<UserTodo> userTodos) {
+        this.userTodos = userTodos;
     }
 
     public List<CareerLevel> getCareerLevels() {

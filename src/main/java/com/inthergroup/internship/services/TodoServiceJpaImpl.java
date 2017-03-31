@@ -56,14 +56,14 @@ public class TodoServiceJpaImpl implements TodoService {
     public void addTodoToUser(Long userId, Long todoId) {
         Todo todo = todoRepo.findOne(todoId);
         User user = userRepo.findOne(userId);
-        user.addTodo(todo);
+        user.addTodo(todo, false);
     }
     
     @Override
     public void removeTodoFromUser(Long userId, Long todoId) {
         Todo todo = todoRepo.findOne(todoId);
         User user = userRepo.findOne(userId);
-        user.removeTodo(todo);
+        user.removeTodo(todo, false);
     }
 
     @Override

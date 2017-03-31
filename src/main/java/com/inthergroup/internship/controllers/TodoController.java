@@ -17,10 +17,10 @@ public class TodoController {
 
     @RequestMapping("/create-todo")
     @ResponseBody
-    public String createTodo(String task) {
+    public String createTodo(String todoName) {
         Todo todo = null;
         try {
-            todo = new Todo(task);
+            todo = new Todo(todoName);
             todoService.create(todo);
         } catch (Exception ex) {
             return "Error creating the Todo: " + ex.toString();

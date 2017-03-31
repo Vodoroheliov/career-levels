@@ -2,42 +2,6 @@ create database if not exists internship;
 
 use internship
 
-drop table if exists `users`;
-
-CREATE TABLE `users` (
-  `id` int(20) NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(64) DEFAULT NULL,
-  `first_name` varchar(64) DEFAULT NULL,
-  `login` varchar(64) NOT NULL,
-  `password` varchar(64) DEFAULT NULL,
-  `email` varchar(64) DEFAULT NULL,
-  `career_level_id` int(20) NOT NULL,
-   PRIMARY KEY (`id`),
-   UNIQUE (`login`, `email`)
-);
-
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (1,'Doe', 'John','john123', 'doe1111', 'john@mail.com', 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (2,'Public', 'Mary', 'public123', 'mary111', 'mary@mail.com', 2);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (3,'Queue', 'Susan', 'queue1111', 'susan123', 'susan@mail.com', 3);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (4,'Jackson', 'Michael', 'jackson1111', 'michael123', 'michael@mail.com', 4);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (5,'Smith', 'John', 'smith1111', 'john123', 'john@mail.com', 5);
-
-
-drop table if exists `career_levels`;
-
-CREATE TABLE `career_levels` (
-  `id` int (20) not null AUTO_INCREMENT,
-  `level_name` varchar(64) not null,
-  PRIMARY KEY (`id`),
-  UNIQUE (`level_name`)
-);
-
-INSERT INTO `career_levels` (`id`,`level_name`) VALUES (1,'Internship');
-INSERT INTO `career_levels` (`id`,`level_name`) VALUES (2,'Baby on board');
-INSERT INTO `career_levels` (`id`,`level_name`) VALUES (3,'First steps');
-INSERT INTO `career_levels` (`id`,`level_name`) VALUES (4,'You are good!');
-INSERT INTO `career_levels` (`id`,`level_name`) VALUES (5,'You rock!');
-
 
 drop table if exists `users_benefits`;
 
@@ -408,4 +372,42 @@ drop table if exists groups;
 
 INSERT INTO `groups` (`id`, `group_name`) VALUES (1,'user');
 INSERT INTO `groups` (`id`, `group_name`) VALUES (2,'admin');
+
+
+drop table if exists `users`;
+
+CREATE TABLE `users` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `last_name` varchar(64) DEFAULT NULL,
+  `first_name` varchar(64) DEFAULT NULL,
+  `login` varchar(64) NOT NULL,
+  `password` varchar(64) DEFAULT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `career_level_id` int(20) NOT NULL,
+   PRIMARY KEY (`id`),
+   UNIQUE (`login`, `email`)
+);
+
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (1,'Doe', 'John','john123', 'doe1111', 'john@mail.com', 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (2,'Public', 'Mary', 'public123', 'mary111', 'mary@mail.com', 2);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (3,'Queue', 'Susan', 'queue1111', 'susan123', 'susan@mail.com', 3);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (4,'Jackson', 'Michael', 'jackson1111', 'michael123', 'michael@mail.com', 4);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `login`, `password`, `email`, `career_level_id`) VALUES (5,'Smith', 'John', 'smith1111', 'john123', 'john@mail.com', 5);
+
+
+drop table if exists `career_levels`;
+
+CREATE TABLE `career_levels` (
+  `id` int (20) not null AUTO_INCREMENT,
+  `level_name` varchar(64) not null,
+  PRIMARY KEY (`id`),
+  UNIQUE (`level_name`)
+);
+
+INSERT INTO `career_levels` (`id`,`level_name`) VALUES (1,'Internship');
+INSERT INTO `career_levels` (`id`,`level_name`) VALUES (2,'Baby on board');
+INSERT INTO `career_levels` (`id`,`level_name`) VALUES (3,'First steps');
+INSERT INTO `career_levels` (`id`,`level_name`) VALUES (4,'You are good!');
+INSERT INTO `career_levels` (`id`,`level_name`) VALUES (5,'You rock!');
+
 
