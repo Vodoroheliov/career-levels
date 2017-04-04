@@ -1,6 +1,9 @@
 package com.inthergroup.internship.controllers;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,8 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
+    // TODO change to "/create-todo-for-career-level"
+    // and create additional controller "/create-todo-type".
     @RequestMapping("/create-todo")
     @ResponseBody
     public String createTodo(String todoName) {
@@ -44,9 +49,15 @@ public class TodoController {
     @RequestMapping("/add-todo-to-user")
     @ResponseBody
     @Transactional
-    public String addTodoToUser(long userId, long todoId) {
+    public String addTodoToUser(long userId, String todoId, long todoTypeId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                    Timestamp dateOfCompletion, String description) {
+        if (description == "") {
+            description = null;
+        }
         try {
-            todoService.addTodoToUser(userId, todoId);
+            todoService.addTodoToUser(userId, todoId, todoTypeId,
+                    dateOfCompletion, description);
         } catch (Exception ex) {
             return "Error adding todo to user: " + ex.toString();
         }
@@ -56,9 +67,11 @@ public class TodoController {
     @RequestMapping("/remove-todo-from-user")
     @ResponseBody
     @Transactional
-    public String removeTodoFromUser(long userId, long todoId) {
+    public String removeTodoFromUser(long userId, String todoId,
+            long careerLevelId) {
+        // TODO check long variables to null value (because of error while testing)
         try {
-            todoService.removeTodoFromUser(userId, todoId);
+            todoService.removeTodoFromUser(userId, todoId, careerLevelId);
         } catch (Exception ex) {
             return "Error removing todo from user: " + ex.toString();
         }

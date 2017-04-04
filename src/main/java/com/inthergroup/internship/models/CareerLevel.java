@@ -1,6 +1,8 @@
 package com.inthergroup.internship.models;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * An entity CareerLevels composed by two fields (id, benefitName). The Entity
+ * An entity CareerLevels composed by two fields (id, name). The Entity
  * annotation indicates that this class is a JPA entity. The Table annotation
  * specifies the name for the table in the db.
  *
@@ -42,21 +44,28 @@ public class CareerLevel {
     @OneToMany(mappedBy="careerLevel")
     private List<User> users;
     
+    // TODO change to many-to-many with extra columns
     // The career level's benefits
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "career_levels_benefits",
             joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="benefit_id", referencedColumnName="id"))
+            inverseJoinColumns=@JoinColumn(name="benefit_type_id", referencedColumnName="id"))
     private List<BenefitType> benefits;
     
-    // The career level's todos
+    // TODO change to many-to-many with extra columns
+    // The career level's todos (common for all users)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "career_levels_todos",
             joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="id"))
+            inverseJoinColumns=@JoinColumn(name="todo_type_id", referencedColumnName="id"))
     private List<TodoType> todos;
+    
+    // The career level's user todos (specific for each user)
+    @OneToMany(mappedBy = "primaryKey.careerLevel", orphanRemoval=true,
+            cascade = CascadeType.ALL)
+    private Set<Todo> userTodos = new HashSet<Todo>();
     
     // ------------------------
     // PUBLIC METHODS
@@ -157,6 +166,14 @@ public class CareerLevel {
         if (todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
             todo.getCareerLevels().remove(this);
         }
+    }
+
+    public Set<Todo> getUserTodos() {
+        return userTodos;
+    }
+
+    public void setUserTodos(Set<Todo> userTodos) {
+        this.userTodos = userTodos;
     }
 
     @Override

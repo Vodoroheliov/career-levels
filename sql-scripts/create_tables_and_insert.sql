@@ -230,7 +230,7 @@ INSERT INTO `todo_types` (`id`,`name`) VALUES (27,'10 articles');
 INSERT INTO `todo_types` (`id`,`name`) VALUES (28,'10 presentations');
 
 
-drop table if exists `users_groups`;
+/* drop table if exists `users_groups`;
 
 CREATE TABLE `users_groups` (
   `user_id`  int(20) not null AUTO_INCREMENT,
@@ -244,6 +244,7 @@ INSERT INTO `users_groups` (`user_id`, `group_id`) VALUES (2, 1);
 INSERT INTO `users_groups` (`user_id`, `group_id`) VALUES (3, 1);
 INSERT INTO `users_groups` (`user_id`, `group_id`) VALUES (4, 1);
 INSERT INTO `users_groups` (`user_id`, `group_id`) VALUES (5, 1);
+*/
 
 
 drop table if exists groups;
@@ -270,6 +271,7 @@ CREATE TABLE `users` (
   `password` varchar(64) DEFAULT NULL,
   `email` varchar(64) DEFAULT NULL,
   `career_level_id` int(20) NOT NULL,
+  `group_id` int(20) not null,
    PRIMARY KEY (`id`),
    UNIQUE (`username`, `email`)
 );

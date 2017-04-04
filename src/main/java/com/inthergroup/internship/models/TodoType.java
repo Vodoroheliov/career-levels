@@ -1,17 +1,13 @@
 package com.inthergroup.internship.models;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -50,11 +46,13 @@ public class TodoType {
 //    @OneToMany(mappedBy="todo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private List<UserTodoAssociation> users;
     
-    // The todo's userTodos
-    @OneToMany(mappedBy = "primaryKey.todoType", orphanRemoval=true,
-            cascade = CascadeType.ALL)
-    private Set<UserTodo> userTodos = new HashSet<UserTodo>();
+//    // TODO change to many-to-many with extra columns
+//    // The TodoType's todos
+//    @OneToMany(mappedBy = "primaryKey.todoType", orphanRemoval=true,
+//            cascade = CascadeType.ALL)
+//    private Set<Todo> userTodos = new HashSet<Todo>();
     
+    // TODO change to many-to-many with extra columns
     @ManyToMany(mappedBy="todos")
     private List<CareerLevel> careerLevels;
     
@@ -104,14 +102,14 @@ public class TodoType {
     //      user.getTodos().add(this);
     //  }
     //}
-
-    public Set<UserTodo> getUserTodos() {
-        return userTodos;
-    }
-
-    public void setUserTodos(Set<UserTodo> userTodos) {
-        this.userTodos = userTodos;
-    }
+//
+//    public Set<Todo> getUserTodos() {
+//        return userTodos;
+//    }
+//
+//    public void setUserTodos(Set<Todo> userTodos) {
+//        this.userTodos = userTodos;
+//    }
 
     public List<CareerLevel> getCareerLevels() {
         return careerLevels;

@@ -1,11 +1,11 @@
 package com.inthergroup.internship.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.inthergroup.internship.models.CareerLevel;
 import com.inthergroup.internship.models.TodoType;
@@ -52,18 +52,17 @@ public class TodoServiceJpaImpl implements TodoService {
     }
     
     @Override
-//    @Transactional
-    public void addTodoToUser(Long userId, Long todoId) {
-        TodoType todoType = todoRepo.findOne(todoId);
+    public void addTodoToUser(Long userId, String todoId, Long todoTypeId,
+            Timestamp dateOfCompletion, String description) {
         User user = userRepo.findOne(userId);
-        user.addTodo(todoType, false);
+        user.addTodo(todoId, todoTypeId, dateOfCompletion, description);
     }
     
     @Override
-    public void removeTodoFromUser(Long userId, Long todoId) {
-        TodoType todo = todoRepo.findOne(todoId);
+    public void removeTodoFromUser(Long userId, String todoId, long careerLevelId) {
         User user = userRepo.findOne(userId);
-        user.removeTodo(todo, false);
+        CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
+        user.removeTodo(todoId, careerLevel);
     }
 
     @Override

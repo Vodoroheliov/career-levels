@@ -14,10 +14,6 @@ public interface BenefitService {
     BenefitType edit(BenefitType benefit);
 
     void deleteById(Long id);
-    
-    void addBenefitToUser(Long userId, Long benefitId);
-
-    void removeBenefitFromUser(Long userId, Long benefitId);
 
     void addBenefitToCareerLevel(Long careerLevelId, Long benefitId);
 

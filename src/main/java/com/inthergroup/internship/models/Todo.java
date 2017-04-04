@@ -11,26 +11,34 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+/**
+ * An entity Todo represents a task for a user.
+ * The Entity annotation indicates that this class is a JPA entity.
+ * The Table annotation specifies the name for the table in the db.
+ *
+ * @author interns
+ */
 @Entity
-@Table(name = "users_todos")
+@Table(name = "todos")
 @AssociationOverrides({
     @AssociationOverride(name = "primaryKey.user",
             joinColumns = @JoinColumn(name = "user_id", nullable = false)),
-    @AssociationOverride(name = "primaryKey.todo",
-            joinColumns = @JoinColumn(name = "todo_type_id", nullable = false))
+    @AssociationOverride(name = "primaryKey.careerLevel",
+            joinColumns = @JoinColumn(name = "career_level_id", nullable = false)),
+    @AssociationOverride(name = "primaryKey.todoId",
+            joinColumns = @JoinColumn(name = "todo_id", nullable = false))
 })
-public class UserTodo {
+public class Todo {
     
     // ----------------
     // PRIVATE FIELDS
     // ----------------
     
     // composite-id key
-    private UserTodoId primaryKey = new UserTodoId();
+    private TodoPK primaryKey = new TodoPK();
     
     // additional fields
-    private boolean done;
-    private int quantity;
+    private long todoTypeId;
     private Timestamp dateOfCompletion;
     private String description;
     
@@ -39,11 +47,11 @@ public class UserTodo {
     // ---------------
 
     @EmbeddedId
-    public UserTodoId getPrimaryKey() {
+    public TodoPK getPrimaryKey() {
         return primaryKey;
     }
 
-    public void setPrimaryKey(UserTodoId primaryKey) {
+    public void setPrimaryKey(TodoPK primaryKey) {
         this.primaryKey = primaryKey;
     }
     
@@ -55,34 +63,32 @@ public class UserTodo {
     public void setUser(User user) {
         getPrimaryKey().setUser(user);
     }
- 
+    
     @Transient
-    public TodoType getTodoType() {
-        return getPrimaryKey().getTodoType();
+    public CareerLevel getCareerLevel() {
+        return getPrimaryKey().getCareerLevel();
     }
  
-    public void setTodoType(TodoType todoType) {
-        getPrimaryKey().setTodoType(todoType);
-    }
-
-    @Column(name = "done", nullable = false,
-            columnDefinition = "boolean default false")
-    public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
+    public void setCareerLevel(CareerLevel careerLevel) {
+        getPrimaryKey().setCareerLevel(careerLevel);
     }
     
-    @Column(name = "quantity", nullable = false,
-            columnDefinition = "integer default 1")
-    public int getQuantity() {
-        return quantity;
+    @Transient
+    public String getTodoId() {
+        return getPrimaryKey().getTodoId();
+    }
+ 
+    public void setTodoId(String todoId) {
+        getPrimaryKey().setTodoId(todoId);
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    @Column(name = "todo_type_id", nullable = false)
+    public long getTodoTypeId() {
+        return todoTypeId;
+    }
+
+    public void setTodoTypeId(long todoTypeId) {
+        this.todoTypeId = todoTypeId;
     }
 
     public Timestamp getDateOfCompletion() {
@@ -106,8 +112,8 @@ public class UserTodo {
     }
 
     public boolean equals(Object object) {
-        if (object instanceof UserTodo) {
-            return primaryKey.equals(((UserTodo) object).getPrimaryKey());
+        if (object instanceof Todo) {
+            return primaryKey.equals(((Todo) object).getPrimaryKey());
         }
         return false;
     }

@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
- * An entity Benefits composed by two fields (id, benefitName). The Entity
+ * An entity Benefits composed by two fields (id, name). The Entity
  * annotation indicates that this class is a JPA entity. The Table annotation
  * specifies the name for the table in the db.
  *
@@ -37,6 +37,7 @@ public class BenefitType {
 //    @ManyToMany(mappedBy="benefits")
 //    private List<User> users;
     
+    // TODO change to many-to-many with extra columns
     @ManyToMany(mappedBy="benefits")
     private List<CareerLevel> careerLevels;
     

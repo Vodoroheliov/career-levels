@@ -2,7 +2,6 @@ package com.inthergroup.internship.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,16 +27,27 @@ public class GroupController {
         return "Group succesfully created! (id = " + group.getId() + ")";
     }
 
-    @RequestMapping("/add-group-to-user")
+//    @RequestMapping("/add-group-to-user")
+//    @ResponseBody
+//    @Transactional
+//    public String addGroupToUser(long userId, long groupId) {
+//        try {
+//            groupService.addGroupToUser(userId, groupId);
+//        } catch (Exception ex) {
+//            return "Error adding todo to user: " + ex.toString();
+//        }
+//        return "Succesfully added todo to user!";
+//    }
+    
+    @RequestMapping("/update-user-group")
     @ResponseBody
-    @Transactional
-    public String addGroupToUser(long userId, long groupId) {
+    public String updateUserGroup(long userId, long groupId) {
         try {
-            groupService.addGroupToUser(userId, groupId);
+            groupService.updateUserGroup(userId, groupId);
         } catch (Exception ex) {
-            return "Error adding todo to user: " + ex.toString();
+            return "Error updating user's group: " + ex.toString();
         }
-        return "Succesfully added todo to user!";
+        return "Succesfully updated user's group!";
     }
     
     // You must delete group only after you deleted it from all
@@ -53,16 +63,16 @@ public class GroupController {
         return "Group succesfully deleted!";
     }
     
-    @RequestMapping("/remove-group-from-user")
-    @ResponseBody
-    @Transactional
-    public String removeGroupFromUser(long userId, long groupId) {
-        try {
-            groupService.removeGroupFromUser(userId, groupId);
-        } catch (Exception ex) {
-            return "Error removing group from user: " + ex.toString();
-        }
-        return "Succesfully removed group from user!";
-    }
+//    @RequestMapping("/remove-group-from-user")
+//    @ResponseBody
+//    @Transactional
+//    public String removeGroupFromUser(long userId, long groupId) {
+//        try {
+//            groupService.removeGroupFromUser(userId, groupId);
+//        } catch (Exception ex) {
+//            return "Error removing group from user: " + ex.toString();
+//        }
+//        return "Succesfully removed group from user!";
+//    }
     
 } // class GroupController

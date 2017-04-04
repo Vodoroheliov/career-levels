@@ -41,30 +41,6 @@ public class BenefitController {
         return "Benefit succesfully deleted!";
     }
     
-    @RequestMapping("/add-benefit-to-user")
-    @ResponseBody
-    @Transactional
-    public String addBenefitToUser(long userId, long benefitId) {
-        try {
-            benefitService.addBenefitToUser(userId, benefitId);
-        } catch (Exception ex) {
-            return "Error adding benefit to user: " + ex.toString();
-        }
-        return "Succesfully added benefit to user!";
-    }
-    
-    @RequestMapping("/remove-benefit-from-user")
-    @ResponseBody
-    @Transactional
-    public String removeBenefitFromUser(long userId, long benefitId) {
-        try {
-            benefitService.removeBenefitFromUser(userId, benefitId);
-        } catch (Exception ex) {
-            return "Error removing benefit from user: " + ex.toString();
-        }
-        return "Succesfully removed benefit from user!";
-    }
-    
     @RequestMapping("/add-benefit-to-career-level")
     @ResponseBody
     @Transactional

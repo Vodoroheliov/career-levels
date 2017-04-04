@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -34,7 +34,10 @@ public class Group {
     @Column(nullable = false, unique = true)
     private String name;
     
-    @ManyToMany(mappedBy="groups")
+//    @ManyToMany(mappedBy="groups")
+//    private List<User> users;
+    
+    @OneToMany(mappedBy="group")
     private List<User> users;
 
     // ------------------------
@@ -85,11 +88,18 @@ public class Group {
         this.users = users;
     }
     
-    public void addUser(User user) {        
-        users.add(user);
-        
-        if (!user.getGroups().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            user.getGroups().add(this);
+//    public void addUser(User user) {        
+//        users.add(user);
+//        
+//        if (!user.getGroups().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            user.getGroups().add(this);
+//        }
+//    }
+    
+    public void addUser(User user) {
+        this.users.add(user);
+        if (user.getGroup() != this) {
+            user.setGroup(this);
         }
     }
 
