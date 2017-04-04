@@ -37,7 +37,7 @@ public class CareerLevel {
     private long id;
     
     @Column(nullable = false, unique = true)
-    private String levelName;
+    private String name;
     
     @OneToMany(mappedBy="careerLevel")
     private List<User> users;
@@ -48,7 +48,7 @@ public class CareerLevel {
             name = "career_levels_benefits",
             joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="benefit_id", referencedColumnName="id"))
-    private List<Benefit> benefits;
+    private List<BenefitType> benefits;
     
     // The career level's todos
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -56,7 +56,7 @@ public class CareerLevel {
             name = "career_levels_todos",
             joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="id"))
-    private List<Todo> todos;
+    private List<TodoType> todos;
     
     // ------------------------
     // PUBLIC METHODS
@@ -69,13 +69,13 @@ public class CareerLevel {
         this.id = id;
     }
     
-    public CareerLevel(String levelName) {
-        this.levelName = levelName;
+    public CareerLevel(String name) {
+        this.name = name;
     }
 
-    public CareerLevel(long id, String levelName) {
+    public CareerLevel(long id, String name) {
         this.id = id;
-        this.levelName = levelName;
+        this.name = name;
     }
     
     // Getter and setter methods
@@ -88,12 +88,12 @@ public class CareerLevel {
         this.id = id;
     }
 
-    public String getLevelName() {
-        return levelName;
+    public String getName() {
+        return name;
     }
 
-    public void setLevelName(String levelName) {
-        this.levelName = levelName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<User> getUsers() {
@@ -111,15 +111,15 @@ public class CareerLevel {
         }
     }
     
-    public List<Benefit> getBenefits() {
+    public List<BenefitType> getBenefits() {
         return benefits;
     }
 
-    public void setBenefits(List<Benefit> benefits) {
+    public void setBenefits(List<BenefitType> benefits) {
         this.benefits = benefits;
     }
     
-    public void addBenefit(Benefit benefit) {        
+    public void addBenefit(BenefitType benefit) {        
         benefits.add(benefit);
         
         if (!benefit.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
@@ -127,7 +127,7 @@ public class CareerLevel {
         }
     }
     
-    public void removeBenefit(Benefit benefit) {        
+    public void removeBenefit(BenefitType benefit) {        
         benefits.remove(benefit);
         
         if (benefit.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
@@ -135,15 +135,15 @@ public class CareerLevel {
         }
     }
 
-    public List<Todo> getTodos() {
+    public List<TodoType> getTodos() {
         return todos;
     }
 
-    public void setTodos(List<Todo> todos) {
+    public void setTodos(List<TodoType> todos) {
         this.todos = todos;
     }
     
-    public void addTodo(Todo todo) {        
+    public void addTodo(TodoType todo) {        
         todos.add(todo);
         
         if (!todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
@@ -151,7 +151,7 @@ public class CareerLevel {
         }
     }
     
-    public void removeTodo(Todo todo) {
+    public void removeTodo(TodoType todo) {
         todos.remove(todo);
         
         if (todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
@@ -161,6 +161,6 @@ public class CareerLevel {
 
     @Override
     public String toString() {
-        return this.levelName;
+        return this.name;
     }
 }

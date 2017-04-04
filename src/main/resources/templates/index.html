@@ -19,7 +19,7 @@
 
         <div th:class="'benefits benefits' + ${bsStat.count}" valign="top" 
                 th:each="bs : ${benefits}">
-                   <div class = "cl_header"  th:text="${careerLevels[bsStat.index].levelName}"></div> 
+                   <div class = "cl_header"  th:text="${careerLevels[bsStat.index].name}"></div> 
                    <br/>
             <div class="ben">Benefits:</div>
            <div > <ul class="benefitName"><li th:each="b : ${bs}" th:text="${b}">

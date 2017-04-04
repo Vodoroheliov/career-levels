@@ -2,16 +2,16 @@ package com.inthergroup.internship.services;
 
 import java.util.List;
 
-import com.inthergroup.internship.models.Benefit;
+import com.inthergroup.internship.models.BenefitType;
 
 public interface BenefitService {
-    List<Benefit> findAll();
+    List<BenefitType> findAll();
 
-    Benefit findById(Long id);
+    BenefitType findById(Long id);
 
-    Benefit create(Benefit benefit);
+    BenefitType create(BenefitType benefit);
 
-    Benefit edit(Benefit benefit);
+    BenefitType edit(BenefitType benefit);
 
     void deleteById(Long id);
     

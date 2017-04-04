@@ -22,8 +22,8 @@ import javax.persistence.Table;
  * @author interns
  */
 @Entity
-@Table(name = "todos")
-public class Todo {
+@Table(name = "todo_types")
+public class TodoType {
 
     // ------------------------
     // PRIVATE FIELDS
@@ -36,7 +36,10 @@ public class Todo {
     private long id;
     
     @Column(nullable = false, unique = true)
-    private String task;
+    private String name;
+    
+//    @Column(nullable = false, columnDefinition = "integer default 1")
+//    private int quantity;
     
 //    @Column(nullable = false, columnDefinition = "boolean default false")
 //    private boolean done;
@@ -48,7 +51,7 @@ public class Todo {
 //    private List<UserTodoAssociation> users;
     
     // The todo's userTodos
-    @OneToMany(mappedBy = "primaryKey.todo", orphanRemoval=true,
+    @OneToMany(mappedBy = "primaryKey.todoType", orphanRemoval=true,
             cascade = CascadeType.ALL)
     private Set<UserTodo> userTodos = new HashSet<UserTodo>();
     
@@ -59,19 +62,19 @@ public class Todo {
     // PUBLIC METHODS
     // ------------------------
 
-    public Todo() { }
+    public TodoType() { }
 
-    public Todo(long id) {
+    public TodoType(long id) {
         this.id = id;
     }
     
-    public Todo(String task) {
-        this.task = task;
+    public TodoType(String name) {
+        this.name = name;
     }
 
-    public Todo(long id, String task) {
+    public TodoType(long id, String name) {
         this.id = id;
-        this.task = task;
+        this.name = name;
     }
     
     // Getter and setter methods
@@ -84,16 +87,14 @@ public class Todo {
         this.id = id;
     }
 
-    public String getTask() {
-        return task;
+    public String getName() {
+        return name;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    
-    
     // This code snippet is for old implementation of User class.
     // But it can be useful for creating a new code.
     //  public void addUser(User user) {        

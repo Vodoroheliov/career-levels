@@ -18,8 +18,8 @@ import javax.persistence.Table;
  * @author interns
  */
 @Entity
-@Table(name = "benefits")
-public class Benefit {
+@Table(name = "benefit_types")
+public class BenefitType {
 
     // ------------------------
     // PRIVATE FIELDS
@@ -32,10 +32,10 @@ public class Benefit {
     private long id;
     
     @Column(nullable = false, unique = true)
-    private String benefitName;
+    private String name;
     
-    @ManyToMany(mappedBy="benefits")
-    private List<User> users;
+//    @ManyToMany(mappedBy="benefits")
+//    private List<User> users;
     
     @ManyToMany(mappedBy="benefits")
     private List<CareerLevel> careerLevels;
@@ -44,20 +44,20 @@ public class Benefit {
     // PUBLIC METHODS
     // ------------------------
 
-    public Benefit() {
+    public BenefitType() {
     }
 
-    public Benefit(long id) {
+    public BenefitType(long id) {
         this.id = id;
     }
     
-    public Benefit(String benefitName) {
-        this.benefitName = benefitName;
+    public BenefitType(String name) {
+        this.name = name;
     }
 
-    public Benefit(long id, String benefitName) {
+    public BenefitType(long id, String name) {
         this.id = id;
-        this.benefitName = benefitName;
+        this.name = name;
     }
     
     // Getter and setter methods
@@ -70,29 +70,29 @@ public class Benefit {
         this.id = id;
     }
 
-    public String getBenefitName() {
-        return benefitName;
+    public String getName() {
+        return name;
     }
 
-    public void setBenefitName(String benefitName) {
-        this.benefitName = benefitName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-    
-    public void addUser(User user) {        
-        users.add(user);
-        
-        if (!user.getBenefits().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            user.getBenefits().add(this);
-        }
-    }
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
+//    
+//    public void addUser(User user) {        
+//        users.add(user);
+//        
+//        if (!user.getBenefits().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            user.getBenefits().add(this);
+//        }
+//    }
 
     public List<CareerLevel> getCareerLevels() {
         return careerLevels;

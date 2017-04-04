@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.inthergroup.internship.models.Benefit;
+import com.inthergroup.internship.models.BenefitType;
 import com.inthergroup.internship.services.BenefitService;
 
 @Controller
@@ -18,9 +18,9 @@ public class BenefitController {
     @RequestMapping("/create-benefit")
     @ResponseBody
     public String createBenefit(String benefitName) {
-        Benefit benefit = null;
+        BenefitType benefit = null;
         try {
-            benefit = new Benefit(benefitName);
+            benefit = new BenefitType(benefitName);
             benefitService.create(benefit);
         } catch (Exception ex) {
             return "Error creating the benefit: " + ex.toString();

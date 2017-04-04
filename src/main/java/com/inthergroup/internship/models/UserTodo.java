@@ -1,5 +1,7 @@
 package com.inthergroup.internship.models;
 
+import java.sql.Timestamp;
+
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
@@ -13,9 +15,9 @@ import javax.persistence.Transient;
 @Table(name = "users_todos")
 @AssociationOverrides({
     @AssociationOverride(name = "primaryKey.user",
-            joinColumns = @JoinColumn(name = "user_id")),
+            joinColumns = @JoinColumn(name = "user_id", nullable = false)),
     @AssociationOverride(name = "primaryKey.todo",
-            joinColumns = @JoinColumn(name = "todo_id"))
+            joinColumns = @JoinColumn(name = "todo_type_id", nullable = false))
 })
 public class UserTodo {
     
@@ -28,6 +30,9 @@ public class UserTodo {
     
     // additional fields
     private boolean done;
+    private int quantity;
+    private Timestamp dateOfCompletion;
+    private String description;
     
     // ---------------
     // PUBLIC METHODS
@@ -52,12 +57,12 @@ public class UserTodo {
     }
  
     @Transient
-    public Todo getTodo() {
-        return getPrimaryKey().getTodo();
+    public TodoType getTodoType() {
+        return getPrimaryKey().getTodoType();
     }
  
-    public void setTodo(Todo todo) {
-        getPrimaryKey().setTodo(todo);
+    public void setTodoType(TodoType todoType) {
+        getPrimaryKey().setTodoType(todoType);
     }
 
     @Column(name = "done", nullable = false,
@@ -70,6 +75,32 @@ public class UserTodo {
         this.done = done;
     }
     
+    @Column(name = "quantity", nullable = false,
+            columnDefinition = "integer default 1")
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Timestamp getDateOfCompletion() {
+        return dateOfCompletion;
+    }
+
+    public void setDateOfCompletion(Timestamp dateOfCompletion) {
+        this.dateOfCompletion = dateOfCompletion;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int hashCode() {
         return primaryKey.hashCode();
     }

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inthergroup.internship.models.Benefit;
+import com.inthergroup.internship.models.BenefitType;
 import com.inthergroup.internship.models.CareerLevel;
 import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.repositories.BenefitRepository;
@@ -27,22 +27,22 @@ public class BenefitServiceJpaImpl implements BenefitService {
     private CareerLevelRepository careerLevelRepo;
 
     @Override
-    public List<Benefit> findAll() {
+    public List<BenefitType> findAll() {
         return this.benefitRepo.findAll();
     }
 
     @Override
-    public Benefit findById(Long id) {
+    public BenefitType findById(Long id) {
         return this.benefitRepo.findOne(id);
     }
 
     @Override
-    public Benefit create(Benefit benefit) {
+    public BenefitType create(BenefitType benefit) {
         return this.benefitRepo.save(benefit);
     }
 
     @Override
-    public Benefit edit(Benefit benefit) {
+    public BenefitType edit(BenefitType benefit) {
         return this.benefitRepo.save(benefit);
     }
 
@@ -52,30 +52,30 @@ public class BenefitServiceJpaImpl implements BenefitService {
     }
     
     @Override
-    @Transactional
+//    @Transactional
     public void addBenefitToUser(Long userId, Long benefitId) {
-        Benefit benefit = benefitRepo.findOne(benefitId);
+        BenefitType benefit = benefitRepo.findOne(benefitId);
         User user = userRepo.findOne(userId);
         user.addBenefit(benefit);
     }
     
     @Override
     public void removeBenefitFromUser(Long userId, Long benefitId) {
-        Benefit benefit = benefitRepo.findOne(benefitId);
+        BenefitType benefit = benefitRepo.findOne(benefitId);
         User user = userRepo.findOne(userId);
         user.removeBenefit(benefit);
     }
 
     @Override
     public void addBenefitToCareerLevel(Long careerLevelId, Long benefitId) {
-        Benefit benefit = benefitRepo.findOne(benefitId);
+        BenefitType benefit = benefitRepo.findOne(benefitId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
         careerLevel.addBenefit(benefit);
     }
 
     @Override
     public void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitId) {
-        Benefit benefit = benefitRepo.findOne(benefitId);
+        BenefitType benefit = benefitRepo.findOne(benefitId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
         careerLevel.removeBenefit(benefit);
     }

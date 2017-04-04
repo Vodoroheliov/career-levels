@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.inthergroup.internship.models.Todo;
+import com.inthergroup.internship.models.TodoType;
 import com.inthergroup.internship.services.TodoService;
 
 @Controller
@@ -18,9 +18,9 @@ public class TodoController {
     @RequestMapping("/create-todo")
     @ResponseBody
     public String createTodo(String todoName) {
-        Todo todo = null;
+        TodoType todo = null;
         try {
-            todo = new Todo(todoName);
+            todo = new TodoType(todoName);
             todoService.create(todo);
         } catch (Exception ex) {
             return "Error creating the Todo: " + ex.toString();

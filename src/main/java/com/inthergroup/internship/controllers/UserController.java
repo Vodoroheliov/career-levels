@@ -96,19 +96,19 @@ public class UserController {
      */
     @RequestMapping("/update-user")
     @ResponseBody
-    public String updateUser(long id, String lastName, String firstName, String login, String password, String email,
-            String levelName) {
+    public String updateUser(long id, String lastName, String firstName, String username,
+            String password, String email, String levelName) {
         try {
             // CareerLevel careerLevel = new CareerLevel(levelName);
             // careerLevelService.create(careerLevel);
             User user = userService.findById(id);
             user.setLastName(lastName);
             user.setFirstName(firstName);
-            user.setLogin(login);
+            user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
             // TODO Change this operation to appropriate (to comply associations)
-            user.getCareerLevel().setLevelName(levelName);
+            user.getCareerLevel().setName(levelName);
             userService.create(user);
         } catch (Exception ex) {
             return "Error updating the user: " + ex.toString();

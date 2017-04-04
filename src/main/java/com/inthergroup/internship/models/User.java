@@ -49,7 +49,7 @@ public class User {
     
     // The user's login
     @Column(nullable = false, length = 64, unique = true)
-    private String login;
+    private String username;
     
     // The user's password
     @Column(length = 64)
@@ -64,13 +64,13 @@ public class User {
     @JoinColumn(name="career_level_id", nullable = false)
     private CareerLevel careerLevel;
     
-    // The user's benefits
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "users_benefits",
-            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="benefit_id", referencedColumnName="id"))
-    private List<Benefit> benefits;
+//    // The user's benefits
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "users_benefits",
+//            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+//            inverseJoinColumns=@JoinColumn(name="benefit_id", referencedColumnName="id"))
+//    private List<BenefitType> benefits;
     
 //    // The user's todos
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -107,12 +107,12 @@ public class User {
         this.id = id;
     }
     
-    public User(String lastName, String firstName, String login,
+    public User(String lastName, String firstName, String username,
                 String password, String email, CareerLevel careerLevel) {
         super();
         this.lastName = lastName;
         this.firstName = firstName;
-        this.login = login;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.careerLevel = careerLevel;
@@ -144,12 +144,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String login) {
+        this.username = login;
     }
 
     public String getPassword() {
@@ -183,29 +183,29 @@ public class User {
         }
     }
 
-    public List<Benefit> getBenefits() {
-        return benefits;
-    }
-
-    public void setBenefits(List<Benefit> benefits) {
-        this.benefits = benefits;
-    }
-    
-    public void addBenefit(Benefit benefit) {        
-        benefits.add(benefit);
-        
-        if (!benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            benefit.getUsers().add(this);
-        }
-    }
-    
-    public void removeBenefit(Benefit benefit) {        
-        benefits.remove(benefit);
-        
-        if (benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            benefit.getUsers().remove(this);
-        }
-    }
+//    public List<BenefitType> getBenefits() {
+//        return benefits;
+//    }
+//
+//    public void setBenefits(List<BenefitType> benefits) {
+//        this.benefits = benefits;
+//    }
+//    
+//    public void addBenefit(BenefitType benefit) {        
+//        benefits.add(benefit);
+//        
+//        if (!benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            benefit.getUsers().add(this);
+//        }
+//    }
+//    
+//    public void removeBenefit(BenefitType benefit) {        
+//        benefits.remove(benefit);
+//        
+//        if (benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            benefit.getUsers().remove(this);
+//        }
+//    }
 
 //    public List<UserTodoAssociation> getTodos() {
 //        return todos;
@@ -263,22 +263,22 @@ public class User {
     
     // Add a todo to the user.
     // Create an association object for the relationship and set its data.
-    public void addTodo(Todo todo, boolean done) {
+    public void addTodo(TodoType todoType, boolean done) {
         UserTodo userTodo = new UserTodo();
-        userTodo.setTodo(todo);
+        userTodo.setTodoType(todoType);
         userTodo.setUser(this);
         userTodo.setDone(done);
         userTodos.add(userTodo);
         
         // Also add the association object to todo.
-        todo.getUserTodos().add(userTodo);
+        todoType.getUserTodos().add(userTodo);
     }
     
     // Remove a todo from the user.
     // Create an association object for the relationship and set its data.
-    public void removeTodo(Todo todo, boolean done) {
+    public void removeTodo(TodoType todo, boolean done) {
         UserTodo userTodo = new UserTodo();
-        userTodo.setTodo(todo);
+        userTodo.setTodoType(todo);
         userTodo.setUser(this);
         userTodo.setDone(done);
         userTodos.remove(userTodo);
