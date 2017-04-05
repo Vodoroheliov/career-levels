@@ -13,4 +13,6 @@ public interface UserService {
     User edit(User user);
 
     void deleteById(Long id);
+    
+    List<User> findUsersFromLevel(Long id);
 }

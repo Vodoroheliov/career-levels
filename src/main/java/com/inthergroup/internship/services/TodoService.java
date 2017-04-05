@@ -1,27 +1,29 @@
 package com.inthergroup.internship.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
-import com.inthergroup.internship.models.Todo;
+import com.inthergroup.internship.models.TodoType;
 
 public interface TodoService {
-    List<Todo> findAll();
+    List<TodoType> findAll();
 
-    Todo findById(Long id);
+    TodoType findById(Long id);
 
-    Todo create(Todo todo);
+    TodoType create(TodoType todo);
 
-    Todo edit(Todo todo);
+    TodoType edit(TodoType todo);
 
     void deleteById(Long id);
     
-    void addTodoToUser(Long userId, Long todoId);
+    void addTodoToUser(Long userId, String todoId, Long todoTypeId,
+            Timestamp dateOfCompletion, String description);
 
-    void removeTodoFromUser(Long userId, Long todoId);
+    void removeTodoFromUser(Long userId, String todoId, Long careerLevelId);
 
-    void addTodoToCareerLevel(Long careerLevelId, Long todoId);
+    void addTodoToCareerLevel(Long careerLevelId, Long todoTypeId, Integer quantity);
 
-    void removeTodoFromCareerLevel(Long careerLevelId, Long todoId);
+    void removeTodoFromCareerLevel(Long careerLevelId, Long todoTypeId);
 
     List<String> findTodosFromLevel(Long id);
 }

@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.inthergroup.internship.models.CareerLevel;
+import com.inthergroup.internship.models.Group;
 import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.services.CareerLevelService;
+import com.inthergroup.internship.services.GroupService;
 import com.inthergroup.internship.services.UserService;
 
 /**
@@ -26,7 +28,10 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private CareerLevelService careerLevelService;    
+    private CareerLevelService careerLevelService;
+    
+    @Autowired
+    private GroupService groupService;
 
     // ------------------------
     // PUBLIC METHODS
@@ -40,11 +45,13 @@ public class UserController {
     @RequestMapping("/create-user")
     @ResponseBody
     public String createUser(String lastName, String firstName, String login,
-            String password, String email, long careerLevelId) {
+            String password, String email, Long careerLevelId, Long groupId) {
         User user = null;
         CareerLevel careerLevel = careerLevelService.findById(careerLevelId);
+        Group group = groupService.findById(groupId);
         try {
-            user = new User(lastName, firstName, login, password, email, careerLevel);
+            user = new User(lastName, firstName, login, password, email,
+                    careerLevel, group);
             userService.create(user);
         } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
@@ -96,19 +103,19 @@ public class UserController {
      */
     @RequestMapping("/update-user")
     @ResponseBody
-    public String updateUser(long id, String lastName, String firstName, String login, String password, String email,
-            String levelName) {
+    public String updateUser(long id, String lastName, String firstName, String username,
+            String password, String email, String levelName) {
         try {
             // CareerLevel careerLevel = new CareerLevel(levelName);
             // careerLevelService.create(careerLevel);
             User user = userService.findById(id);
             user.setLastName(lastName);
             user.setFirstName(firstName);
-            user.setLogin(login);
+            user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
             // TODO Change this operation to appropriate (to comply associations)
-            user.getCareerLevel().setLevelName(levelName);
+            user.getCareerLevel().setName(levelName);
             userService.create(user);
         } catch (Exception ex) {
             return "Error updating the user: " + ex.toString();

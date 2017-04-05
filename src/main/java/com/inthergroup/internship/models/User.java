@@ -1,6 +1,8 @@
 package com.inthergroup.internship.models;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,9 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -44,9 +45,9 @@ public class User {
     @Column(length = 64)
     private String firstName;
     
-    // The user's login
+    // The user's username
     @Column(nullable = false, length = 64, unique = true)
-    private String login;
+    private String username;
     
     // The user's password
     @Column(length = 64)
@@ -61,29 +62,44 @@ public class User {
     @JoinColumn(name="career_level_id", nullable = false)
     private CareerLevel careerLevel;
     
-    // The user's benefits
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "users_benefits",
-            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="benefit_id", referencedColumnName="id"))
-    private List<Benefit> benefits;
+    // The user's group
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id", nullable = false)
+    private Group group;
+
+    
+//    // The user's benefits
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "users_benefits",
+//            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+//            inverseJoinColumns=@JoinColumn(name="benefit_id", referencedColumnName="id"))
+//    private List<BenefitType> benefits;
+    
+//    // The user's todos
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "users_todos",
+//            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+//            inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="id"))
+//    private List<Todo> todos;
+    
+//    // The user's todos
+//    @OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<UserTodoAssociation> todos;
     
     // The user's todos
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "users_todos",
-            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="id"))
-    private List<Todo> todos;
+    @OneToMany(mappedBy = "primaryKey.user", orphanRemoval=true,
+            cascade = CascadeType.ALL)
+    private Set<Todo> todos = new HashSet<Todo>();
     
- // The user's groups
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "users_groups",
-            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="group_id", referencedColumnName="id"))
-    private List<Group> groups;
+//    // The user's groups
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "users_groups",
+//            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+//            inverseJoinColumns=@JoinColumn(name="group_id", referencedColumnName="id"))
+//    private List<Group> groups;
 
     // ------------------------
     // PUBLIC METHODS
@@ -95,15 +111,16 @@ public class User {
         this.id = id;
     }
     
-    public User(String lastName, String firstName, String login,
-                String password, String email, CareerLevel careerLevel) {
+    public User(String lastName, String firstName, String username, String password,
+            String email, CareerLevel careerLevel, Group group) {
         super();
         this.lastName = lastName;
         this.firstName = firstName;
-        this.login = login;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.careerLevel = careerLevel;
+        this.group = group;
     }
     
     // Getter and setter methods
@@ -132,12 +149,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String login) {
+        this.username = login;
     }
 
     public String getPassword() {
@@ -171,76 +188,169 @@ public class User {
         }
     }
 
-    public List<Benefit> getBenefits() {
-        return benefits;
-    }
+//    public List<BenefitType> getBenefits() {
+//        return benefits;
+//    }
+//
+//    public void setBenefits(List<BenefitType> benefits) {
+//        this.benefits = benefits;
+//    }
+//    
+//    public void addBenefit(BenefitType benefit) {        
+//        benefits.add(benefit);
+//        
+//        if (!benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            benefit.getUsers().add(this);
+//        }
+//    }
+//    
+//    public void removeBenefit(BenefitType benefit) {        
+//        benefits.remove(benefit);
+//        
+//        if (benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            benefit.getUsers().remove(this);
+//        }
+//    }
 
-    public void setBenefits(List<Benefit> benefits) {
-        this.benefits = benefits;
+//    public List<UserTodoAssociation> getTodos() {
+//        return todos;
+//    }
+//
+//    public void setTodos(List<UserTodoAssociation> todos) {
+//        this.todos = todos;
+//    }
+    
+//    public void addTodo(UserTodoAssociation todo) {        
+//        todos.add(todo);
+//        
+//        if (!todo.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            todo.getUsers().add(this);
+//        }
+//    }
+    
+//    // Add a todo to the user.
+//    // Create an association object for the relationship and set its data.
+//    public void addTodo(Todo todo, boolean done) {
+//        UserTodoAssociation association = new UserTodoAssociation();
+//        association.setTodo(todo);
+//        association.setUser(this);
+//        association.setTodoId(todo.getId());
+//        association.setUserId(this.getId());
+//        association.setDone(done);
+//        this.todos.add(association);
+//        
+//        // Also add the association object to todo.
+//        todo.getUsers().add(association);
+//    }
+    
+//    public void removeTodo(Todo todo) {        
+//        todos.remove(todo);
+//        
+//        if (todo.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            todo.getUsers().remove(this);
+//        }
+//    }
+    
+//    // Remove a todo from the user.
+//    // Create an association object for the relationship and set its data.
+//    public void removeTodo(Todo todo, boolean done) {
+//        UserTodoAssociation association = new UserTodoAssociation();
+//        association.setTodo(todo);
+//        association.setUser(this);
+//        association.setTodoId(todo.getId());
+//        association.setUserId(this.getId());
+//        association.setDone(done);
+//        this.todos.remove(association);
+//        
+//        // Also remove the association object from todo.
+//        todo.getUsers().remove(association);
+//    }
+    
+//    // Add a todo to the user.
+//    // Create an association object for the relationship and set its data.
+//    public void addTodo(TodoType todoType, boolean done) {
+//        Todo userTodo = new Todo();
+//        userTodo.setTodoType(todoType);
+//        userTodo.setUser(this);
+//        todos.add(userTodo);
+//        
+//        // Also add the association object to todo.
+//        todoType.getUserTodos().add(userTodo);
+//    }
+//    
+//    // Remove a todo from the user.
+//    // Create an association object for the relationship and set its data.
+//    public void removeTodo(TodoType todo, boolean done) {
+//        Todo userTodo = new Todo();
+//        userTodo.setTodoType(todo);
+//        userTodo.setUser(this);
+//        todos.remove(userTodo);
+//        
+//        // Also remove the association object from todo.
+//        todo.getUserTodos().remove(userTodo);
+//    }
+    
+    // Add a todo to the user.
+    // Create an association object for the relationship and set its data.
+    public void addTodo(String todoId, long todoTypeId, Timestamp dateOfCompletion,
+            String description) {
+        Todo todo = new Todo();
+        todo.setUser(this);
+        todo.setCareerLevel(this.careerLevel);
+        todo.setTodoId(todoId);
+        todo.setTodoTypeId(todoTypeId);
+        todo.setDateOfCompletion(dateOfCompletion);
+        todo.setDescription(description);
+        todos.add(todo);
     }
     
-    public void addBenefit(Benefit benefit) {        
-        benefits.add(benefit);
-        
-        if (!benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            benefit.getUsers().add(this);
-        }
-    }
-    
-    public void removeBenefit(Benefit benefit) {        
-        benefits.remove(benefit);
-        
-        if (benefit.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            benefit.getUsers().remove(this);
-        }
+    // Remove a todo from the user.
+    // Create an association object for the relationship and set its data.
+    public void removeTodo(String todoId, CareerLevel careerLevel) {
+        Todo todo = new Todo();
+        todo.setUser(this);
+        todo.setCareerLevel(careerLevel);
+        todo.setTodoId(todoId);
+        todos.remove(todo);
     }
 
-    public List<Todo> getTodos() {
+    public Set<Todo> getTodos() {
         return todos;
     }
 
-    public void setTodos(List<Todo> todos) {
-        this.todos = todos;
+    public void setTodos(Set<Todo> userTodos) {
+        this.todos = userTodos;
     }
     
-    public void addTodo(Todo todo) {        
-        todos.add(todo);
-        
-        if (!todo.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            todo.getUsers().add(this);
+    public Group getGroup() {
+        return group;
+    }
+    
+    public void setGroup(Group group) {
+        if (this.group.getUsers().contains(this)) {
+            this.group.getUsers().remove(this);
         }
-    }
-    
-    public void removeTodo(Todo todo) {        
-        todos.remove(todo);
         
-        if (todo.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            todo.getUsers().remove(this);
-        }
-    }
-
-    public List<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
-    }
-    
-    public void addGroup(Group group) {        
-        groups.add(group);
-        
+        this.group = group;
         if (!group.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            group.getUsers().add(this);
+            group.getUsers().add(this); 
         }
     }
-    
-    public void removeGroup(Group group) {        
-        groups.remove(group);
-        
-        if (group.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            group.getUsers().remove(this);
-        }
-    }
+
+//    public void addGroup(Group group) {        
+//        groups.add(group);
+//        
+//        if (!group.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            group.getUsers().add(this);
+//        }
+//    }
+//    
+//    public void removeGroup(Group group) {        
+//        groups.remove(group);
+//        
+//        if (group.getUsers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            group.getUsers().remove(this);
+//        }
+//    }
     
 } // class User
