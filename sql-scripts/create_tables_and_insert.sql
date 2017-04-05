@@ -125,9 +125,9 @@ drop table if exists `todos`;
 
 # Finished tasks for each user
 CREATE TABLE `todos` (
-  `user_id` int(20) not null AUTO_INCREMENT,
-  `career_level_id`,
-  `todo_id` varchar(64) not null, #e.g. title of the book
+  `user_id` int(20) not null AUTO_INCREMENT, # do we need auto_increment here?
+  `career_level_id` int(20) not null,
+  `todo_id` varchar(64) not null, # e.g. title of the book
   `todo_type_id` int (20) not null,
   `date_of_completion` datetime,
   `description` varchar(256),
@@ -276,11 +276,14 @@ CREATE TABLE `users` (
    UNIQUE (`username`, `email`)
 );
 
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`) VALUES (1,'Doe', 'John','john123', 'doe1111', 'john@mail.com', 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`) VALUES (2,'Public', 'Mary', 'public123', 'mary111', 'mary@mail.com', 2);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`) VALUES (3,'Queue', 'Susan', 'queue1111', 'susan123', 'susan@mail.com', 3);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`) VALUES (4,'Jackson', 'Michael', 'jackson1111', 'michael123', 'michael@mail.com', 4);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`) VALUES (5,'Smith', 'John', 'smith1111', 'john123', 'john@mail.com', 5);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (1,'Doe', 'John','john123', 'doe1111', 'john@mail.com', 1, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (2,'Public', 'Mary', 'public123', 'mary111', 'mary@mail.com', 2, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (3,'Queue', 'Susan', 'queue1111', 'susan123', 'susan@mail.com', 3, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (4,'Jackson', 'Michael', 'jackson1111', 'michael123', 'michael@mail.com', 4, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (5,'Smith', 'John', 'smith1111', 'john123', 'john@mail.com', 5, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (6,'Smith', 'James','smith123', 'james1111', 'james@mail.com', 1, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (7,'Sweater', 'Peter', 'sweater123', 'peter111', 'sweater@mail.com', 2, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (8,'Black', 'Arnold', 'arnold1111', 'black123', 'black@mail.com', 1, 1);
 
 
 drop table if exists `career_levels`;

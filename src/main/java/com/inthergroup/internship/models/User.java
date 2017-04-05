@@ -64,7 +64,7 @@ public class User {
     
     // The user's group
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="group_id", nullable = false)
+    @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
     
@@ -93,7 +93,6 @@ public class User {
             cascade = CascadeType.ALL)
     private Set<Todo> todos = new HashSet<Todo>();
     
-//    // TODO change to many-to-many with extra columns
 //    // The user's groups
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JoinTable(
@@ -313,7 +312,6 @@ public class User {
         todo.setCareerLevel(careerLevel);
         todo.setTodoId(todoId);
         todos.remove(todo);
-        System.out.println("todo contains: " + todos.contains(todo));
     }
 
     public Set<Todo> getTodos() {

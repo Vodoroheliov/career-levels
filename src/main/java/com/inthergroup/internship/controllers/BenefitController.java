@@ -15,9 +15,9 @@ public class BenefitController {
     @Autowired
     private BenefitService benefitService;
     
-    @RequestMapping("/create-benefit")
+    @RequestMapping("/create-benefit-type")
     @ResponseBody
-    public String createBenefit(String benefitName) {
+    public String createBenefitType(String benefitName) {
         BenefitType benefit = null;
         try {
             benefit = new BenefitType(benefitName);
@@ -30,9 +30,9 @@ public class BenefitController {
     
     // You must delete benefit only after you deleted it from all
     // users that contained it.
-    @RequestMapping("/delete-benefit")
+    @RequestMapping("/delete-benefit-type")
     @ResponseBody
-    public String deleteBenefit(long id) {
+    public String deleteBenefitType(long id) {
         try {
             benefitService.deleteById(id);
         } catch (Exception ex) {
@@ -44,9 +44,11 @@ public class BenefitController {
     @RequestMapping("/add-benefit-to-career-level")
     @ResponseBody
     @Transactional
-    public String addBenefitToCareerLevel(long careerLevelId, long benefitId) {
+    public String addBenefitToCareerLevel(long careerLevelId, long benefitTypeId,
+            int quantity) {
         try {
-            benefitService.addBenefitToCareerLevel(careerLevelId, benefitId);
+            benefitService.addBenefitToCareerLevel(careerLevelId, benefitTypeId,
+                    quantity);
         } catch (Exception ex) {
             return "Error adding benefit to career level: " + ex.toString();
         }
@@ -56,9 +58,9 @@ public class BenefitController {
     @RequestMapping("/remove-benefit-from-career-level")
     @ResponseBody
     @Transactional
-    public String removeBenefitFromCareerLevel(long careerLevelId, long benefitId) {
+    public String removeBenefitFromCareerLevel(long careerLevelId, long benefitTypeId) {
         try {
-            benefitService.removeBenefitFromCareerLevel(careerLevelId, benefitId);
+            benefitService.removeBenefitFromCareerLevel(careerLevelId, benefitTypeId);
         } catch (Exception ex) {
             return "Error removing benefit from career level: " + ex.toString();
         }

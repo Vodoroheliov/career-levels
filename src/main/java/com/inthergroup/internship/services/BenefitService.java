@@ -15,9 +15,10 @@ public interface BenefitService {
 
     void deleteById(Long id);
 
-    void addBenefitToCareerLevel(Long careerLevelId, Long benefitId);
+    void addBenefitToCareerLevel(Long careerLevelId, Long benefitTypeId,
+            Integer quantity);
 
-    void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitId);
+    void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitTypeId);
 
     List<String> findBenefitsFromLevel(Long id);
 }

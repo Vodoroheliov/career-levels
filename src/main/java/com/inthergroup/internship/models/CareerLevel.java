@@ -7,13 +7,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -44,23 +40,31 @@ public class CareerLevel {
     @OneToMany(mappedBy="careerLevel")
     private List<User> users;
     
-    // TODO change to many-to-many with extra columns
-    // The career level's benefits
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "career_levels_benefits",
-            joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="benefit_type_id", referencedColumnName="id"))
-    private List<BenefitType> benefits;
+//    // The career level's benefits
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "career_levels_benefits",
+//            joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
+//            inverseJoinColumns=@JoinColumn(name="benefit_type_id", referencedColumnName="id"))
+//    private List<BenefitType> benefits;
     
-    // TODO change to many-to-many with extra columns
-    // The career level's todos (common for all users)
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "career_levels_todos",
-            joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="todo_type_id", referencedColumnName="id"))
-    private List<TodoType> todos;
+    // Benefits for a specific level
+    @OneToMany(mappedBy = "primaryKey.careerLevel", orphanRemoval=true,
+            cascade = CascadeType.ALL)
+    private Set<CareerLevelBenefit> careerLevelBenefits = new HashSet<CareerLevelBenefit>();
+    
+//    // The career level's todos (common for all users)
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "career_levels_todos",
+//            joinColumns=@JoinColumn(name="career_level_id", referencedColumnName="id"),
+//            inverseJoinColumns=@JoinColumn(name="todo_type_id", referencedColumnName="id"))
+//    private List<TodoType> todos;
+    
+    // Tasks for a specific level
+    @OneToMany(mappedBy = "primaryKey.careerLevel", orphanRemoval=true,
+            cascade = CascadeType.ALL)
+    private Set<CareerLevelTodo> careerLevelTodos = new HashSet<CareerLevelTodo>();
     
     // The career level's user todos (specific for each user)
     @OneToMany(mappedBy = "primaryKey.careerLevel", orphanRemoval=true,
@@ -120,54 +124,108 @@ public class CareerLevel {
         }
     }
     
-    public List<BenefitType> getBenefits() {
-        return benefits;
-    }
+//    public List<BenefitType> getBenefits() {
+//        return benefits;
+//    }
+//
+//    public void setBenefits(List<BenefitType> benefits) {
+//        this.benefits = benefits;
+//    }
+//    
+//    public void addBenefit(BenefitType benefit) {        
+//        benefits.add(benefit);
+//        
+//        if (!benefit.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            benefit.getCareerLevels().add(this);
+//        }
+//    }
+//    
+//    public void removeBenefit(BenefitType benefit) {        
+//        benefits.remove(benefit);
+//        
+//        if (benefit.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            benefit.getCareerLevels().remove(this);
+//        }
+//    }
 
-    public void setBenefits(List<BenefitType> benefits) {
-        this.benefits = benefits;
+//    public List<TodoType> getTodos() {
+//        return todos;
+//    }
+//
+//    public void setTodos(List<TodoType> todos) {
+//        this.todos = todos;
+//    }
+//    
+//    public void addTodo(TodoType todo) {        
+//        todos.add(todo);
+//        
+//        if (!todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            todo.getCareerLevels().add(this);
+//        }
+//    }
+//    
+//    public void removeTodo(TodoType todo) {
+//        todos.remove(todo);
+//        
+//        if (todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            todo.getCareerLevels().remove(this);
+//        }
+//    }
+    
+    // Add a benefit to the career level.
+    // Create an association object for the relationship and set its data.
+    public void addBenefit(BenefitType benefitType, int quantity) {
+        CareerLevelBenefit careerLevelBenefit = new CareerLevelBenefit();
+        careerLevelBenefit.setCareerLevel(this);
+        careerLevelBenefit.setBenefitType(benefitType);
+        careerLevelBenefit.setQuantity(quantity);
+        careerLevelBenefits.add(careerLevelBenefit);
     }
     
-    public void addBenefit(BenefitType benefit) {        
-        benefits.add(benefit);
-        
-        if (!benefit.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            benefit.getCareerLevels().add(this);
-        }
+    // Remove a benefit from the career level.
+    // Create an association object for the relationship and set its data.
+    public void removeBenefit(BenefitType benefitType) {
+        CareerLevelBenefit careerLevelBenefit = new CareerLevelBenefit();
+        careerLevelBenefit.setCareerLevel(this);
+        careerLevelBenefit.setBenefitType(benefitType);
+        careerLevelBenefits.remove(careerLevelBenefit);
     }
     
-    public void removeBenefit(BenefitType benefit) {        
-        benefits.remove(benefit);
-        
-        if (benefit.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            benefit.getCareerLevels().remove(this);
-        }
+    public Set<CareerLevelBenefit> getCareerLevelBenefits() {
+        return careerLevelBenefits;
     }
 
-    public List<TodoType> getTodos() {
-        return todos;
+    public void setCareerLevelBenefits(Set<CareerLevelBenefit> careerLevelBenefits) {
+        this.careerLevelBenefits = careerLevelBenefits;
     }
 
-    public void setTodos(List<TodoType> todos) {
-        this.todos = todos;
+    // Add a todo to the career level.
+    // Create an association object for the relationship and set its data.
+    public void addTodo(TodoType todoType, int quantity) {
+        CareerLevelTodo careerLevelTodo = new CareerLevelTodo();
+        careerLevelTodo.setCareerLevel(this);
+        careerLevelTodo.setTodoType(todoType);
+        careerLevelTodo.setQuantity(quantity);
+        careerLevelTodos.add(careerLevelTodo);
     }
     
-    public void addTodo(TodoType todo) {        
-        todos.add(todo);
-        
-        if (!todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            todo.getCareerLevels().add(this);
-        }
-    }
-    
-    public void removeTodo(TodoType todo) {
-        todos.remove(todo);
-        
-        if (todo.getCareerLevels().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            todo.getCareerLevels().remove(this);
-        }
+    // Remove a todo from the career level.
+    // Create an association object for the relationship and set its data.
+    public void removeTodo(TodoType todoType) {
+        CareerLevelTodo careerLevelTodo = new CareerLevelTodo();
+        careerLevelTodo.setCareerLevel(this);
+        careerLevelTodo.setTodoType(todoType);
+        careerLevelTodos.remove(careerLevelTodo);
     }
 
+    public Set<CareerLevelTodo> getCareerLevelTodos() {
+        return careerLevelTodos;
+    }
+
+    public void setCareerLevelTodos(Set<CareerLevelTodo> careerLevelTodos) {
+        this.careerLevelTodos = careerLevelTodos;
+    }
+    
     public Set<Todo> getUserTodos() {
         return userTodos;
     }

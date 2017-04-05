@@ -59,24 +59,25 @@ public class TodoServiceJpaImpl implements TodoService {
     }
     
     @Override
-    public void removeTodoFromUser(Long userId, String todoId, long careerLevelId) {
+    public void removeTodoFromUser(Long userId, String todoId, Long careerLevelId) {
         User user = userRepo.findOne(userId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
         user.removeTodo(todoId, careerLevel);
     }
 
     @Override
-    public void addTodoToCareerLevel(Long careerLevelId, Long todoId) {
-        TodoType todo = todoRepo.findOne(todoId);
+    public void addTodoToCareerLevel(Long careerLevelId, Long todoTypeId,
+            Integer quantity) {
+        TodoType todoType = todoRepo.findOne(todoTypeId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
-        careerLevel.addTodo(todo);
+        careerLevel.addTodo(todoType, quantity);
     }
 
     @Override
-    public void removeTodoFromCareerLevel(Long careerLevelId, Long todoId) {
-        TodoType todo = todoRepo.findOne(todoId);
+    public void removeTodoFromCareerLevel(Long careerLevelId, Long todoTypeId) {
+        TodoType todoType = todoRepo.findOne(todoTypeId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
-        careerLevel.removeTodo(todo);
+        careerLevel.removeTodo(todoType);
     }
 
     @Override

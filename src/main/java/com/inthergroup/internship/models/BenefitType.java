@@ -1,13 +1,15 @@
 package com.inthergroup.internship.models;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -37,9 +39,13 @@ public class BenefitType {
 //    @ManyToMany(mappedBy="benefits")
 //    private List<User> users;
     
-    // TODO change to many-to-many with extra columns
-    @ManyToMany(mappedBy="benefits")
-    private List<CareerLevel> careerLevels;
+//    @ManyToMany(mappedBy="benefits")
+//    private List<CareerLevel> careerLevels;
+    
+    // Tasks for a specific level
+    @OneToMany(mappedBy = "primaryKey.benefitType", orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private Set<CareerLevelBenefit> careerLevelBenefits = new HashSet<CareerLevelBenefit>();
     
     // ------------------------
     // PUBLIC METHODS
@@ -79,6 +85,14 @@ public class BenefitType {
         this.name = name;
     }
 
+    public Set<CareerLevelBenefit> getCareerLevelBenefits() {
+        return careerLevelBenefits;
+    }
+
+    public void setCareerLevelBenefits(Set<CareerLevelBenefit> careerLevelBenefits) {
+        this.careerLevelBenefits = careerLevelBenefits;
+    }
+
 //    public List<User> getUsers() {
 //        return users;
 //    }
@@ -95,11 +109,11 @@ public class BenefitType {
 //        }
 //    }
 
-    public List<CareerLevel> getCareerLevels() {
-        return careerLevels;
-    }
-
-    public void setCareerLevels(List<CareerLevel> careerLevels) {
-        this.careerLevels = careerLevels;
-    }
+//    public List<CareerLevel> getCareerLevels() {
+//        return careerLevels;
+//    }
+//
+//    public void setCareerLevels(List<CareerLevel> careerLevels) {
+//        this.careerLevels = careerLevels;
+//    }
 }

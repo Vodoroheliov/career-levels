@@ -1,13 +1,15 @@
 package com.inthergroup.internship.models;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -34,7 +36,7 @@ public class TodoType {
     @Column(nullable = false, unique = true)
     private String name;
     
-//    @Column(nullable = false, columnDefinition = "integer default 1")
+//    @Column(nullable = false, columnDefinition = "int default 1")
 //    private int quantity;
     
 //    @Column(nullable = false, columnDefinition = "boolean default false")
@@ -46,15 +48,18 @@ public class TodoType {
 //    @OneToMany(mappedBy="todo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private List<UserTodoAssociation> users;
     
-//    // TODO change to many-to-many with extra columns
 //    // The TodoType's todos
 //    @OneToMany(mappedBy = "primaryKey.todoType", orphanRemoval=true,
 //            cascade = CascadeType.ALL)
 //    private Set<Todo> userTodos = new HashSet<Todo>();
     
-    // TODO change to many-to-many with extra columns
-    @ManyToMany(mappedBy="todos")
-    private List<CareerLevel> careerLevels;
+//    @ManyToMany(mappedBy="todos")
+//    private List<CareerLevel> careerLevels;
+    
+    // Tasks for a specific level
+    @OneToMany(mappedBy = "primaryKey.todoType", orphanRemoval=true,
+            cascade = CascadeType.ALL)
+    private Set<CareerLevelTodo> careerLevelTodos = new HashSet<CareerLevelTodo>();
     
     // ------------------------
     // PUBLIC METHODS
@@ -93,6 +98,14 @@ public class TodoType {
         this.name = name;
     }
 
+    public Set<CareerLevelTodo> getCareerLevelTodos() {
+        return careerLevelTodos;
+    }
+
+    public void setCareerLevelTodos(Set<CareerLevelTodo> careerLevelTodos) {
+        this.careerLevelTodos = careerLevelTodos;
+    }
+
     // This code snippet is for old implementation of User class.
     // But it can be useful for creating a new code.
     //  public void addUser(User user) {        
@@ -111,11 +124,11 @@ public class TodoType {
 //        this.userTodos = userTodos;
 //    }
 
-    public List<CareerLevel> getCareerLevels() {
-        return careerLevels;
-    }
-
-    public void setCareerLevels(List<CareerLevel> careerLevels) {
-        this.careerLevels = careerLevels;
-    }
+//    public List<CareerLevel> getCareerLevels() {
+//        return careerLevels;
+//    }
+//
+//    public void setCareerLevels(List<CareerLevel> careerLevels) {
+//        this.careerLevels = careerLevels;
+//    }
 }

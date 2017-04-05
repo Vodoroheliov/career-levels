@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TodoRepository extends JpaRepository<TodoType, Long> {
     @Query("select name from TodoType where id in " +
-            "(select t.id from TodoType t inner join t.careerLevels c where c.id = ?1)")
+            "(select ct.primaryKey.todoType.id from CareerLevelTodo ct " +
+            "where ct.primaryKey.careerLevel.id = ?1)")
     public List<String> findTodosFromLevel(Long id);
 }

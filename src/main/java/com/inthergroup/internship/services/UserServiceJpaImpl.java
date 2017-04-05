@@ -37,4 +37,10 @@ public class UserServiceJpaImpl implements UserService {
     public void deleteById(Long id) {
         this.userRepo.delete(id);
     }
+    
+    @Override
+    public List<User> findUsersFromLevel(Long id) {
+//        return this.userRepo.findUsersFromLevel(id);
+        return userRepo.findByCareerLevelId(id);
+    }
 }

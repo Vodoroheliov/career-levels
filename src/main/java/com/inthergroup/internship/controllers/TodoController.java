@@ -18,32 +18,30 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    // TODO change to "/create-todo-for-career-level"
-    // and create additional controller "/create-todo-type".
-    @RequestMapping("/create-todo")
+    @RequestMapping("/create-todo-type")
     @ResponseBody
-    public String createTodo(String todoName) {
-        TodoType todo = null;
+    public String createTodoType(String todoName) {
+        TodoType todoType = null;
         try {
-            todo = new TodoType(todoName);
-            todoService.create(todo);
+            todoType = new TodoType(todoName);
+            todoService.create(todoType);
         } catch (Exception ex) {
-            return "Error creating the Todo: " + ex.toString();
+            return "Error creating the Todo Type: " + ex.toString();
         }
-        return "Todo succesfully created! (id = " + todo.getId() + ")";
+        return "Todo Type succesfully created! (id = " + todoType.getId() + ")";
     }
     
-    // You must delete todo only after you deleted it from all
+    // You must delete todo type only after you deleted it from all
     // users that contained it.
-    @RequestMapping("/delete-todo")
+    @RequestMapping("/delete-todo-type")
     @ResponseBody
-    public String deleteTodo(long id) {
+    public String deleteTodoType(long id) {
         try {
             todoService.deleteById(id);
         } catch (Exception ex) {
-            return "Error deleting the todo by id #" + id + ": " + ex.toString();
+            return "Error deleting the Todo Type by id #" + id + ": " + ex.toString();
         }
-        return "Todo succesfully deleted!";
+        return "Todo Type succesfully deleted!";
     }
 
     @RequestMapping("/add-todo-to-user")
@@ -81,9 +79,10 @@ public class TodoController {
     @RequestMapping("/add-todo-to-career-level")
     @ResponseBody
     @Transactional
-    public String addTodoToCareerLevel(long careerLevelId, long todoId) {
+    public String addTodoToCareerLevel(long careerLevelId, long todoTypeId,
+            int quantity) {
         try {
-            todoService.addTodoToCareerLevel(careerLevelId, todoId);
+            todoService.addTodoToCareerLevel(careerLevelId, todoTypeId, quantity);
         } catch (Exception ex) {
             return "Error adding todo to career level: " + ex.toString();
         }
@@ -93,9 +92,9 @@ public class TodoController {
     @RequestMapping("/remove-todo-from-career-level")
     @ResponseBody
     @Transactional
-    public String removeTodoFromCareerLevel(long careerLevelId, long todoId) {
+    public String removeTodoFromCareerLevel(long careerLevelId, long todoTypeId) {
         try {
-            todoService.removeTodoFromCareerLevel(careerLevelId, todoId);
+            todoService.removeTodoFromCareerLevel(careerLevelId, todoTypeId);
         } catch (Exception ex) {
             return "Error removing todo from career level: " + ex.toString();
         }

@@ -45,7 +45,7 @@ public class UserController {
     @RequestMapping("/create-user")
     @ResponseBody
     public String createUser(String lastName, String firstName, String login,
-            String password, String email, long careerLevelId, long groupId) {
+            String password, String email, Long careerLevelId, Long groupId) {
         User user = null;
         CareerLevel careerLevel = careerLevelService.findById(careerLevelId);
         Group group = groupService.findById(groupId);

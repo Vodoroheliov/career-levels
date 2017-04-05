@@ -46,17 +46,18 @@ public class BenefitServiceJpaImpl implements BenefitService {
     }
 
     @Override
-    public void addBenefitToCareerLevel(Long careerLevelId, Long benefitId) {
-        BenefitType benefit = benefitRepo.findOne(benefitId);
+    public void addBenefitToCareerLevel(Long careerLevelId, Long benefitTypeId,
+            Integer quantity) {
+        BenefitType benefitType = benefitRepo.findOne(benefitTypeId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
-        careerLevel.addBenefit(benefit);
+        careerLevel.addBenefit(benefitType, quantity);
     }
 
     @Override
-    public void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitId) {
-        BenefitType benefit = benefitRepo.findOne(benefitId);
+    public void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitTypeId) {
+        BenefitType benefitType = benefitRepo.findOne(benefitTypeId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
-        careerLevel.removeBenefit(benefit);
+        careerLevel.removeBenefit(benefitType);
     }
 
     @Override
