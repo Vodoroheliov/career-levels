@@ -15,7 +15,9 @@ public interface GroupService {
 
     void deleteById(Long id);
 
-    void addGroupToUser(Long userId, Long groupId);
-
-    void removeGroupFromUser(Long userId, Long todoId);
+//    void addGroupToUser(Long userId, Long groupId);
+//
+//    void removeGroupFromUser(Long userId, Long todoId);
+    
+    void updateUserGroup(long userId, long groupId);
 }

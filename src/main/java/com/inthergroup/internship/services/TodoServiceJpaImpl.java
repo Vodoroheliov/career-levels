@@ -1,14 +1,14 @@
 package com.inthergroup.internship.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.inthergroup.internship.models.CareerLevel;
-import com.inthergroup.internship.models.Todo;
+import com.inthergroup.internship.models.TodoType;
 import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.repositories.CareerLevelRepository;
 import com.inthergroup.internship.repositories.TodoRepository;
@@ -27,22 +27,22 @@ public class TodoServiceJpaImpl implements TodoService {
     private CareerLevelRepository careerLevelRepo;
 
     @Override
-    public List<Todo> findAll() {
+    public List<TodoType> findAll() {
         return this.todoRepo.findAll();
     }
 
     @Override
-    public Todo findById(Long id) {
+    public TodoType findById(Long id) {
         return this.todoRepo.findOne(id);
     }
 
     @Override
-    public Todo create(Todo todo) {
+    public TodoType create(TodoType todo) {
         return this.todoRepo.save(todo);
     }
 
     @Override
-    public Todo edit(Todo todo) {
+    public TodoType edit(TodoType todo) {
         return this.todoRepo.save(todo);
     }
 
@@ -52,32 +52,32 @@ public class TodoServiceJpaImpl implements TodoService {
     }
     
     @Override
-    @Transactional
-    public void addTodoToUser(Long userId, Long todoId) {
-        Todo todo = todoRepo.findOne(todoId);
+    public void addTodoToUser(Long userId, String todoId, Long todoTypeId,
+            Timestamp dateOfCompletion, String description) {
         User user = userRepo.findOne(userId);
-        user.addTodo(todo);
+        user.addTodo(todoId, todoTypeId, dateOfCompletion, description);
     }
     
     @Override
-    public void removeTodoFromUser(Long userId, Long todoId) {
-        Todo todo = todoRepo.findOne(todoId);
+    public void removeTodoFromUser(Long userId, String todoId, Long careerLevelId) {
         User user = userRepo.findOne(userId);
-        user.removeTodo(todo);
+        CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
+        user.removeTodo(todoId, careerLevel);
     }
 
     @Override
-    public void addTodoToCareerLevel(Long careerLevelId, Long todoId) {
-        Todo todo = todoRepo.findOne(todoId);
+    public void addTodoToCareerLevel(Long careerLevelId, Long todoTypeId,
+            Integer quantity) {
+        TodoType todoType = todoRepo.findOne(todoTypeId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
-        careerLevel.addTodo(todo);
+        careerLevel.addTodo(todoType, quantity);
     }
 
     @Override
-    public void removeTodoFromCareerLevel(Long careerLevelId, Long todoId) {
-        Todo todo = todoRepo.findOne(todoId);
+    public void removeTodoFromCareerLevel(Long careerLevelId, Long todoTypeId) {
+        TodoType todoType = todoRepo.findOne(todoTypeId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
-        careerLevel.removeTodo(todo);
+        careerLevel.removeTodo(todoType);
     }
 
     @Override

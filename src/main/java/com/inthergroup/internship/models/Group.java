@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,9 +32,12 @@ public class Group {
     private long id;
     
     @Column(nullable = false, unique = true)
-    private String groupName;
+    private String name;
     
-    @ManyToMany(mappedBy="groups")
+//    @ManyToMany(mappedBy="groups")
+//    private List<User> users;
+    
+    @OneToMany(mappedBy="group")
     private List<User> users;
 
     // ------------------------
@@ -49,14 +52,14 @@ public class Group {
         this.id = id;
     }
     
-    public Group(String groupName) {
-        this.groupName = groupName;
+    public Group(String name) {
+        this.name = name;
     }
 
-    public Group(long id, String groupName) {
+    public Group(long id, String name) {
         super();
         this.id = id;
-        this.groupName = groupName;
+        this.name = name;
     }
     
     // Getter and setter methods
@@ -69,12 +72,12 @@ public class Group {
         this.id = id;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getName() {
+        return name;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setName(String name) {
+        this.name = name;
     }
     
     public List<User> getUsers() {
@@ -85,11 +88,18 @@ public class Group {
         this.users = users;
     }
     
-    public void addUser(User user) {        
-        users.add(user);
-        
-        if (!user.getGroups().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            user.getGroups().add(this);
+//    public void addUser(User user) {        
+//        users.add(user);
+//        
+//        if (!user.getGroups().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+//            user.getGroups().add(this);
+//        }
+//    }
+    
+    public void addUser(User user) {
+        this.users.add(user);
+        if (user.getGroup() != this) {
+            user.setGroup(this);
         }
     }
 
