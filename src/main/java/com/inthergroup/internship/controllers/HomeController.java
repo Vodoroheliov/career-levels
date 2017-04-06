@@ -30,7 +30,7 @@ public class HomeController {
     @Autowired
     private TodoService todoService;
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index(Model model) {
 
         // List all careerl levels
@@ -70,5 +70,17 @@ public class HomeController {
         model.addAttribute("todos", todos);
 
         return "index";
+    }
+    
+    @RequestMapping("/progress_page")
+    public String progressPage() {
+        // model.addAttribute("tasks", taskService.getAllTasks());
+        return "progress_page";
+    }
+
+    @RequestMapping("/total_progress")
+    public String total_progress() {
+        // model.addAttribute("tasks", taskService.getAllTasks());
+        return "total_progress";
     }
 }
