@@ -63,9 +63,9 @@
 
 	<div th:class="'users users' + ${usStat.count}" valign="top"
 		th:each="us : ${users}">
-		<div>
-			<b>Users:</b>
-		</div>
+<!-- 		<div> -->
+<!-- 			<b>Users:</b> -->
+<!-- 		</div> -->
 		<ul class="usersName" th:each="u : ${us}">
 			<a class="t" th:href="@{progress_page.html}">
 				<li class="user" th:text="${u.firstName} + ' ' + ${u.lastName}"></li>
@@ -79,7 +79,6 @@
 							<span class="sr-only">45% Complete</span>
 						</div>
 					</div>
-
 			</span>
 			</a>
 		</ul>

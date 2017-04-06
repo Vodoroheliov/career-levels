@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 
 import com.inthergroup.internship.models.CareerLevel;
 import com.inthergroup.internship.models.User;
@@ -74,18 +72,16 @@ public class HomeController {
         return "index";
     }
     
-	@Autowired
 	
-	@RequestMapping("/progress_page")
-  public String progress_page( ){
-	//	model.addAttribute("tasks", taskService.getAllTasks());
-		return "progress_page";
-	}
-	@RequestMapping("/total_progress")
-	 public String total_progress( ){
-			//model.addAttribute("tasks", taskService.getAllTasks());
-			return "total_progress";
-		}
-	
-    
+    @RequestMapping("/progress_page")
+    public String progressPage() {
+        // model.addAttribute("tasks", taskService.getAllTasks());
+        return "progress_page";
+    }
+
+    @RequestMapping("/total_progress")
+    public String total_progress() {
+        // model.addAttribute("tasks", taskService.getAllTasks());
+        return "total_progress";
+    }
 }
