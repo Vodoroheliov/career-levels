@@ -2,6 +2,7 @@ package com.inthergroup.internship.services;
 
 import com.inthergroup.internship.models.User;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     List<User> findAll();
@@ -15,4 +16,6 @@ public interface UserService {
     void deleteById(Long id);
     
     List<User> findUsersFromLevel(Long id);
+    
+    Map<String, Integer> findUsersPercentProgress();
 }

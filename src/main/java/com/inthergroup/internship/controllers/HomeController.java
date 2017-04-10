@@ -29,8 +29,13 @@ public class HomeController {
     
     @Autowired
     private TodoService todoService;
-
+    
     @RequestMapping("/")
+    public String root() {
+        return "forward:/index";
+    }
+
+    @RequestMapping("/index")
     public String index(Model model) {
 
         // List all careerl levels
@@ -68,6 +73,9 @@ public class HomeController {
             todos.add(todosFromLevel);
         }
         model.addAttribute("todos", todos);
+        
+        model.addAttribute(
+                "usersPercentProgress", userService.findUsersPercentProgress());
 
         return "index";
     }

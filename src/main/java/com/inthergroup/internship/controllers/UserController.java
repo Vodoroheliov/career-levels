@@ -2,6 +2,8 @@ package com.inthergroup.internship.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -10,6 +12,7 @@ import com.inthergroup.internship.models.Group;
 import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.services.CareerLevelService;
 import com.inthergroup.internship.services.GroupService;
+import com.inthergroup.internship.services.TodoService;
 import com.inthergroup.internship.services.UserService;
 
 /**
@@ -31,11 +34,37 @@ public class UserController {
     private CareerLevelService careerLevelService;
     
     @Autowired
+    private TodoService todoService;
+    
+    @Autowired
     private GroupService groupService;
 
     // ------------------------
     // PUBLIC METHODS
     // ------------------------
+    
+    @RequestMapping("/users/progress-page/{id}")
+    public String progressPage(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("userId", id);
+        model.addAttribute("todos", todoService.findCurrentTodosByUserId(id));
+        model.addAttribute(
+                "finishedTodos", todoService.findCurrentFinishedTodosByUserId(id));
+        model.addAttribute("user", userService.findById(id));
+        model.addAttribute(
+                "careerLevel", careerLevelService.findCareerLevelByUserId(id));
+        return "users/progress-page";
+    }
+
+    @RequestMapping("/users/total-progress/{id}")
+    public String total_progress(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("userId", id);
+        model.addAttribute(
+                "allFinishedTodos", todoService.findAllFinishedTodosByUserId(id));
+        model.addAttribute("user", userService.findById(id));
+        model.addAttribute(
+                "careerLevel", careerLevelService.findCareerLevelByUserId(id));
+        return "users/total-progress";
+    }
 
     /**
      * /create  --> Create a new user and save it in the database.

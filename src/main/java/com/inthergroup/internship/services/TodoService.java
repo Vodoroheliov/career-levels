@@ -26,4 +26,10 @@ public interface TodoService {
     void removeTodoFromCareerLevel(Long careerLevelId, Long todoTypeId);
 
     List<String> findTodosFromLevel(Long id);
+    
+    List<Object[]>findCurrentFinishedTodosByUserId(Long id);
+    
+    List<Object[]>findCurrentTodosByUserId(Long id);
+    
+    List<Object[]>findAllFinishedTodosByUserId(Long id);
 }

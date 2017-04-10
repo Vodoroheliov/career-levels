@@ -1,6 +1,7 @@
 package com.inthergroup.internship.controllers;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,12 +49,15 @@ public class TodoController {
     @ResponseBody
     @Transactional
     public String addTodoToUser(long userId, String todoId, long todoTypeId,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                    Timestamp dateOfCompletion, String description) {
+//            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Timestamp dateOfCompletion,
+            String description) {
         if (description == "") {
             description = null;
         }
         try {
+            Calendar calendar = Calendar.getInstance();
+            java.sql.Timestamp dateOfCompletion =
+                    new java.sql.Timestamp(calendar.getTime().getTime());
             todoService.addTodoToUser(userId, todoId, todoTypeId,
                     dateOfCompletion, description);
         } catch (Exception ex) {

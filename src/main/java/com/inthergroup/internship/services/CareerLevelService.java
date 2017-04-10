@@ -18,4 +18,6 @@ public interface CareerLevelService {
     void updateUserCareerLevel(long userId, long careerLevelId);
 
     List<CareerLevel> findAllByOrderByIdAsc();
+    
+    CareerLevel findCareerLevelByUserId(Long userId);
 }
