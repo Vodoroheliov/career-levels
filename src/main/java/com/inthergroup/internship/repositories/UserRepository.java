@@ -15,5 +15,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "where ct.primaryKey.careerLevel.id = ?1)")
 //    public List<String> findTodosFromLevel(Long id);
 //    List<String> findUsersFromLevel(Long id);
-    List<User> findByCareerLevelId(Long id);
+    public List<User> findByCareerLevelId(Long id);
+    
+    @Query("select count(u.id) from User u")
+    public int findNumberOfUserIds();
+    
+    @Query("select u.id from User u order by u.id asc")
+    public long[] findUserIds();
 }

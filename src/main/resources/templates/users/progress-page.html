@@ -18,14 +18,14 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" th:href="@{index.html}"><img class = "logo" th:src="@{/images/logo.png}"  height="50" width="50" /></a>
+      <a class="navbar-brand" th:href="@{/index}"><img class = "logo" th:src="@{/images/logo.png}"  height="50" width="50" /></a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a th:href="@{index.html}">Home</a></li>
-      <li class="active"><a th:href="@{progress_page.html}">User progress</a>
-      
-      </li>
-      <li><a th:href="@{total_progress.html}">Total progress</a></li>
+      <li><a th:href="@{/index}">Home</a></li>
+<!--       <li class="active"><a th:href="@{/users/progress-page}">User progress</a></li> -->
+        <li class="active"><a th:href="@{#}">Something 1</a></li>
+<!--       <li><a th:href="@{/users/total-progress}">Total progress</a></li> -->
+        <li><a th:href="@{#}">Something 2</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -33,29 +33,33 @@
     </ul>
   </div>
 </nav>
- <div class="jumbotron text-center ">
-  <h2>User progress!</h2>
-  <h3>Current level: You're rock!</h3> 
- 
 
+ <div class="jumbotron text-center ">
+  <h2>
+	  Progress of
+	  <span th:text="${user.firstName + ' ' + user.lastName}"
+	       th:remove="tag">lastName firstName</span>
+  </h2>
+  <h3>
+      Current level:
+      <span th:text="${careerLevel.name}"
+           th:remove="tag">career level name</span>
+  </h3> 
  </div>
  
 <div> 
   <div class = "col-lg-6">
      <div class = "panel panel-primary">
         <div class ="panel-heading">
-           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>Todo  </h3>
+           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>Todo</h3>
         </div>
          <div class = "panel-body">
            <div class = "table-responsive">
                <table class = "table table-bordered table-hover table-striped">
                  <thead>
                     <tr>
-                      <th>Id</th>
+                      <th>Quantity</th>
                       <th>Name</th>
-                      <th>Description</th>
-                      <th>Date Created</th>
-                      <th>Finished</th>                 
                     </tr>                 
                  </thead>
                  <tbody>
@@ -69,7 +73,11 @@
 <!--                     <td><a th:href="@{/updateTask(id=${task.id})}"><span class = "glyphicon glyphicon-pencil"></span></a></td> -->
 <!--                     <td><a th:href="@{/deleteTask(id=${task.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td> -->
 <!--                    </tr>              -->
-                 </tbody>                               
+                        <tr th:each = "todo : ${todos}">
+		                    <td th:text = "${todo[1].quantity}"></td>
+		                    <td th:text = "${todo[0].name}"></td>
+                        </tr>   
+                 </tbody>
                </table>
 <!--                <div class="container"> -->
 <!--                  <ul class ="nav nav-pills"> -->
@@ -91,18 +99,18 @@
    <div class = "col-lg-6">
      <div class = "panel panel-primary">
         <div class ="panel-heading">
-           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>Finished </h3>
+           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>Finished</h3>
         </div>
          <div class = "panel-body">
            <div class = "table-responsive">
                <table class = "table table-bordered table-hover table-striped">
                  <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Name</th>
+                      <th>Todo Id</th>
+                      <th>Task</th>
                       <th>Description</th>
-                      <th>Date Created</th>
-                      <th>Finished</th>                 
+                      <th>Date of completion</th>
+<!--                       <th>Finished</th> -->
                     </tr>                 
                  </thead>
                  <tbody>
@@ -116,6 +124,12 @@
 <!--                     <td><a th:href="@{/updateTask(id=${task.id})}"><span class = "glyphicon glyphicon-pencil"></span></a></td> -->
 <!--                     <td><a th:href="@{/deleteTask(id=${task.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td> -->
 <!--                    </tr>              -->
+                   <tr th:each = "todo : ${finishedTodos}">
+                      <td th:text = "${todo[1].primaryKey.todoId}"></td>
+                      <td th:text = "${todo[0].name}"></td>
+                      <td th:text = "${todo[1].description}"></td>
+                      <td th:text = "${todo[1].dateOfCompletion}"></td>
+                   </tr>
                  </tbody>                               
                </table>
 <!--                <div class="container"> -->
@@ -192,81 +206,84 @@
 <!--  </div>    -->
 
 
-    <div class="container">                  
-  <ul class="pager">
-    <li><a th:href="@{index.html}">&lt;&lt;&lt; Home</a></li>
-    <li><a th:href="@{total_progress.html}">All finished tasks &gt;&gt;&gt;</a></li>
-  </ul>
-</div>
+	<div class="container">
+		<ul class="pager">
+			<li><a th:href="@{/index}">&lt;&lt;&lt; Home</a></li>
+			<li><a th:href="@{/users/total-progress/{id}/(id=${userId})}">All finished tasks
+					&gt;&gt;&gt;</a></li>
+		</ul>
+	</div>
 
 
-
-<div>
-<footer class="footer-distributed">
-
+	<div>
+		<footer class="footer-distributed">
 			<div class="footer-left">
-			
- <a  href="#"><img class = "logo" th:src="@{/images/logo.png}"  
- height="130" width="130" /></a>
-<!-- 				<h3>Company<span>logo</span></h3> -->
-
+					
+				<a  href="#"><img class = "logo" th:src="@{/images/logo.png}"  
+				height="130" width="130" /></a>
+		<!-- 				<h3>Company<span>logo</span></h3> -->
+		
 				<p class="footer-links">
-					<a th:href="@{index.html}">Home</a>
+					<a th:href="@{/index.html}">Home</a>
 					·
 					<a th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
-<!-- 					· -->
-<!-- 					<a href="#">Pricing</a> -->
-<!-- 					· -->
-<!-- 					<a href="#">About</a> -->
-<!-- 					· -->
-<!-- 					<a href="#">Faq</a> -->
-<!-- 					· -->
-<!-- 					<a href="#">Contact</a> -->
+		<!-- 					· -->
+		<!-- 					<a href="#">Pricing</a> -->
+		<!-- 					· -->
+		<!-- 					<a href="#">About</a> -->
+		<!-- 					· -->
+		<!-- 					<a href="#">Faq</a> -->
+		<!-- 					· -->
+		<!-- 					<a href="#">Contact</a> -->
 				</p>
-
-				<p class="footer-company-name footer-company-about"><span>Copyright &copy; 2017, ISD. All rights reserved.</span> </p>
+		
+				<p class="footer-company-name footer-company-about">
+				    <span>Copyright &copy; 2017, ISD. All rights reserved.</span>
+			    </p>
 			</div>
-
+		
 			<div class="footer-center">
-
+		
 				<div>
 					<i class="fa fa-map-marker"></i>
 					<p><span>Str. Fierarilor 2</span> Chisinau 2001MD, Moldova</p>
 				</div>
-
+		
 				<div>
 					<i class="fa fa-phone"></i>
 					<p>+373 22 996 170</p>
 				</div>
-
+		
 				<div>
 					<i class="fa fa-envelope"></i>
 					<p><a href="mailto:isd@inthergroup.com">isd@inthergroup.com</a></p>
 				</div>
-
+		
 			</div>
-
+		
 			<div class="footer-right">
-
+		
 				<p class="footer-company-about">
 				<br/>
 					<span>About the company<br/>
 					ISD executes Java projects. For a very reasonable price customer gains access to our team of skilled professionals.
 				</span>
 				</p>
-
+		
 				<div class="footer-icons">
-
-					<a th:href="@{https://www.facebook.com/isdmoldova}"><i class="fa fa-facebook"></i></a>
+		
+					<a th:href="@{https://www.facebook.com/isdmoldova}">
+					   <i class="fa fa-facebook"></i>
+				    </a>
 					<a href="#"><i class="fa fa-twitter"></i></a>
 					<a href="#"><i class="fa fa-linkedin"></i></a>
 					<a href="#"><i class="fa fa-github"></i></a>
-
+		
 				</div>
-
+		
 			</div>
-
+		
 		</footer>
-</div>
+    </div>
 </body>
 </html>

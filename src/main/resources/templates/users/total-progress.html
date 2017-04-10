@@ -19,14 +19,14 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" th:href="@{index.html}"><img class = "logo" th:src="@{/images/logo.png}"  height="50" width="50" /></a>
+      <a class="navbar-brand" th:href="@{/index}"><img class = "logo" th:src="@{/images/logo.png}"  height="50" width="50" /></a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a th:href="@{index.html}">Home</a></li>
-      <li ><a th:href="@{progress_page.html}">User progress</a>
-       
-      </li>
-      <li class="active"><a th:href="@{total_progress.html}">Total progress</a></li>
+      <li><a th:href="@{/index}">Home</a></li>
+<!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
+      <li ><a th:href="@{#}">Something 1</a></li>
+<!--       <li class="active"><a th:href="@{/users/total-progress}">Total progress</a></li> -->
+      <li class="active"><a th:href="@{#}">Something 2</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -36,7 +36,16 @@
 </nav>
 
  <div class="jumbotron text-center">
-  <h2>Total progress!</h2>
+  <h2>
+    Total progress of
+    <span th:text="${user.firstName + ' ' + user.lastName}"
+            th:remove="tag">lastName firstName</span>
+  </h2>
+  <h3>
+      Current level:
+      <span th:text="${careerLevel.name}"
+           th:remove="tag">career level name</span>
+  </h3> 
    
  </div>
 <div class="total_progress  ">
@@ -50,12 +59,12 @@
                <table class = "table table-bordered table-hover table-striped">
                  <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Name</th>
+                      <th>Career Level</th>
+                      <th>Todo Id</th>
+                      <th>Task</th>
                       <th>Description</th>
-                      <th>Date Created</th>
-                      <th>Finished</th>                 
-                    </tr>                 
+                      <th>Date of completion</th>
+                    </tr>
                  </thead>
                  <tbody>
 <!--                    <tr th:each = "task:${tasks}"> -->
@@ -68,7 +77,14 @@
 <!--                     <td><a th:href="@{/updateTask(id=${task.id})}"><span class = "glyphicon glyphicon-pencil"></span></a></td> -->
 <!--                     <td><a th:href="@{/deleteTask(id=${task.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td> -->
 <!--                    </tr>              -->
-                 </tbody>                               
+                    <tr th:each = "todo : ${allFinishedTodos}">
+                      <td th:text = "${todo[1].primaryKey.careerLevel.name}"></td>
+                      <td th:text = "${todo[1].primaryKey.todoId}"></td>
+                      <td th:text = "${todo[0].name}"></td>
+                      <td th:text = "${todo[1].description}"></td>
+                      <td th:text = "${todo[1].dateOfCompletion}"></td>
+                   </tr>
+                 </tbody>
                </table>
 <!--                <div class="container"> -->
 <!--                  <ul class ="nav nav-pills"> -->
@@ -80,13 +96,13 @@
            </div>   
         </div>
      </div>
- </div>    
+ </div>
         
  </div>    
  
  <div class="container">                  
   <ul class="pager">
-    <li><a th:href="@{progress_page.html}">&lt;&lt;&lt; Previous page</a></li>
+    <li><a th:href="@{/users/progress-page/{id}/(id=${userId})}">&lt;&lt;&lt; Previous page</a></li>
 <!--     <li><a href="temp.html">All finished tasks</a></li> -->
   </ul>
 </div>
@@ -101,7 +117,7 @@
 <!-- 				<h3>Company<span>logo</span></h3> -->
 
 				<p class="footer-links">
-					<a th:href="@{index.html}">Home</a>
+					<a th:href="@{/index}">Home</a>
 					·
 					<a th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
 <!-- 					· -->

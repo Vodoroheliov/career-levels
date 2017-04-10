@@ -29,6 +29,11 @@ public class HomeController {
     
     @Autowired
     private TodoService todoService;
+    
+    @RequestMapping("/")
+    public String root() {
+        return "forward:/index";
+    }
 
     @RequestMapping("/index")
     public String index(Model model) {
@@ -68,19 +73,10 @@ public class HomeController {
             todos.add(todosFromLevel);
         }
         model.addAttribute("todos", todos);
+        
+        model.addAttribute(
+                "usersPercentProgress", userService.findUsersPercentProgress());
 
         return "index";
-    }
-    
-    @RequestMapping("/progress_page")
-    public String progressPage() {
-        // model.addAttribute("tasks", taskService.getAllTasks());
-        return "progress_page";
-    }
-
-    @RequestMapping("/total_progress")
-    public String total_progress() {
-        // model.addAttribute("tasks", taskService.getAllTasks());
-        return "total_progress";
     }
 }

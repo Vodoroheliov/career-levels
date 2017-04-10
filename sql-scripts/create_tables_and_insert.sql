@@ -202,7 +202,7 @@ CREATE TABLE `todo_types` (
 
 INSERT INTO `todo_types` (`id`,`name`) VALUES (1,'Prove you are proactive');
 INSERT INTO `todo_types` (`id`,`name`) VALUES (2,'Finish trial period');
-INSERT INTO `todo_types` (`id`,`name`) VALUES (3,'Read '' Warehouse & Distribution Science''');
+INSERT INTO `todo_types` (`id`,`name`) VALUES (3,'Read "Warehouse & Distribution Science"');
 INSERT INTO `todo_types` (`id`,`name`) VALUES (4,'Daily time tracking report');
 INSERT INTO `todo_types` (`id`,`name`) VALUES (5,'3 ideas for the company');
 INSERT INTO `todo_types` (`id`,`name`) VALUES (6,'3 months in the company');
