@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<<<<<<< HEAD
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-<meta charset="UTF-8" />
-<title>HELLO</title>
-<link rel="stylesheet"
-	th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}" />
-<link rel="stylesheet" type="text/css"
-	href="../static/css/bootstrap.min.css"
-	th:href="@{/css/bootstrap.min.css}" />
-=======
 <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" /> -->
 <!-- <meta charset="UTF-8" /> -->
 <!-- <title>HELLO</title> -->
@@ -29,7 +19,6 @@
 <link rel = "stylesheet" type="text/css"  href = "../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 <link rel = "stylesheet" type="text/css"  href = "../static/css/style.css" th:href="@{/css/style.css}" />
 <link rel = "stylesheet" type="text/css"  href = "../static/css/footer-distributed-with-address-and-phones.css" th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
->>>>>>> origin/design
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -54,24 +43,12 @@
 		</div>
 	</nav>
 
-<<<<<<< HEAD
-	<div class="header"></div>
-=======
 	<div class="img"></div>
->>>>>>> origin/design
 
 
 	<!--         <div class="careerLevel" th:each="cl : ${careerLevels}" -->
 	<!--                 th:text="${cl.levelName}"> -->
 	<!--         </div> -->
-<<<<<<< HEAD
-
-	<div th:each="cl : ${careerLevels}">
-		<div th:class="'benefits benefits' + ${clStat.count}" valign="top">
-			<div class="cl_header" th:text="${cl.name}"></div>
-			<br />
-			<div class="ben">Benefits:</div>
-=======
 <div class="row">
 	<div  th:class="'col-sm-6 col-md-4 col-xs-7 col-lg-3   panel panel-default panel-body careerLevel careerLevel' + ${clStat.count}" th:each="cl : ${careerLevels}">
 <!-- 		<div class="varf" > </div>  -->
@@ -81,39 +58,14 @@
 			<br />
 			<div class="ben_title">Benefits</div>
 			<br />
->>>>>>> origin/design
 			<div>
 				<ul class="benefitName">
 					<li th:each="b : ${benefits[clStat.index]}" th:text="${b}"></li>
-				</ul>
-<<<<<<< HEAD
-			</div>
-		</div>
-
-		<!--         <div> -->
-		<!--             <table border="0" cellspacing="0" cellpadding="0"> -->
-		<!--             <table border = "1"> -->
-		<!--                 <tr> -->
-		<!-- 	                <td th:each="us : ${users}"> -->
-		<!-- 	                    <div th:each="u : ${us}"> -->
-		<!-- 	                       <span th:text="${u.firstName}"></span> -->
-		<!-- 	                       <span th:text="${u.lastName}"></span> -->
-		<!-- 	                    </div> -->
-		<!-- 	                </td> -->
-		<!--                 </tr> -->
-		<!--             </table> -->
-		<!--         </div> -->
-
-		<div th:class="'users users' + ${clStat.count}" valign="top">
-			<!-- 		<div> -->
-			<!-- 			<b>Users:</b> -->
-			<!-- 		</div> -->
-=======
+				</ul>`
 				<div th:class="'guys guys' + ${clStat.count}"></div>
 			</div>
 		</div>
 		<div th:class="'users users' + ${clStat.count}" valign="top">
->>>>>>> origin/design
 			<ul class="usersName" th:each="u : ${users[clStat.index]}">
 				<a class="t" th:href="@{users/progress-page/{id}/(id=${u.id})}">
 					<li class="user" th:text="${u.firstName} + ' ' + ${u.lastName}"></li>
@@ -122,14 +74,11 @@
 						<div
 							th:text="'Current progress is: ' + ${usersPercentProgress['__${u.id}__']} + '%'"></div>
 						<div class="progress">
-<<<<<<< HEAD
 							<!-- 						<div class="progress-bar progress-bar-striped active" -->
 							<!-- 							role="progressbar" aria-valuenow="45" aria-valuemin="0" -->
 							<!-- 							aria-valuemax="100" style="width: 50%"> -->
 							<!-- 							<span class="sr-only">45% Complete</span> -->
 							<!-- 						</div> -->
-=======
->>>>>>> origin/design
 							<div class="progress-bar progress-bar-striped active"
 								role="progressbar" aria-valuenow="45" aria-valuemin="0"
 								aria-valuemax="100"
@@ -144,23 +93,15 @@
 		</div>
 
 		<div th:class="'todos todos' + ${clStat.count}" valign="top">
-<<<<<<< HEAD
-			<div class="tod">
-				<b>To do:</b>
-			</div>
-=======
 			<div class="tod-title">
 				<b>To do:</b>
 			</div>
 			<br/>
->>>>>>> origin/design
 			<ul class="todosName">
 				<li class="task" th:each="t : ${todos[clStat.index]}" th:text="${t}"></li>
 			</ul>
 		</div>
 	</div>
-<<<<<<< HEAD
-=======
 </div>	 
 	<footer class="footer-distributed">
 			<div class="footer-left">
@@ -230,10 +171,5 @@
 			</div>
 		
 		</footer>
-
-	
-
-	
->>>>>>> origin/design
 </body>
 </html>
