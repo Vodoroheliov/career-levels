@@ -99,7 +99,10 @@
    <div class = "col-lg-6">
      <div class = "panel panel-primary">
         <div class ="panel-heading">
-           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>Finished</h3>
+           <h3 class = "panel-title">
+               <i class = "fa fa-money fa-fw"></i>Finished
+               (<a th:href="@{/add-todo-to-user/{id}/(id=${userId})}"><span class = "glyphicon glyphicon-plus"></span> Add</a>)
+           </h3>
         </div>
          <div class = "panel-body">
            <div class = "table-responsive">
@@ -129,6 +132,8 @@
                       <td th:text = "${todo[0].name}"></td>
                       <td th:text = "${todo[1].description}"></td>
                       <td th:text = "${todo[1].dateOfCompletion}"></td>
+                      <td><a th:href="@{/updateTask}"><span class = "glyphicon glyphicon-pencil"></span></a></td>
+                      <td><a th:href="@{/remove-todo-from-user(userId=${userId},todoId=${todo[1].primaryKey.todoId}, careerLevelId=${todo[1].primaryKey.careerLevel.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td>
                    </tr>
                  </tbody>                               
                </table>

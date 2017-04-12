@@ -1,15 +1,21 @@
 package com.inthergroup.internship.controllers;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.inthergroup.internship.forms.AddFinishedTodoForm;
 import com.inthergroup.internship.models.TodoType;
 import com.inthergroup.internship.services.TodoService;
 
@@ -44,30 +50,50 @@ public class TodoController {
         }
         return "Todo Type succesfully deleted!";
     }
-
-    @RequestMapping("/add-todo-to-user")
-    @ResponseBody
+    
+    /**
+     * Directs user to fill in the form for adding the finished task.
+     */
+    @RequestMapping(value = "/add-todo-to-user/{id}", method = RequestMethod.GET)
     @Transactional
-    public String addTodoToUser(long userId, String todoId, long todoTypeId,
-//            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Timestamp dateOfCompletion,
-            String description) {
-        if (description == "") {
-            description = null;
+    public String addTodoToUser(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("userId", id);
+        model.addAttribute("todoForm", new AddFinishedTodoForm());
+        model.addAttribute("todoTypes", todoService.findAll());
+        return "todos/add-finished-todo";
+    }
+
+    /**
+     * Adds the completed task to the user.
+     */
+    @RequestMapping(value = "/add-todo-to-user", method = RequestMethod.POST)
+    @Transactional
+    public String addTodoToUser(
+            @Valid @ModelAttribute("todoForm") AddFinishedTodoForm todoForm,
+            BindingResult bindingResult, Long userId) {
+        System.out.println(bindingResult.toString());
+        if (!bindingResult.hasErrors()) { // validation errors
+            if (todoForm.getDescription() == "") {
+                todoForm.setDescription(null);
+            }
+            try {
+                Calendar calendar = Calendar.getInstance();
+                java.sql.Timestamp dateOfCompletion =
+                        new java.sql.Timestamp(calendar.getTime().getTime());
+                todoService.addTodoToUser(userId, todoForm.getTodoId(),
+                        todoForm.getTodoTypeId(), dateOfCompletion,
+                        todoForm.getDescription());
+            } catch (Exception ex) {
+                return "Error adding todo to user: " + ex.toString();
+            }
         }
-        try {
-            Calendar calendar = Calendar.getInstance();
-            java.sql.Timestamp dateOfCompletion =
-                    new java.sql.Timestamp(calendar.getTime().getTime());
-            todoService.addTodoToUser(userId, todoId, todoTypeId,
-                    dateOfCompletion, description);
-        } catch (Exception ex) {
-            return "Error adding todo to user: " + ex.toString();
+        else {
+            return "redirect:/add-todo-to-user/" + userId;
         }
-        return "Succesfully added todo to user!";
+        return "redirect:users/progress-page/" + userId;
     }
     
-    @RequestMapping("/remove-todo-from-user")
-    @ResponseBody
+    @RequestMapping(value = "/remove-todo-from-user", method = RequestMethod.GET)
     @Transactional
     public String removeTodoFromUser(long userId, String todoId,
             long careerLevelId) {
@@ -77,7 +103,7 @@ public class TodoController {
         } catch (Exception ex) {
             return "Error removing todo from user: " + ex.toString();
         }
-        return "Succesfully removed todo from user!";
+        return "redirect:users/progress-page/" + userId;
     }
     
     @RequestMapping("/add-todo-to-career-level")

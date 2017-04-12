@@ -1,6 +1,6 @@
-create database if not exists internship;
+create database if not exists internship2;
 
-use internship
+use internship2
 
 
 drop table if exists `career_levels_benefits`;
@@ -133,6 +133,11 @@ CREATE TABLE `todos` (
   `description` varchar(256),
   PRIMARY KEY (`user_id`, `career_level_id`, `todo_id`)
 );
+
+INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(1, 1, 'I did it', 1, '2017-04-09 19:31:27', 'It was interesting!');
+INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(2, 1, 'I did it!', 1, '2017-04-09 20:27:49', 'It was very interesting.');
+INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(2, 2, 'Tracking report', 4, '2017-04-09 19:37:07', 'Interesting report.');
+INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(2, 2, 'trial period', 2, '2017-04-09 18:29:03', 'Doing stuff.');
 
 
 drop table if exists `career_levels_todos`;
