@@ -1,6 +1,6 @@
-create database if not exists internship;
+create database if not exists internship2;
 
-use internship
+use internship2
 
 
 drop table if exists `career_levels_benefits`;
