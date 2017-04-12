@@ -29,13 +29,8 @@ public class HomeController {
     
     @Autowired
     private TodoService todoService;
-    
-    @RequestMapping("/")
-    public String root() {
-        return "forward:/index";
-    }
 
-    @RequestMapping("/index")
+    @RequestMapping({"/", "/index"})
     public String index(Model model) {
 
         // List all careerl levels
