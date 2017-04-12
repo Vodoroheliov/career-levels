@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<svg width="1380" height="425" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <style type="text/css">.st0{opacity:0.8667;fill:#E83600;enable-background:new    ;}
+	.st1{fill:#FBD6B1;}
+	.st2{fill:#4E2E22;}
+	.st3{fill:#EC6180;}
+	.st4{fill:#2E2D2D;}
+	.st5{fill:#F8F8F8;}
+	.st6{fill:#7A7B7C;}
+	.st7{fill:#749B87;}
+	.st8{fill:#3F271D;}
+	.st9{fill:#8EB29B;}
+	.st10{fill:#4C3F3A;}
+	.st11{fill:#FBD8B5;}
+	.st12{fill:#3C312E;}
+	.st13{fill:#D8D7D5;}
+	.st14{fill:#EDCBAA;}</style>
+ <g>
+  <title>Layer 1</title>
+  <g id="g10" transform="matrix(5.160864033475777,0,0,-1.630136353067985,-14.287509936128398,2602.616339211962) ">
+   <g id="g58-4" transform="matrix(-2.3087714,0.00072644892,-0.00081592189,-2.1114937,502.0388,863.17452) ">
+    <g id="path60-1_1_">
+     <polygon class="st0" points="57.082504272460966,-199.7225036621095 57.082504272460966,-354.72247314453136 137.08250427246097,-386.52249145507824 217.08250427246097,-354.62249755859386 217.08250427246097,-199.7225036621095 " id="svg_1" fill="black"/>
+    </g>
+   </g>
+  </g>
+  <path fill="#ffffff" stroke-width="5" d="m1.48331,119.134195l2.369383,-116.467527l1375.702927,0c0,0 -2.369383,118.000003 -2.369383,118.000003c0,0 -690.90861,-118.000003 -690.90861,-118.000003c0,0 -684.794318,116.467527 -684.794318,116.467527l0.000001,0z" id="svg_2" stroke="#ffffff"/>
+ </g>
+</svg>

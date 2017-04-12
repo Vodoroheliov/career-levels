@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<svg width="461.8" height="237.4" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <style type="text/css">.st0{filter:url(#filter10128);}
+	.st1{opacity:0.8667;fill:#FF6500;}
+	.st2{filter:url(#filter10140);}
+	.st3{opacity:0.8667;fill:#E83600;}</style>
+ <filter color-interpolation-filters="sRGB" id="filter10140">
+  <feGaussianBlur stdDeviation="6" id="feGaussianBlur10146"/>
+ </filter>
+ <filter color-interpolation-filters="sRGB" id="filter10128">
+  <feGaussianBlur stdDeviation="6" id="feGaussianBlur10134"/>
+ </filter>
+
+ <g>
+  <title>Layer 1</title>
+  <g transform="matrix(1.5140797197818756,0,0,-1.25,-97.78872023522854,2104.7244) " id="g10">
+   <g class="st0" id="path16_1_">
+    <path id="svg_1" d="m0,1493.8l49.3,93.6l-49.2,96.3" class="st1"/>
+   </g>
+   <g class="st2" id="path28-5">
+    <path id="svg_2" d="m0.1,1683.8l49.2,-96.3l-49.3,-93.7c133.3,0 236.4,0 369.5,0.3l0,189.7l-369.4,0z" class="st3"/>
+   </g>
+  </g>
+ </g>
+</svg>
