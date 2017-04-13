@@ -1,0 +1,23 @@
+package com.inthergroup.internship.services;
+
+import java.util.List;
+
+import com.inthergroup.internship.models.Group;
+
+public interface GroupService {
+    List<Group> findAll();
+
+    Group findById(Long id);
+
+    Group create(Group group);
+
+    Group edit(Group group);
+
+    void deleteById(Long id);
+
+//    void addGroupToUser(Long userId, Long groupId);
+//
+//    void removeGroupFromUser(Long userId, Long todoId);
+    
+    void updateUserGroup(long userId, long groupId);
+}

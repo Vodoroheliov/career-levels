@@ -1,0 +1,33 @@
+
+ <p style = "font-size:20px; font-style:italic;color:red;">
+ &nbsp; Adresa combinatului:
+</p>
+<h5 style="font-size:15px">&nbsp; MD 2032, Republica Moldova, or. Chisinau, str. Sarmizegetusa, 30</h5>
+<p style = "font-size:20px; font-style:italic;color:red;">
+ &nbsp; Sectia de desfacere:
+</p>
+
+<h5 style="font-size:15px">&nbsp;  Incheierea contractelor:  +373 22 52-80-84;
+<br>&nbsp; sales@franzeluta.md</h5>
+
+<p style = "font-size:20px; font-style:italic;color:red;">
+&nbsp; Comanda pentru persoane juridice:
+</p>
+<h5 style="font-size:15px">&nbsp; produse de panificatie +373 22 85-35-35 <br>
+&nbsp; produse de cofetarie si paste fainoase +373 22 85-36-36</h5>
+<p style = "font-size:20px; font-style:italic;color:red;">
+&nbsp; Comanda torturilor si colacilor pentru persoane fizice:
+</p>
+<h5 style="font-size:15px">&nbsp; magazin de firma Nr. 6<br>
+&nbsp; str. Stefan cel Mare 73, tel. +373 22 20-70-50<br><br>
+ 
+&nbsp; magazin de firma Nr 35<br>
+&nbsp; str. Tighina 59, tel. +373 22 27-62-09<br><br>
+ 
+&nbsp; magazin de firma Nr 36<br>
+&nbsp; str. Stefan cel Mare 126, tel. +373 22 20-19-39</h5>
+<p style = "font-size:20px; font-style:italic;color:red;">
+&nbsp; Fabrica de paine 1, or. Chisinau, str. Columna 166:
+</p>
+<h5 style="font-size:15px">&nbsp; Expeditia<br>
+&nbsp; +373 22 75-14-97</h5>
