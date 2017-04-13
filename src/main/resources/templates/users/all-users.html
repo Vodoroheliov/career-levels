@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset = "UTF-8"/>
+<meta http-equiv = "X-UA-Compatible" content="IE-edge"/>
+<meta name = "viewport" content="width=device-width, initial -scale =1"/>
+<meta name =  "description" content = ""/>
+<meta name = "author" content = ""/>
+<title>All users</title>
+<link rel="stylesheet" th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}"/>
+
+<link rel = "stylesheet" type="text/css"  href = "../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+<link rel = "stylesheet" type="text/css"  href = "../static/css/style.css" th:href="@{/css/style.css}" />
+<link rel = "stylesheet" type="text/css"  href = "../static/css/footer-distributed-with-address-and-phones.css" th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" th:href="@{/index}"><img class = "logo" th:src="@{/images/logo.png}"  height="50" width="50" /></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a th:href="@{/index}">Home</a></li>
+<!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
+<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a th:href="@{/users/all-users}">All users</a></li>
+            <li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
+            <li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
+<!--             <li role="separator" class="divider"></li> -->
+            <li><a th:href="@{/todos/todo-type}">All todo types</a></li>
+<!--             <li role="separator" class="divider"></li> -->
+            <li><a th:href="@{/benefits/benefit-type}">All benefit types</a></li>
+          </ul>
+</li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="total_progress  ">
+   <div class = "column-lg-8">
+     <div class = "panel panel-primary">
+        <div class ="panel-heading">
+           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>All users  
+<!--              <a class="btn1 icon-btn btn-success" href="#"> -->
+<!--                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span> -->
+<!--                  Add -->
+<!--              </a> -->
+<button type="button" class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success" data-toggle="modal" data-target="#Add"> Add</button>
+          
+           </h3>
+          
+        </div>
+         <div class = "panel-body">
+           <div class = "table-responsive">
+               <table class = "table table-bordered table-hover table-striped">
+                 <thead>
+                    <tr>
+                      <th>ID</th>                      
+                      <th>Last name</th>
+                      <th>First name</th>
+                      <th>Username</th>
+                      <th>Email </th>
+                      <th>Career Level</th>
+                      <th>Group</th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                 
+                     <tr>
+                      <td>1</td>
+                      <td>rotari</td>
+                      <td>Alex</td>
+                      <td>Rotari</td>
+                      <td>Rotari</td>
+                      <td>Rotari</td>
+                      <td>Rotari</td>
+                      <td><a href="#"><span class = "glyphicon glyphicon-pencil" data-toggle="modal" data-target="#Update"></span></a></td>
+                      <td><a href="#"><span class = "glyphicon glyphicon-trash" ></span></a></td>
+                    </tr>
+                      <tr>
+                      <td>1</td>
+                      <td>rotari</td>
+                      <td>Alex</td>
+                      <td>Rotari</td>
+                    </tr>
+                      <tr>
+                      <td>1</td>
+                      <td>rotari</td>
+                      <td>Alex</td>
+                      <td>Rotari</td>
+                    </tr>
+                      <tr>
+                      <td>1</td>
+                      <td>rotari</td>
+                      <td>Alex</td>
+                      <td>Rotari</td>
+                    </tr>
+<!--                    <tr th:each = "task:${tasks}"> -->
+<!--                     <td th:text = "${task.id}"></td> -->
+<!--                     <td th:text = "${task.name}"></td> -->
+<!--                     <td th:text = "${task.description}"></td> -->
+<!--                     <td th:text = "${#dates.format(task.dateCreated, 'dd-MM-yyyy')}"></td> -->
+<!--                     <td th:text = "${task.finished}"></td> -->
+<!--                     <td><a th:href="@{/task(id=${task.id})}"><span class = "glyphicon glyphicon-ok"></span></a></td> -->
+<!--                     <td><a th:href="@{/updateTask(id=${task.id})}"><span class = "glyphicon glyphicon-pencil"></span></a></td> -->
+<!--                     <td><a th:href="@{/deleteTask(id=${task.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td> -->
+<!--                    </tr>              -->
+                    <tr th:each = "todo : ${allFinishedTodos}">
+                      <td th:text = "${todo[1].primaryKey.careerLevel.name}"></td>
+                      <td th:text = "${todo[1].primaryKey.todoId}"></td>
+                      <td th:text = "${todo[0].name}"></td>
+                      <td th:text = "${todo[1].description}"></td>
+                      <td th:text = "${todo[1].dateOfCompletion}"></td>
+                   </tr>
+                 </tbody>
+               </table>
+<!--                <div class="container"> -->
+<!--                  <ul class ="nav nav-pills"> -->
+<!--                    <li th:class="${status.index}==${pageCourantetasks}?active:''" th:each= "p, status:${pagesTasks}"> -->
+<!--                      <a th:href="@{/index(pageTasks=${status.index})}" th:text="${status.index}"></a> -->
+<!--                    </li> -->
+<!--                  </ul> -->
+<!--                </div> -->
+           </div>   
+        </div>
+     </div>
+ </div>
+        
+ </div>  
+ 
+
+
+ 
+ <div class="container">
+  <!-- Trigger the modal with a button -->
+<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+
+<div class="modal fade" tabindex="-1" id="Update"
+        data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm-4">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title">Update</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="inputLogin">Last name</label>
+                        <input class="form-control" placeholder="Last name"
+                                type="text" id="inputLogin" />
+                    </div>              
+                    <div class="form-group">
+                        <label for="inputLastName">First name</label>
+                        <input class="form-control" placeholder="First name"
+                                type="text" id="inputLastName" />
+                    </div>
+                   <div class="form-group">
+                        <label for="inputFirstName">Username</label>
+                        <input class="form-control" placeholder="Username"
+                                type="text" id="inputFirstName" />
+                    </div>
+                     <div class="form-group">
+                        <label for="inputFirstName">Email</label>
+                        <input class="form-control" placeholder="First name"
+                                type="text" id="inputFirstName" />
+                    </div>
+<label for="inputCareerLevel">Career Level</label>
+<div class="mainselection">
+<select name="CareerLevel" id="input7">
+    <option value="Internship">Internship</option>
+    <option value="Baby on board">Baby on board</option>
+    <option value="First steps">First steps</option> 
+    <option value="You are good">You are good</option> 
+    <option value="You are rock">You are rock</option>                              
+</select>
+</div>
+
+<br/>
+<label for="inputGroup">Group</label>
+<div class="mainselection">
+<select name="CareerLevel" id="input7">
+    <option value="admin">Admin</option>
+    <option value="user">User</option>                             
+</select>
+</div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-primary"
+                        data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
+</div>
+  <div class="container">
+  <!-- Trigger the modal with a button -->
+<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+
+<div class="modal fade" tabindex="-1" id="Add"
+        data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title">Add</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="inputLogin">Last name</label>
+                        <input class="form-control" placeholder="Last name"
+                                type="text" id="inputLogin" />
+                    </div>              
+                    <div class="form-group">
+                        <label for="inputLastName">First name</label>
+                        <input class="form-control" placeholder="First name"
+                                type="text" id="inputLastName" />
+                    </div>
+                   <div class="form-group">
+                        <label for="inputFirstName">Username</label>
+                        <input class="form-control" placeholder="Username"
+                                type="text" id="inputFirstName" />
+                    </div>
+                     <div class="form-group">
+                        <label for="inputFirstName">Email</label>
+                        <input class="form-control" placeholder="First name"
+                                type="text" id="inputFirstName" />
+                    </div>
+<label for="inputCareerLevel">Career Level</label>
+<div class="mainselection">
+<select name="CareerLevel" id="input7">
+    <option value="Internship">Internship</option>
+    <option value="Baby on board">Baby on board</option>
+    <option value="First steps">First steps</option> 
+    <option value="You are good">You are good</option> 
+    <option value="You are rock">You are rock</option>                              
+</select>
+</div>
+
+<br/>
+<label for="inputGroup">Group</label>
+<div class="mainselection">
+<select name="CareerLevel" id="input7">
+    <option value="admin">Admin</option>
+    <option value="user">User</option>                             
+</select>
+</div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-primary"
+                        data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
+</div>
+ 
+ <div class="container">                  
+  <ul class="pager">
+    <li><a th:href="@{/index}">&lt;&lt;&lt;Home</a></li>
+<!--     <li><a href="temp.html">All finished tasks</a></li> -->
+  </ul>
+</div>
+
+<div>
+<!-- Footer -->
+<footer class="footer-distributed">
+
+			<div class="footer-left">
+
+ <a  href="#"><img class = "logo" th:src="@{/images/logo.png}"  
+ height="130" width="130" /></a>
+<!-- 				<h3>Company<span>logo</span></h3> -->
+
+				<p class="footer-links">
+					<a th:href="@{/index}">Home</a>
+					·
+					<a th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
+<!-- 					· -->
+<!-- 					<a href="#">Pricing</a> -->
+<!-- 					· -->
+<!-- 					<a href="#">About</a> -->
+<!-- 					· -->
+<!-- 					<a href="#">Faq</a> -->
+<!-- 					· -->
+<!-- 					<a href="#">Contact</a> -->
+				</p>
+
+				<p class="footer-company-name">Copyright &copy; 2017, ISD. All rights reserved. </p>
+			</div>
+
+			<div class="footer-center">
+
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p><span>21 Revolution Street</span> Paris, France</p>
+				</div>
+
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>+1 555 123456</p>
+				</div>
+
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="mailto:support@company.com">support@company.com</a></p>
+				</div>
+
+			</div>
+
+			<div class="footer-right">
+
+				<p class="footer-company-about">
+					<span>About the company</span>
+					Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-github"></i></a>
+
+				</div>
+
+			</div>
+
+		</footer>
+</div>
+</body>
+</html>

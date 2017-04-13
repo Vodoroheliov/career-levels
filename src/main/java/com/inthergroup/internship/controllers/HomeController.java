@@ -74,4 +74,30 @@ public class HomeController {
 
         return "index";
     }
+    
+    @RequestMapping("/users/admin")
+    public String admin() {
+        return "/users/admin";
+    }
+    @RequestMapping("/users/all-users")
+    public String users() {
+        return "/users/all-users";
+    }
+    @RequestMapping("/todos/all-tasks")
+    public String tasks() {
+        return "/todos/all-tasks";
+    }
+    @RequestMapping("/todos/todo-type")
+    public String todo_type() {
+        return "/todos/todo-type";
+    }
+    @RequestMapping("/benefits/all-benefits")
+    public String benefits() {
+        return "/benefits/all-benefits";
+    }
+   
+    @RequestMapping("/benefits/benefit-type")
+    public String benefit_type() {
+        return "/benefits/benefit-type";
+    }
 }
