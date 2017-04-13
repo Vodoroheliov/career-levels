@@ -1,6 +1,6 @@
-create database if not exists internship2;
+create database if not exists internship;
 
-use internship2
+use internship
 
 
 drop table if exists `career_levels_benefits`;
@@ -129,7 +129,7 @@ CREATE TABLE `todos` (
   `career_level_id` int(20) not null,
   `todo_id` varchar(64) not null, # e.g. title of the book
   `todo_type_id` int (20) not null,
-  `date_of_completion` datetime,
+  `date_of_completion` datetime not null default now(),
   `description` varchar(256),
   PRIMARY KEY (`user_id`, `career_level_id`, `todo_id`)
 );

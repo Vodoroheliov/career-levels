@@ -3,18 +3,30 @@ package com.inthergroup.internship.services;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.inthergroup.internship.models.Todo;
 import com.inthergroup.internship.models.TodoType;
 
 public interface TodoService {
-    List<TodoType> findAll();
 
-    TodoType findById(Long id);
+    /**
+     *  Find todo type
+     */
+    TodoType findTodoTypeById(Long id);
+    
+    List<TodoType> findAllTodoTypes();
 
-    TodoType create(TodoType todo);
+    TodoType createTodoType(TodoType todo);
 
-    TodoType edit(TodoType todo);
+    TodoType saveTodoType(TodoType todo);
 
-    void deleteById(Long id);
+    void deleteTodoTypeById(Long id);
+    
+    Todo findTodo(Long userId, Long CareerLevelId, String todoId);
+    
+    /**
+     *  Save completed todo
+     */
+    Todo saveTodo(Todo todo);
     
     void addTodoToUser(Long userId, String todoId, Long todoTypeId,
             Timestamp dateOfCompletion, String description);
@@ -29,6 +41,9 @@ public interface TodoService {
     
     List<Object[]>findCurrentFinishedTodosByUserId(Long id);
     
+    /**
+     * Finds todos (for current career level) that user not finished yet.
+     */
     List<Object[]>findCurrentTodosByUserId(Long id);
     
     List<Object[]>findAllFinishedTodosByUserId(Long id);

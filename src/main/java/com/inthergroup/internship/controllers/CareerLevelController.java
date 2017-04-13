@@ -22,7 +22,8 @@ public class CareerLevelController {
             careerLevel = new CareerLevel(levelName);
             careerLevelService.create(careerLevel);
         } catch (Exception ex) {
-            return "Error creating the Career Level: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error creating the Career Level: " + ex.toString();
         }
         return "Career Level succesfully created! (id = " + careerLevel.getId() + ")";
     }
@@ -33,7 +34,8 @@ public class CareerLevelController {
         try {
             careerLevelService.updateUserCareerLevel(userId, careerLevelId);
         } catch (Exception ex) {
-            return "Error updating user's career level: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error updating user's career level: " + ex.toString();
         }
         return "Succesfully updated user's career level!";
     }
@@ -46,7 +48,9 @@ public class CareerLevelController {
         try {
             careerLevelService.deleteById(id);
         } catch (Exception ex) {
-            return "Error deleting the career level by id #" + id + ": " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error deleting the career level by id #" + id + ": "
+                    + ex.toString();
         }
         return "Career level succesfully deleted!";
     }

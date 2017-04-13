@@ -6,8 +6,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class AddFinishedTodoForm {
-    @NotEmpty
-    @Size(min=4, max=30)
+    @NotEmpty(message = "Can not be empty")
+    @Size(min=4, max=30, message = "Title size should be in the range [4...30]")
     private String todoId = "";
     
     private String description = "";

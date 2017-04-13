@@ -8,15 +8,25 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.inthergroup.internship.models.CareerLevel;
+import com.inthergroup.internship.models.Todo;
 import com.inthergroup.internship.models.TodoType;
 import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.repositories.CareerLevelRepository;
 import com.inthergroup.internship.repositories.TodoRepository;
+import com.inthergroup.internship.repositories.TodoTypeRepository;
 import com.inthergroup.internship.repositories.UserRepository;
 
 @Service
 @Primary
 public class TodoServiceJpaImpl implements TodoService {
+    
+    // -----------------
+    // Fields
+    // -----------------
+    
+    @Autowired
+    private TodoTypeRepository todoTypeRepo;
+    
     @Autowired
     private TodoRepository todoRepo;
     
@@ -25,32 +35,46 @@ public class TodoServiceJpaImpl implements TodoService {
     
     @Autowired
     private CareerLevelRepository careerLevelRepo;
-
+    
+    // ----------------
+    // Methods
+    // ----------------
+    
     @Override
-    public List<TodoType> findAll() {
-        return this.todoRepo.findAll();
+    public TodoType findTodoTypeById(Long id) {
+        return this.todoTypeRepo.findOne(id);
     }
 
     @Override
-    public TodoType findById(Long id) {
-        return this.todoRepo.findOne(id);
+    public List<TodoType> findAllTodoTypes() {
+        return this.todoTypeRepo.findAll();
     }
 
     @Override
-    public TodoType create(TodoType todo) {
-        return this.todoRepo.save(todo);
+    public TodoType createTodoType(TodoType todo) {
+        return this.todoTypeRepo.save(todo);
     }
 
     @Override
-    public TodoType edit(TodoType todo) {
-        return this.todoRepo.save(todo);
+    public TodoType saveTodoType(TodoType todo) {
+        return this.todoTypeRepo.save(todo);
     }
 
     @Override
-    public void deleteById(Long id) {
-        this.todoRepo.delete(id);
+    public void deleteTodoTypeById(Long id) {
+        this.todoTypeRepo.delete(id);
     }
     
+    @Override
+    public Todo findTodo(Long userId, Long careerLevelId, String todoId) {
+        return todoRepo.findTodo(userId, careerLevelId, todoId);
+    }
+
+    @Override
+    public Todo saveTodo(Todo todo) {
+        return todoRepo.save(todo);
+    }
+
     @Override
     public void addTodoToUser(Long userId, String todoId, Long todoTypeId,
             Timestamp dateOfCompletion, String description) {
@@ -68,14 +92,14 @@ public class TodoServiceJpaImpl implements TodoService {
     @Override
     public void addTodoToCareerLevel(Long careerLevelId, Long todoTypeId,
             Integer quantity) {
-        TodoType todoType = todoRepo.findOne(todoTypeId);
+        TodoType todoType = todoTypeRepo.findOne(todoTypeId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
         careerLevel.addTodo(todoType, quantity);
     }
 
     @Override
     public void removeTodoFromCareerLevel(Long careerLevelId, Long todoTypeId) {
-        TodoType todoType = todoRepo.findOne(todoTypeId);
+        TodoType todoType = todoTypeRepo.findOne(todoTypeId);
         CareerLevel careerLevel = careerLevelRepo.findOne(careerLevelId);
         careerLevel.removeTodo(todoType);
     }

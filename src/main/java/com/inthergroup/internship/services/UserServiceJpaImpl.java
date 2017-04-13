@@ -1,16 +1,16 @@
 package com.inthergroup.internship.services;
 
-import com.inthergroup.internship.models.User;
-import com.inthergroup.internship.repositories.TodoRepository;
-import com.inthergroup.internship.repositories.UserRepository;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.inthergroup.internship.models.User;
+import com.inthergroup.internship.repositories.TodoRepository;
+import com.inthergroup.internship.repositories.UserRepository;
 
 @Service
 @Primary

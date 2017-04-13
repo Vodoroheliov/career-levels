@@ -132,7 +132,7 @@
                       <td th:text = "${todo[0].name}"></td>
                       <td th:text = "${todo[1].description}"></td>
                       <td th:text = "${todo[1].dateOfCompletion}"></td>
-                      <td><a th:href="@{/updateTask}"><span class = "glyphicon glyphicon-pencil"></span></a></td>
+                      <td><a th:href="@{/update-todo-for-user/{id}/(id=${userId},careerLevelId=${todo[1].primaryKey.careerLevel.id}, todoId=${todo[1].primaryKey.todoId})}"><span class = "glyphicon glyphicon-pencil"></span></a></td>
                       <td><a th:href="@{/remove-todo-from-user(userId=${userId},todoId=${todo[1].primaryKey.todoId}, careerLevelId=${todo[1].primaryKey.careerLevel.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td>
                    </tr>
                  </tbody>                               

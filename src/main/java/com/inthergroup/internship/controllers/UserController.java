@@ -83,7 +83,8 @@ public class UserController {
                     careerLevel, group);
             userService.create(user);
         } catch (Exception ex) {
-            return "Error creating the user: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error creating the user: " + ex.toString();
         }
         return "User succesfully created! (id = " + user.getId() + ")";
     }
@@ -100,7 +101,8 @@ public class UserController {
         try {
             userService.deleteById(id);
         } catch (Exception ex) {
-            return "Error deleting the user by id #" + id + ": " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error deleting the user by id #" + id + ": " + ex.toString();
         }
         return "User succesfully deleted!";
     }
@@ -119,7 +121,8 @@ public class UserController {
         try {
             user = userService.findById(id);
         } catch (Exception ex) {
-            return "User not found";
+            return "redirect:/general-error?msg=" +
+                    "User not found";
         }
         return "id: " + user.getId() + ", last name: " + user.getLastName() + ", first name: " + user.getFirstName()
                 + ", career level: " + user.getCareerLevel();
@@ -147,7 +150,8 @@ public class UserController {
             user.getCareerLevel().setName(levelName);
             userService.create(user);
         } catch (Exception ex) {
-            return "Error updating the user: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error updating the user: " + ex.toString();
         }
         return "User succesfully updated!";
     }
