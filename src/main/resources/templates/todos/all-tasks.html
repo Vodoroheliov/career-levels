@@ -8,7 +8,7 @@
 <meta name = "viewport" content="width=device-width, initial -scale =1"/>
 <meta name =  "description" content = ""/>
 <meta name = "author" content = ""/>
-<title>All users</title>
+<title>All tasks</title>
 <link rel="stylesheet" th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}"/>
 
 <link rel = "stylesheet" type="text/css"  href = "../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
@@ -16,9 +16,6 @@
 <link rel = "stylesheet" type="text/css"  href = "../static/css/footer-distributed-with-address-and-phones.css" th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -50,16 +47,15 @@
 </nav>
 
 <div class="total_progress  ">
-   <div class = "column-lg-8">
+   <div class = "column-lg-6">
      <div class = "panel panel-primary">
         <div class ="panel-heading">
-           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>All users  
+           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>All tasks 
 <!--              <a class="btn1 icon-btn btn-success" href="#"> -->
 <!--                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span> -->
 <!--                  Add -->
 <!--              </a> -->
 <button type="button" class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success" data-toggle="modal" data-target="#Add"> Add</button>
-          
            </h3>
           
         </div>
@@ -68,46 +64,17 @@
                <table class = "table table-bordered table-hover table-striped">
                  <thead>
                     <tr>
-                      <th>ID</th>                      
-                      <th>Last name</th>
-                      <th>First name</th>
-                      <th>Username</th>
-                      <th>Email </th>
                       <th>Career Level</th>
-                      <th>Group</th>
+                      <th>Todo type</th>
+                      <th>Quantity</th>
                     </tr>
                  </thead>
                  <tbody>
-                 
-                     <tr>
-                      <td>1</td>
-                      <td>rotari</td>
-                      <td>Alex</td>
-                      <td>Rotari</td>
-                      <td>Rotari</td>
-                      <td>Rotari</td>
-                      <td>Rotari</td>
+                   <td>You are rock</td>
+                      <td>Ideas for the company</td>
+                      <td>15</td>
                       <td><a href="#"><span class = "glyphicon glyphicon-pencil" data-toggle="modal" data-target="#Update"></span></a></td>
                       <td><a href="#"><span class = "glyphicon glyphicon-trash" ></span></a></td>
-                    </tr>
-                      <tr>
-                      <td>1</td>
-                      <td>rotari</td>
-                      <td>Alex</td>
-                      <td>Rotari</td>
-                    </tr>
-                      <tr>
-                      <td>1</td>
-                      <td>rotari</td>
-                      <td>Alex</td>
-                      <td>Rotari</td>
-                    </tr>
-                      <tr>
-                      <td>1</td>
-                      <td>rotari</td>
-                      <td>Alex</td>
-                      <td>Rotari</td>
-                    </tr>
 <!--                    <tr th:each = "task:${tasks}"> -->
 <!--                     <td th:text = "${task.id}"></td> -->
 <!--                     <td th:text = "${task.name}"></td> -->
@@ -141,16 +108,14 @@
         
  </div>  
  
-
-
- 
- <div class="container">
+ <!--  TODO Update popup  -->
+  <div class="container">
   <!-- Trigger the modal with a button -->
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 
 <div class="modal fade" tabindex="-1" id="Update"
         data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm-4">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
@@ -159,27 +124,7 @@
                 <h4 class="modal-title">Update</h4>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="inputLogin">Last name</label>
-                        <input class="form-control" placeholder="Last name"
-                                type="text" id="inputLogin" />
-                    </div>              
-                    <div class="form-group">
-                        <label for="inputLastName">First name</label>
-                        <input class="form-control" placeholder="First name"
-                                type="text" id="inputLastName" />
-                    </div>
-                   <div class="form-group">
-                        <label for="inputFirstName">Username</label>
-                        <input class="form-control" placeholder="Username"
-                                type="text" id="inputFirstName" />
-                    </div>
-                     <div class="form-group">
-                        <label for="inputFirstName">Email</label>
-                        <input class="form-control" placeholder="First name"
-                                type="text" id="inputFirstName" />
-                    </div>
+                <form>                 
 <label for="inputCareerLevel">Career Level</label>
 <div class="mainselection">
 <select name="CareerLevel" id="input7">
@@ -192,14 +137,20 @@
 </div>
 
 <br/>
-<label for="inputGroup">Group</label>
+<label for="inputTodoType">Todo type</label>
 <div class="mainselection">
 <select name="CareerLevel" id="input7">
-    <option value="admin">Admin</option>
-    <option value="user">User</option>                             
+    <option></option>
+    <option value="books per year">books per year</option>
+    <option value="articles">articles</option>                             
 </select>
 </div>
-
+<br/>
+   <div class="form-group">
+                        <label for="inputFirstName">Quantity</label>
+                        <input class="form-control" placeholder="Enter a number"
+                                type="text" id="inputFirstName" />
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -212,6 +163,9 @@
 </div>
   
 </div>
+ 
+ 
+ <!--  TODO Add popup  -->
   <div class="container">
   <!-- Trigger the modal with a button -->
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
@@ -227,27 +181,7 @@
                 <h4 class="modal-title">Add</h4>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="inputLogin">Last name</label>
-                        <input class="form-control" placeholder="Last name"
-                                type="text" id="inputLogin" />
-                    </div>              
-                    <div class="form-group">
-                        <label for="inputLastName">First name</label>
-                        <input class="form-control" placeholder="First name"
-                                type="text" id="inputLastName" />
-                    </div>
-                   <div class="form-group">
-                        <label for="inputFirstName">Username</label>
-                        <input class="form-control" placeholder="Username"
-                                type="text" id="inputFirstName" />
-                    </div>
-                     <div class="form-group">
-                        <label for="inputFirstName">Email</label>
-                        <input class="form-control" placeholder="First name"
-                                type="text" id="inputFirstName" />
-                    </div>
+                <form>                 
 <label for="inputCareerLevel">Career Level</label>
 <div class="mainselection">
 <select name="CareerLevel" id="input7">
@@ -260,19 +194,24 @@
 </div>
 
 <br/>
-<label for="inputGroup">Group</label>
+<label for="inputTodoType">Todo type</label>
 <div class="mainselection">
 <select name="CareerLevel" id="input7">
-    <option value="admin">Admin</option>
-    <option value="user">User</option>                             
+    <option></option>
+    <option value="books per year">books per year</option>
+    <option value="articles">articles</option>                             
 </select>
 </div>
-
-
+<br/>
+   <div class="form-group">
+                        <label for="inputFirstName">Quantity</label>
+                        <input class="form-control" placeholder="Enter a number"
+                                type="text" id="inputFirstName" />
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Add</button>
                 <button type="button" class="btn btn-primary"
                         data-dismiss="modal">Cancel</button>
             </div>
@@ -281,6 +220,7 @@
 </div>
   
 </div>
+   
  
  <div class="container">                  
   <ul class="pager">
@@ -290,7 +230,6 @@
 </div>
 
 <div>
-<!-- Footer -->
 <footer class="footer-distributed">
 
 			<div class="footer-left">
