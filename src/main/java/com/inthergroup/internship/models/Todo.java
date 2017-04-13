@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- * An entity Todo represents a task for a user.
+ * An entity Todo represents a finished task.
  * The Entity annotation indicates that this class is a JPA entity.
  * The Table annotation specifies the name for the table in the db.
  *
@@ -91,6 +91,7 @@ public class Todo {
         this.todoTypeId = todoTypeId;
     }
 
+//    @Column(name = "date_of_completion", nullable = false)
     public Timestamp getDateOfCompletion() {
         return dateOfCompletion;
     }

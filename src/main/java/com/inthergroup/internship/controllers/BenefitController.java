@@ -23,7 +23,8 @@ public class BenefitController {
             benefit = new BenefitType(benefitName);
             benefitService.create(benefit);
         } catch (Exception ex) {
-            return "Error creating the benefit: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error creating the benefit: " + ex.toString();
         }
         return "Benefit succesfully created! (id = " + benefit.getId() + ")";
     }
@@ -36,7 +37,8 @@ public class BenefitController {
         try {
             benefitService.deleteById(id);
         } catch (Exception ex) {
-            return "Error deleting the benefit by id #" + id + ": " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error deleting the benefit by id #" + id + ": " + ex.toString();
         }
         return "Benefit succesfully deleted!";
     }
@@ -50,7 +52,8 @@ public class BenefitController {
             benefitService.addBenefitToCareerLevel(careerLevelId, benefitTypeId,
                     quantity);
         } catch (Exception ex) {
-            return "Error adding benefit to career level: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error adding benefit to career level: " + ex.toString();
         }
         return "Succesfully added benefit to career level!";
     }
@@ -62,7 +65,8 @@ public class BenefitController {
         try {
             benefitService.removeBenefitFromCareerLevel(careerLevelId, benefitTypeId);
         } catch (Exception ex) {
-            return "Error removing benefit from career level: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error removing benefit from career level: " + ex.toString();
         }
         return "Succesfully removed benefit from career level!";
     }

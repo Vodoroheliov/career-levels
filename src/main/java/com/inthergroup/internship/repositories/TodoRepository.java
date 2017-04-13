@@ -1,7 +1,5 @@
 package com.inthergroup.internship.repositories;
 
-import com.inthergroup.internship.models.TodoType;
-
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,8 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.inthergroup.internship.models.Todo;
+
 @Repository
-public interface TodoRepository extends JpaRepository<TodoType, Long> {
+public interface TodoRepository extends JpaRepository<Todo, Long> {
+
+    @Query ("select t from Todo t where t.primaryKey.user.id = :userId " +
+            "and t.primaryKey.careerLevel.id = :careerLevelId " +
+            "and t.primaryKey.todoId = :todoId")
+    Todo findTodo(@Param("userId")Long userId,
+            @Param("careerLevelId")Long careerLevelId, @Param("todoId")String todoId);
+    
     @Query("select name from TodoType where id in " +
             "(select ct.primaryKey.todoType.id from CareerLevelTodo ct " +
             "where ct.primaryKey.careerLevel.id = ?1)")

@@ -22,7 +22,8 @@ public class GroupController {
             group = new Group(groupName);
             groupService.create(group);
         } catch (Exception ex) {
-            return "Error creating the Group: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error creating the Group: " + ex.toString();
         }
         return "Group succesfully created! (id = " + group.getId() + ")";
     }
@@ -45,7 +46,8 @@ public class GroupController {
         try {
             groupService.updateUserGroup(userId, groupId);
         } catch (Exception ex) {
-            return "Error updating user's group: " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error updating user's group: " + ex.toString();
         }
         return "Succesfully updated user's group!";
     }
@@ -58,7 +60,8 @@ public class GroupController {
         try {
             groupService.deleteById(id);
         } catch (Exception ex) {
-            return "Error deleting the group by id #" + id + ": " + ex.toString();
+            return "redirect:/general-error?msg=" +
+                    "Error deleting the group by id #" + id + ": " + ex.toString();
         }
         return "Group succesfully deleted!";
     }
