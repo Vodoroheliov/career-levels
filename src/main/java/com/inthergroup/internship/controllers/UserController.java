@@ -43,6 +43,17 @@ public class UserController {
     // PUBLIC METHODS
     // ------------------------
     
+    @RequestMapping("/all-users")
+    public String allUsers(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "users/all-users";
+    }
+    
+    @RequestMapping("/show-user-form")
+    public String showUserForm() {
+        return "users/create-user";
+    }
+    
     @RequestMapping("/users/progress-page/{id}")
     public String progressPage(@PathVariable("id") Long id, Model model) {
         model.addAttribute("userId", id);

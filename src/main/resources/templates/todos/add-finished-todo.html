@@ -15,7 +15,7 @@
             <input id="todoId" type="text" th:field="*{todoId}" name="todoId" class="form-control"
                 placeholder="Title" />
             <span class="formError" th:if="${#fields.hasErrors('todoId')}"
-                            th:errors="*{todoId}">Invalid Title</span>
+                    th:errors="*{todoId}">Invalid Title</span>
             <div style="clear: both; display: block; height: 10px;"></div>
             <div><label for="description">Description:</label></div>
             <input type="text" th:field="*{description}" name ="description"
