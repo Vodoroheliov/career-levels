@@ -137,7 +137,9 @@
                         </label>
                         <div class="col-xs-5">
       <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="\b((?!=|\,|\.).)+(.)\b"
-            aria-required="true" aria-describedby="name-format" placeholder="Enter a name"/>                      
+            aria-required="true" 
+            minlength="4" maxlength="16"
+            aria-describedby="name-format" placeholder="Enter a name"/>                      
                         </div>        
 </div>
                     
@@ -150,7 +152,7 @@
         </div>
     </div>
 </div>
- 
+</div> 
  
 <!-- Update form -->
  <div class="container">
@@ -174,13 +176,11 @@
  
   <div class="form-group">
                         <label class="col-xs-3 control-label">Name
-                        <span class="asteriskField">
-					        *
-					       </span>
                         </label>
                         <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="\b((?!=|\,|\.).)+(.)\b"
-            aria-required="true" aria-describedby="name-format" placeholder="Enter a name"/>                      
+      <input class="form-control" id="Last Name" name="Last Name" value=""   pattern="\b((?!=|\,|\.).)+(.)\b" 
+            minlength="4" maxlength="16"
+            aria-describedby="name-format" placeholder="Enter a name"/>                      
                         </div>        
 </div>
                     
@@ -193,7 +193,7 @@
         </div>
     </div>
 </div>
- 
+</div> 
    
  
  <div class="container">                  

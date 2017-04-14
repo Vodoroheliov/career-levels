@@ -164,31 +164,47 @@
                 <!-- The form is placed inside the body of modal -->
                 <form id="loginForm" method="post" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">First Name</label>
+                        <label class="col-xs-3 control-label">First Name
+                        <span class="asteriskField">
+					        *
+					       </span>
+                        </label>
                         <div class="col-xs-5">
       <input class="form-control" id="First Name" name="Last Name" value="" required  pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" 
-            aria-required="true" aria-describedby="name-format" placeholder="Name"/>                      
+            aria-required="true" minlength="4" maxlength="16" aria-describedby="name-format" placeholder="Name"/>                      
                         </div>        
                     </div>
                     
   <div class="form-group">
-                        <label class="col-xs-3 control-label">Last Name</label>
+                        <label class="col-xs-3 control-label">Last Name
+                        <span class="asteriskField">
+					        *
+					       </span>
+                        </label>
                         <div class="col-xs-5">
       <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" 
-            aria-required="true" aria-describedby="name-format" placeholder="Name"/>                      
+            aria-required="true" aria-describedby="name-format" minlength="4" maxlength="16" placeholder="Name"/>                      
                         </div>        
                     </div>   
                     
   <div class="form-group">
-                        <label class="col-xs-3 control-label">Username</label>
+                        <label class="col-xs-3 control-label">Username
+                        <span class="asteriskField">
+					        *
+					       </span>
+                        </label>
                         <div class="col-xs-5">
-      <input class="form-control" id="username" name="Last Name" value="" required  pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" 
-            aria-required="true" aria-describedby="name-format" placeholder="Name"/>                      
+      <input class="form-control" id="username" name="Last Name" value="" required  pattern="[0-9]*+[a-zA-z]([ '-][a-zA-Z]+)*" 
+            aria-required="true" minlength="4" maxlength="16"  aria-describedby="name-format" placeholder="Name"/>                      
                         </div>        
                     </div>                                    
                     
    <div class="form-group">
-                        <label class="col-xs-3 control-label">Email</label>
+                        <label class="col-xs-3 control-label">Email
+                        <span class="asteriskField">
+					        *
+					       </span>
+                        </label>
                         <div class="col-xs-5">
       <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" 
             aria-required="true" aria-describedby="name-format" placeholder="email@example.com"/>                      
@@ -197,8 +213,12 @@
 
         
 <div class="form-group">        
-     <label for="name" class="col-xs-3 control-label">CareerLevel</label>   
-        <select  required>
+     <label for="name" class="col-xs-3 control-label">CareerLevel
+     <span class="asteriskField">
+					        *
+					       </span>
+     </label>   
+        <select class="styled-select transparent semi-square"  required>
   <option value="">Select an item</option>
    <option value="Internship">Internship</option>
     <option value="Baby on board">Baby on board</option>
@@ -209,8 +229,12 @@
  </div>     
  
  <div class="form-group">
- <label class="col-xs-3 control-label">Group</label>
-<select required name="group" id="input7">
+ <label class="col-xs-3 control-label">Group
+ <span class="asteriskField">
+					        *
+					       </span>
+ </label>
+<select class="styled-select transparent semi-square"  required name="group" id="input7">
     <option value="">Select an item</option>
     <option value="admin">Admin</option>
     <option value="user">User</option>                             
@@ -234,6 +258,8 @@
         </div>
     </div>
 </div>
+</div>
+
 
 <!-- Update form -->
  <div class="container">
@@ -256,39 +282,39 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">First Name</label>
                         <div class="col-xs-5">
-      <input class="form-control" id="First Name" name="Last Name" value="" required  pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" 
-            aria-required="true" aria-describedby="name-format" placeholder="Name"/>                      
+      <input class="form-control" id="First Name" name="Last Name" value=""  pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" 
+            minlength="4" maxlength="16" aria-describedby="name-format" placeholder="Name"/>                      
                         </div>        
                     </div>
                     
   <div class="form-group">
                         <label class="col-xs-3 control-label">Last Name</label>
                         <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" 
-            aria-required="true" aria-describedby="name-format" placeholder="Name"/>                      
+      <input class="form-control" id="Last Name" name="Last Name" value="" minlength="4" maxlength="16"  pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" 
+             aria-describedby="name-format" placeholder="Name"/>                      
                         </div>        
                     </div>   
                     
   <div class="form-group">
                         <label class="col-xs-3 control-label">Username</label>
                         <div class="col-xs-5">
-      <input class="form-control" id="username" name="Last Name" value="" required  pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" 
-            aria-required="true" aria-describedby="name-format" placeholder="Name"/>                      
+      <input class="form-control" id="username" name="Last Name" value="" minlength="4" maxlength="16"  pattern="[0-9]*+[a-zA-z]([ '-][a-zA-Z]+)*"
+            aria-describedby="name-format" placeholder="Name"/>                      
                         </div>        
                     </div>                                    
                     
    <div class="form-group">
                         <label class="col-xs-3 control-label">Email</label>
                         <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" 
-            aria-required="true" aria-describedby="name-format" placeholder="email@example.com"/>                      
+      <input class="form-control" id="Last Name" name="Last Name" value=""  pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" 
+            aria-describedby="name-format" placeholder="email@example.com"/>                      
                         </div>        
                     </div>                  
 
         
 <div class="form-group">        
      <label for="name" class="col-xs-3 control-label">CareerLevel</label>   
-        <select  required>
+        <select class="styled-select transparent semi-square"   >
   <option value="">Select an item</option>
    <option value="Internship">Internship</option>
     <option value="Baby on board">Baby on board</option>
@@ -300,7 +326,7 @@
  
  <div class="form-group">
  <label class="col-xs-3 control-label">Group</label>
-<select required name="group" id="input7">
+<select class="styled-select transparent semi-square"  name="group" id="input7">
     <option value="">Select an item</option>
     <option value="admin">Admin</option>
     <option value="user">User</option>                             
@@ -315,7 +341,7 @@
         </div>
     </div>
 </div>
-
+</div>
 
  <div class="container">                  
   <ul class="pager">
@@ -324,8 +350,9 @@
   </ul>
 </div>
 
-<div>
+
 <!-- Footer -->
+<div>
 <footer class="footer-distributed">
 
 			<div class="footer-left">

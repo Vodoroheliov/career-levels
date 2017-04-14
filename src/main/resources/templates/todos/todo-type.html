@@ -148,7 +148,7 @@
                         </label>
                         <div class="col-xs-5">
       <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="\b((?!=|\,|\.).)+(.)\b"
-            aria-required="true" aria-describedby="name-format" placeholder="Enter a name"/>                      
+            aria-required="true" minlength="4" maxlength="16" aria-describedby="name-format" placeholder="Enter a name"/>                      
                         </div>        
 </div>
                     
@@ -161,7 +161,7 @@
         </div>
     </div>
 </div>
- 
+ </div>
  
 <!-- Update form -->
  <div class="container">
@@ -185,13 +185,11 @@
  
   <div class="form-group">
                         <label class="col-xs-3 control-label">Name
-                        <span class="asteriskField">
-					        *
-					       </span>
                         </label>
                         <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="\b((?!=|\,|\.).)+(.)\b"
-            aria-required="true" aria-describedby="name-format" placeholder="Enter a name"/>                      
+      <input class="form-control" id="Last Name" name="Last Name" value=""  pattern="\b((?!=|\,|\.).)+(.)\b"
+           minlength="4" maxlength="16"
+            aria-describedby="name-format" placeholder="Enter a name"/>                      
                         </div>        
 </div>
                     
@@ -204,52 +202,8 @@
         </div>
     </div>
 </div>
- 
- <!--  TODO Add popup  -->
-  <div class="container">
-  <!-- Trigger the modal with a button -->
-<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+ </div>
 
-<div class="modal fade" tabindex="-1" id="Add"
-        data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
-                </button>
-                <h4 class="modal-title">Add</h4>
-            </div>
-            <div class="modal-body">
-    <form>                 
-                     <div class="form-group">
-                        <label for="inputId">ID</label>
-                        <input class="form-control" placeholder="ID"
-                                type="text" id="inputFirstName" />
-                    </div>
-                    
-                      <div class="mainselection">
-								<select name="CareerLevel" id="input7">
-								    <option value="Finish trial period">Finish trial period</option>
-								    <option value="Read Warehouse and Distribution Science">Read Warehouse and Distribution Science</option>
-				   				    <option value="Daily time tracking report">Daily time tracking report</option> 
-								    <option value="ideas for the company">ideas for the company</option> 
- 							        <option value="months in the company">months in the company</option> 
- 							        <option value="article">article</option> 
- 							        <option value="presentation">presentation</option>                              
-								</select>
-                            </div>
-                </form> 
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-primary"
-                        data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>  
-</div>
    
  
  

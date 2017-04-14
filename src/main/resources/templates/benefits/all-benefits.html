@@ -129,8 +129,12 @@
                 <!-- The form is placed inside the body of modal -->
                 <form id="loginForm" method="post" class="form-horizontal">      
 <div class="form-group">        
-     <label for="name" class="col-xs-3 control-label">CareerLevel</label>   
-        <select  required>
+     <label for="name" class="col-xs-3 control-label">CareerLevel
+     <span class="asteriskField">
+					        *
+					       </span>
+     </label>   
+        <select class="styled-select transparent semi-square" required>
   <option value="">Select an item</option>
    <option value="Internship">Internship</option>
     <option value="Baby on board">Baby on board</option>
@@ -141,8 +145,12 @@
  </div>     
  
  <div class="form-group">
- <label class="col-xs-3 control-label">Benefit type</label>
-<select required name="group" id="input7">
+ <label class="col-xs-3 control-label">Benefit type
+ <span class="asteriskField">
+					        *
+					       </span>
+ </label>
+<select class="styled-select transparent semi-square" required name="group" id="input7">
     <option value="">Select an item</option>
  <option value="books per year">Fixed schedule</option>
     <option value="articles">Laptop</option>                              
@@ -150,9 +158,13 @@
 </div>  
  
   <div class="form-group">
-                        <label class="col-xs-3 control-label">Quantity</label>
+                        <label class="col-xs-3 control-label">Quantity
+                        <span class="asteriskField">
+					        *
+					       </span>
+                        </label>
                         <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="[1-9]*" 
+      <input class="form-control" id="Last Name" name="Last Name" value="" required  type="number" step="1" min="1" 
             aria-required="true" aria-describedby="name-format" placeholder="Enter a number"/>                      
                         </div>        
                     </div>
@@ -165,6 +177,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
  
  <!-- Update form -->
@@ -179,7 +192,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title">Add</h5>
+                <h5 class="modal-title">Update</h5>
             </div>
 
             <div class="modal-body">
@@ -187,7 +200,7 @@
                 <form id="loginForm" method="post" class="form-horizontal">      
 <div class="form-group">        
      <label for="name" class="col-xs-3 control-label">CareerLevel</label>   
-        <select  required>
+        <select class="styled-select transparent semi-square">
   <option value="">Select an item</option>
    <option value="Internship">Internship</option>
     <option value="Baby on board">Baby on board</option>
@@ -199,7 +212,7 @@
  
  <div class="form-group">
  <label class="col-xs-3 control-label">Benefit type</label>
-<select required name="group" id="input7">
+<select class="styled-select transparent semi-square" name="group" id="input7">
     <option value="">Select an item</option>
     <option value="books per year">Fixed schedule</option>
     <option value="articles">Laptop</option>                             
@@ -209,8 +222,8 @@
   <div class="form-group">
                         <label class="col-xs-3 control-label">Quantity</label>
                         <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="[1-9]*" 
-            aria-required="true" aria-describedby="name-format" placeholder="Enter a number"/>                      
+      <input class="form-control" id="Last Name" name="Last Name" value=""  type="number" step="1" min="1" 
+             aria-describedby="name-format" placeholder="Enter a number"/>                      
                         </div>        
                     </div>
                     
@@ -223,7 +236,7 @@
         </div>
     </div>
 </div>
- 
+ </div>
  <div class="container">                  
   <ul class="pager">
     <li><a th:href="@{/index}">&lt;&lt;&lt;Previous page</a></li>
