@@ -39,11 +39,11 @@ public class User {
     private long id;
     
     // The user's last name
-    @Column(length = 64)
+    @Column(nullable = false, length = 64)
     private String lastName;
     
     // The user's first name
-    @Column(length = 64)
+    @Column(nullable = false, length = 64)
     private String firstName;
     
     // The user's username
@@ -55,7 +55,7 @@ public class User {
     private String password;
     
     // The user's email
-    @Column(length = 64, unique = true)
+    @Column(nullable = false, length = 64, unique = true)
     private String email;
     
     // The user's career level
