@@ -1,6 +1,7 @@
 package com.inthergroup.internship.services;
 
-import java.sql.Timestamp;
+
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,7 @@ public class TodoServiceJpaImpl implements TodoService {
 
     @Override
     public void addTodoToUser(Long userId, String todoId, Long todoTypeId,
-            Timestamp dateOfCompletion, String description) {
+            Date dateOfCompletion, String description) {
         User user = userRepo.findOne(userId);
         user.addTodo(todoId, todoTypeId, dateOfCompletion, description);
     }

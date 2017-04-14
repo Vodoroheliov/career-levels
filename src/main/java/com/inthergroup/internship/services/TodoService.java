@@ -1,6 +1,7 @@
 package com.inthergroup.internship.services;
 
-import java.sql.Timestamp;
+
+import java.util.Date;
 import java.util.List;
 
 import com.inthergroup.internship.models.Todo;
@@ -29,7 +30,7 @@ public interface TodoService {
     Todo saveTodo(Todo todo);
     
     void addTodoToUser(Long userId, String todoId, Long todoTypeId,
-            Timestamp dateOfCompletion, String description);
+            Date dateOfCompletion, String description);
 
     void removeTodoFromUser(Long userId, String todoId, Long careerLevelId);
 

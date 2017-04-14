@@ -1,6 +1,7 @@
 package com.inthergroup.internship.models;
 
-import java.sql.Timestamp;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -292,7 +293,7 @@ public class User {
     
     // Add a todo to the user.
     // Create an association object for the relationship and set its data.
-    public void addTodo(String todoId, long todoTypeId, Timestamp dateOfCompletion,
+    public void addTodo(String todoId, long todoTypeId, Date dateOfCompletion,
             String description) {
         Todo todo = new Todo();
         todo.setUser(this);

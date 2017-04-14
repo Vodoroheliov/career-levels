@@ -63,6 +63,7 @@ public class UserController {
         model.addAttribute("user", userService.findById(id));
         model.addAttribute(
                 "careerLevel", careerLevelService.findCareerLevelByUserId(id));
+        model.addAttribute("todoTypes", todoService.findAllTodoTypes());
         return "users/progress-page";
     }
 

@@ -1,10 +1,13 @@
 package com.inthergroup.internship.controllers;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -60,128 +64,194 @@ public class TodoController {
         return "Todo Type succesfully deleted!";
     }
     
-    /**
-     * Directs user to fill in the form for adding the finished task.
-     */
-    @RequestMapping(value = "/add-todo-to-user/{id}", method = RequestMethod.GET)
-    @Transactional
-    public String addTodoToUser(
-            @ModelAttribute("todoForm") AddFinishedTodoForm todoForm,
-            @PathVariable("id") Long id, final Model model) {
-        
-        if (model.asMap().containsKey("todoFormBindingResult"))
-        {
-            model.addAttribute("org.springframework.validation.BindingResult.todoForm",
-                    model.asMap().get("todoFormBindingResult"));
-        }
-        
-//        if (!model.containsAttribute("todoForm")) {
-//            model.addAttribute("todoForm", new AddFinishedTodoForm());
-//        } else {
-//            model.addAttribute("searchFormBacking", todoForm);
+//    /**
+//     * Directs user to fill in the form for adding the finished task.
+//     */
+//    @RequestMapping(value = "/add-todo-to-user/{id}", method = RequestMethod.GET)
+//    @Transactional
+//    public String addTodoToUser(
+//            @ModelAttribute("todoForm") AddFinishedTodoForm todoForm,
+//            @PathVariable("id") Long id, final Model model) {
+//        
+//        if (model.asMap().containsKey("todoFormBindingResult"))
+//        {
+//            model.addAttribute("org.springframework.validation.BindingResult.todoForm",
+//                    model.asMap().get("todoFormBindingResult"));
 //        }
-        
-        model.addAttribute("userId", id);
-        model.addAttribute("todoTypes", todoService.findAllTodoTypes());
-        return "todos/add-finished-todo";
-    }
+//        
+////        if (!model.containsAttribute("todoForm")) {
+////            model.addAttribute("todoForm", new AddFinishedTodoForm());
+////        } else {
+////            model.addAttribute("searchFormBacking", todoForm);
+////        }
+//        
+//        model.addAttribute("userId", id);
+//        model.addAttribute("todoTypes", todoService.findAllTodoTypes());
+//        return "todos/add-finished-todo";
+//    }
+
+//    /**
+//     * Adds the completed task to the user.
+//     */
+//    @RequestMapping(value = "/add-todo-to-user", method = RequestMethod.POST)
+//    @Transactional
+//    public String addTodoToUser(
+//            @Valid @ModelAttribute("todoForm") final AddFinishedTodoForm todoForm,
+//            final BindingResult bindingResult, Long userId,
+//            final RedirectAttributes redirectAttributes) {
+//        System.out.println(bindingResult.toString());
+//        if (!bindingResult.hasErrors()) { // validation errors
+//            if (todoForm.getDescription() == "") {
+//                todoForm.setDescription(null);
+//            }
+//            try {
+//                Calendar calendar = Calendar.getInstance();
+//                java.sql.Timestamp dateOfCompletion =
+//                        new java.sql.Timestamp(calendar.getTime().getTime());
+//                todoService.addTodoToUser(userId, todoForm.getTodoId(),
+//                        todoForm.getTodoTypeId(), dateOfCompletion,
+//                        todoForm.getDescription());
+//            } catch (Exception ex) {
+//                return "redirect:/general-error?msg=" +
+//                        "Error adding todo to user: " + ex.toString();
+//            }
+//        }
+//        else {
+//            //flash errors bound to "searchFormBacking"
+//            redirectAttributes.addFlashAttribute(
+//                    "todoFormBindingResult", bindingResult);
+//            redirectAttributes.addFlashAttribute("todoForm", todoForm);
+//            return "redirect:/add-todo-to-user/" + userId;
+////            return "todos/add-finished-todo";
+//        }
+//        return "redirect:/users/progress-page/" + userId;
+//    }
 
     /**
      * Adds the completed task to the user.
      */
-    @RequestMapping(value = "/add-todo-to-user", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-todo-to-user/{id}", method = RequestMethod.POST)
     @Transactional
     public String addTodoToUser(
-            @Valid @ModelAttribute("todoForm") final AddFinishedTodoForm todoForm,
-            final BindingResult bindingResult, Long userId,
-            final RedirectAttributes redirectAttributes) {
-        System.out.println(bindingResult.toString());
-        if (!bindingResult.hasErrors()) { // validation errors
-            if (todoForm.getDescription() == "") {
-                todoForm.setDescription(null);
-            }
-            try {
-                Calendar calendar = Calendar.getInstance();
-                java.sql.Timestamp dateOfCompletion =
-                        new java.sql.Timestamp(calendar.getTime().getTime());
-                todoService.addTodoToUser(userId, todoForm.getTodoId(),
-                        todoForm.getTodoTypeId(), dateOfCompletion,
-                        todoForm.getDescription());
-            } catch (Exception ex) {
-                return "redirect:/general-error?msg=" +
-                        "Error adding todo to user: " + ex.toString();
-            }
+            @PathVariable("id") Long id,
+            @RequestParam("todoId") String todoId,
+            @RequestParam("description") String description,
+            @RequestParam("todoTypeId") Long todoTypeId,
+            @RequestParam("dateOfCompletion") @DateTimeFormat(pattern="yyyy/mm/dd")
+                    Date dateOfCompletion) {
+        
+        if (description == "") {
+            description = null;
         }
-        else {
-            //flash errors bound to "searchFormBacking"
-            redirectAttributes.addFlashAttribute(
-                    "todoFormBindingResult", bindingResult);
-            redirectAttributes.addFlashAttribute("todoForm", todoForm);
-            return "redirect:/add-todo-to-user/" + userId;
-//            return "todos/add-finished-todo";
+        if (dateOfCompletion == null) {
+            dateOfCompletion = new Date();
         }
-        return "redirect:users/progress-page/" + userId;
+        try {
+//            Calendar calendar = Calendar.getInstance();
+//            java.sql.Timestamp dateOfCompletion =
+//                    new java.sql.Timestamp(calendar.getTime().getTime());
+            todoService.addTodoToUser(id, todoId, todoTypeId, dateOfCompletion,
+                    description);
+        } catch (Exception ex) {
+            return "redirect:/general-error?msg=" +
+                    "Error adding todo to user: " + ex.toString();
+        }
+        return "redirect:/users/progress-page/" + id;
     }
     
-    /**
-     * Shows the form for updating the finished task.
-     */
-    @RequestMapping(value = "/update-todo-for-user/{id}", method = RequestMethod.GET)
-    @Transactional
-    public String updateTodoForUser(@PathVariable("id") Long id, Long careerLevelId,
-            String todoId, Model model) {
-        model.addAttribute("userId", id);
-        
-        // Fill form with data of existing todo
-        Todo todo = todoService.findTodo(id, careerLevelId, todoId);
-        AddFinishedTodoForm todoForm = new AddFinishedTodoForm();
-        todoForm.setTodoId(todo.getTodoId());
-        todoForm.setTodoTypeId(todo.getTodoTypeId());
-        todoForm.setDescription(todo.getDescription());
-        model.addAttribute("todoForm", todoForm);
-        
-        model.addAttribute("todoTypes", todoService.findAllTodoTypes());
-        System.out.println("todo: " + todo);
-        
-        return "todos/update-finished-todo";
-    }
+//    /**
+//     * Shows the form for updating the finished task.
+//     */
+//    @RequestMapping(value = "/update-todo-for-user/{id}", method = RequestMethod.GET)
+//    @Transactional
+//    public String updateTodoForUser(@PathVariable("id") Long id, Long careerLevelId,
+//            String todoId, Model model) {
+//        model.addAttribute("userId", id);
+//        
+//        // Fill form with data of existing todo
+//        Todo todo = todoService.findTodo(id, careerLevelId, todoId);
+//        AddFinishedTodoForm todoForm = new AddFinishedTodoForm();
+//        todoForm.setTodoId(todo.getTodoId());
+//        todoForm.setTodoTypeId(todo.getTodoTypeId());
+//        todoForm.setDescription(todo.getDescription());
+//        model.addAttribute("todoForm", todoForm);
+//        
+//        model.addAttribute("todoTypes", todoService.findAllTodoTypes());
+//        System.out.println("todo: " + todo);
+//        
+//        return "/todos/update-finished-todo";
+//    }
+    
+//    /**
+//     * Update the existing finished task.
+//     */
+//    @RequestMapping(value = "/update-todo-for-user", method = RequestMethod.POST)
+//    @Transactional
+//    public String updateTodoForUser(
+//            @Valid @ModelAttribute("todoForm") AddFinishedTodoForm todoForm,
+//            BindingResult bindingResult, Long userId) {
+//        System.out.println(bindingResult.toString());
+//        if (!bindingResult.hasErrors()) { // validation errors
+//            if (todoForm.getDescription() == "") {
+//                todoForm.setDescription(null);
+//            }
+//            try {
+//                User user = userService.findById(userId);
+//                Todo todo = todoService.findTodo(userId,
+//                        user.getCareerLevel().getId(), todoForm.getTodoId());
+//                todo.setDescription(todoForm.getDescription());
+//                todo.setTodoTypeId(todoForm.getTodoTypeId());
+//                todoService.saveTodo(todo);
+//            } catch (Exception ex) {
+//                System.out.println("Test1: " + ex.toString());
+//                return "redirect:/general-error?msg=" +
+//                        "Error updating todo for user: " + ex.toString();
+//            }
+//        }
+//        else {
+//            return "redirect:/add-todo-to-user/" + userId;
+//        }
+//        return "redirect:/users/progress-page/" + userId;
+//    }
     
     /**
      * Update the existing finished task.
      */
-    @RequestMapping(value = "/update-todo-for-user", method = RequestMethod.POST)
+    @RequestMapping(value = "/update-todo-for-user/{id}", method = RequestMethod.POST)
     @Transactional
     public String updateTodoForUser(
-            @Valid @ModelAttribute("todoForm") AddFinishedTodoForm todoForm,
-            BindingResult bindingResult, Long userId) {
-        System.out.println(bindingResult.toString());
-        if (!bindingResult.hasErrors()) { // validation errors
-            if (todoForm.getDescription() == "") {
-                todoForm.setDescription(null);
-            }
-            try {
-                User user = userService.findById(userId);
-                Todo todo = todoService.findTodo(userId,
-                        user.getCareerLevel().getId(), todoForm.getTodoId());
-                todo.setDescription(todoForm.getDescription());
-                todo.setTodoTypeId(todoForm.getTodoTypeId());
-                todoService.saveTodo(todo);
-            } catch (Exception ex) {
-                System.out.println("Test1: " + ex.toString());
-                return "redirect:/general-error?msg=" +
-                        "Error updating todo for user: " + ex.toString();
-            }
+            @PathVariable("id") Long id,
+            @RequestParam("todoId") String todoId,
+            @RequestParam("description") String description,
+            @RequestParam("todoTypeId") Long todoTypeId,
+            @RequestParam("dateOfCompletion") @DateTimeFormat(pattern="yyyy/mm/dd")
+                    Date dateOfCompletion) {
+        
+        if (description == "") {
+            description = null;
         }
-        else {
-            return "redirect:/add-todo-to-user/" + userId;
+        if (dateOfCompletion == null) {
+            dateOfCompletion = new Date();
         }
-        return "redirect:users/progress-page/" + userId;
+        try {
+            User user = userService.findById(id);
+            Todo todo = todoService.findTodo(id, user.getCareerLevel().getId(),
+                    todoId);
+            todo.setDescription(description);
+            todo.setTodoTypeId(todoTypeId);
+            todo.setDateOfCompletion(dateOfCompletion);
+            todoService.saveTodo(todo);
+        } catch (Exception ex) {
+            return "redirect:/general-error?msg=" +
+                    "Error updating todo for user: " + ex.toString();
+        }
+        return "redirect:/users/progress-page/" + id;
     }
     
     @RequestMapping(value = "/remove-todo-from-user", method = RequestMethod.GET)
     @Transactional
-    public String removeTodoFromUser(long userId, String todoId,
-            long careerLevelId) {
+    public String removeTodoFromUser(Long userId, String todoId,
+            Long careerLevelId) {
         // TODO check long variables to null value (because of error while testing)
         try {
             todoService.removeTodoFromUser(userId, todoId, careerLevelId);

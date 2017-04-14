@@ -1,5 +1,6 @@
 package com.inthergroup.internship.models;
 
+import java.util.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.AssociationOverride;
@@ -43,7 +44,7 @@ public class Todo {
     
     // additional fields
     private long todoTypeId;
-    private Timestamp dateOfCompletion;
+    private Date dateOfCompletion;
     private String description;
     
     // ---------------
@@ -97,11 +98,11 @@ public class Todo {
 
     // TODO Test with this column constraint:
 //    @Column(name = "date_of_completion", nullable = false)
-    public Timestamp getDateOfCompletion() {
+    public Date getDateOfCompletion() {
         return dateOfCompletion;
     }
 
-    public void setDateOfCompletion(Timestamp dateOfCompletion) {
+    public void setDateOfCompletion(Date dateOfCompletion) {
         this.dateOfCompletion = dateOfCompletion;
     }
 
