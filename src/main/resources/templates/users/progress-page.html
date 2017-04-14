@@ -32,7 +32,9 @@
 <!-- Bootstrap Date-Picker Plugin -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-<script>
+<!--  <script href="/js/handlebars.js" th:src="@{/js/handlebars.js}"></script> -->
+ 
+ <script>
 	$(document).ready(function(){
 		var date_input=$('input[name="dateOfCompletion"]'); //our date input has the name "dateOfCompletion"
 		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
@@ -87,9 +89,10 @@
     <ul class="nav navbar-nav">
       <li><a th:href="@{/index}">Home</a></li>
 <!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
-      <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+<div class="dropdown">
+  <button class="dropbtn">Administration<span class="caret"></span></button>
+
+ <div class="dropdown-content">
             <li><a th:href="@{/users/all-users}">All users</a></li>
             <li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
             <li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
@@ -97,8 +100,9 @@
             <li><a th:href="@{/todos/todo-type}">All todo types</a></li>
 <!--             <li role="separator" class="divider"></li> -->
             <li><a th:href="@{/benefits/benefit-type}">All benefit types</a></li>
-          </ul>
-</li>
+ </div>
+
+</div>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -196,37 +200,48 @@
   </div>
  </div> 
 
-
+<!-- Add form -->
 <div class="container">
 <!-- Trigger the modal with a button -->
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 
 <div class="modal fade" tabindex="-1" id="Add"
         data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm-4">
+    <div class="modal-dialog modal-sm-2">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Add</h4>
+                <h5 class="modal-title">Add</h5>
             </div>
+
             <div class="modal-body">
                  <form id="addForm" th:action="@{/add-todo-to-user/{id}/(id=${userId})}"
                          action="#" class="form-horizontal" method="post">
                     <div class="form-group">
-                        <label for="todoId">Title</label>
-                        <input class="form-control" placeholder="Title"
-                                type="text" name="todoId" id="todoId" />
+                        <label class="col-xs-3 for="todoId">Title</label>
+                        <span class="asteriskField">*</span>
+                        <div class="col-xs-5">
+	                        <input class="form-control" placeholder="Title"
+	                                type="text" name="todoId" id="todoId"
+	                                required  pattern="\b((?!=|\,|\.).)+(.)\b"
+                                    aria-required="true"
+                                    aria-describedby="name-format"  />
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <input class="form-control" placeholder="Description"
-                                type="text" name="description" id="description" />
+                        <label class="col-xs-3" for="description">Description</label>
+                        <div class="col-xs-5">
+                            <input class="form-control" placeholder="Description"
+                                type="text" name="description" id="description"
+                                aria-required="true" aria-describedby="name-format" />
+                        </div>
                     </div>
-                    <label for="todoTypeId">Task type</label>
+                    <label class="col-xs-3" for="todoTypeId">Task type</label>
+                    <span class="asteriskField">*</span>
                     <div class="mainselection">
-	                    <select name="todoTypeId" id="todoTypeId">
+	                    <select name="todoTypeId" id="todoTypeId" required>
 	                        <option th:each="todoType : ${todoTypes}" 
 	                            th:value="${todoType.id}" 
 	                            th:text="${todoType.name}">Course</option>
@@ -238,23 +253,22 @@
                     <div class="bootstrap-iso">
                      <div class="container-fluid">
                       <div class="row">
-                       <div class="col-md-6 col-sm-6 col-xs-12">
+                       <div class="col-md-8 col-sm-8 col-xs-12">
                          <div class="form-group ">
-                          <label class="control-label col-sm-4 requiredField" for="dateOfCompletion">
-                           Date
-                           <span class="asteriskField">*</span>
-                          </label>
-                          <br/>
-                          <div class="col-sm-12">
-                           <div class="input-group">
-                            <div class="input-group-addon">
-                             <i class="fa fa-calendar">
-                             </i>
-                            </div>
-                            <input class="form-control" id="dateOfCompletion"
-                                    name="dateOfCompletion"
-                                    placeholder="yyyy/mm/dd" type="text"/>
-                           </div>
+                         <div class="col-sm-12">
+	                          <label class="control-label col-sm-4 requiredField" for="dateOfCompletion">
+	                           Date
+	                           <span class="asteriskField">*</span>
+	                          </label>
+	                           <div class="input-group">
+	                            <div class="input-group-addon">
+	                             <i class="fa fa-calendar">
+	                             </i>
+	                            </div>
+	                            <input class="form-control" id="dateOfCompletion"
+	                                    name="dateOfCompletion"
+	                                    placeholder="yyyy/mm/dd" type="text" required/>
+	                           </div>
                           </div>
                          </div>
                        </div>
@@ -267,41 +281,55 @@
                 <button onclick="addFormSubmit()" type="submit" class="btn btn-primary">Add</button>
                 <button type="button" class="btn btn-primary"
                         data-dismiss="modal">Cancel</button>
+
             </div>
         </div>
     </div>
 </div>
 </div>
 
+<!-- Update form -->
 <div class="container">
 <!-- Trigger the modal with a button -->
 <!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Update">Open Modal</button> -->
 
 <div class="modal fade" tabindex="-1" id="Update"
-        data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm-4">
+        data-keyboard="false" data-backdrop="static"
+        role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog modal-sm-2">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Update</h4>
+                <h5 class="modal-title">Update</h5>
             </div>
+
             <div class="modal-body">
                 <form id="updateForm" th:action="@{/update-todo-for-user/{id}/(id=${userId})}"
                         action="#" class="form-horizontal" method="post">
                     <div class="form-group">
-                        <label for="todoId">Title</label>
-                        <input class="form-control" placeholder="Title" value="Old Value"
-                                type="text" name="todoId" id="todoIdUpdate" readonly="readonly" />
+                        <label class="col-xs-3" for="todoId">Title</label>
+                        <div class="col-xs-5">
+	                        <input class="form-control" placeholder="Title" value="Old Value"
+	                                type="text" name="todoId" id="todoIdUpdate" readonly="readonly"
+	                                required  pattern="\b((?!=|\,|\.).)+(.)\b"
+	                                aria-required="true" aria-describedby="name-format" />
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <input class="form-control" placeholder="Description" value="Old Description"
-                                type="text" name="description" id="descriptionUpdate" />
+                        <label class="col-xs-3" for="description">Description</label>
+                        <div class="col-xs-5">
+	                        <input class="form-control" placeholder="Description" value="Old Description"
+	                                type="text" name="description" id="descriptionUpdate"
+	                                aria-required="true" aria-describedby="name-format" />
+                        </div>
                     </div>
-					<label for="todoTypeIdUpdate">Task type</label>
-					<div class="mainselection">
+					<label class="col-xs-3" for="todoTypeIdUpdate">
+					   Task type
+				    </label>
+				    <span class="asteriskField">*</span>
+					<div class="mainselection" required>
                         <select name="todoTypeId" id="todoTypeIdUpdate">
                             <option th:each="todoType : ${todoTypes}" 
                                 th:value="${todoType.id}" 
@@ -314,14 +342,13 @@
 					<div class="bootstrap-iso">
 					 <div class="container-fluid">
 					  <div class="row">
-					   <div class="col-md-6 col-sm-6 col-xs-12">
+					   <div class="col-md-8 col-sm-8 col-xs-12">
 					     <div class="form-group ">
+					     <div class="col-sm-12">
 					      <label class="control-label col-sm-4 requiredField" for="dateOfCompletionUpdate">
 					       Date
 					       <span class="asteriskField">*</span>
 					      </label>
-					      <br/>
-					      <div class="col-sm-12">
 					       <div class="input-group">
 					        <div class="input-group-addon">
 					         <i class="fa fa-calendar">
@@ -329,7 +356,7 @@
 					        </div>
 					        <input class="form-control" id="dateOfCompletionUpdate"
 					               name="dateOfCompletion"
-					               placeholder="yyyy/mm/dd" type="text"/>
+					               placeholder="yyyy/mm/dd" type="text" required/>
 					       </div>
 					      </div>
 					     </div>
@@ -357,6 +384,7 @@
 			     All finished tasks &gt;&gt;&gt;</a></li>
 		</ul>
 	</div>
+<div>
 
     <div>
 		<footer class="footer-distributed">

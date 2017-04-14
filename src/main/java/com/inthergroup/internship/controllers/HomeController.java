@@ -100,4 +100,9 @@ public class HomeController {
     public String benefit_type() {
         return "/benefits/benefit-type";
     }
+    
+    @RequestMapping("/validation")
+    public String validation() {
+        return "/validation";
+    }
 }

@@ -26,9 +26,10 @@
     <ul class="nav navbar-nav">
       <li><a th:href="@{/index}">Home</a></li>
 <!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
-<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+<div class="dropdown">
+  <button class="dropbtn">Administration<span class="caret"></span></button>
+
+ <div class="dropdown-content">
             <li><a th:href="@{/users/all-users}">All users</a></li>
             <li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
             <li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
@@ -36,8 +37,9 @@
             <li><a th:href="@{/todos/todo-type}">All todo types</a></li>
 <!--             <li role="separator" class="divider"></li> -->
             <li><a th:href="@{/benefits/benefit-type}">All benefit types</a></li>
-          </ul>
-</li>
+ </div>
+
+</div>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -108,120 +110,133 @@
         
  </div>  
  
-<!--  TODO Update popup  -->
-  <div class="container">
-  <!-- Trigger the modal with a button -->
-<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
-
-<div class="modal fade" tabindex="-1" id="Update"
-        data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
-                </button>
-                <h4 class="modal-title">Update</h4>
-            </div>
-            <div class="modal-body">
-                <form>                 
-<label for="inputCareerLevel">Career Level</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="Internship">Internship</option>
-    <option value="Baby on board">Baby on board</option>
-    <option value="First steps">First steps</option> 
-    <option value="You are good">You are good</option> 
-    <option value="You are rock">You are rock</option>                              
-</select>
-</div>
-
-<br/>
-<label for="inputBenefitType">Benefit type</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="Fixed salary">Fixed salary</option>
-    <option value="Laptop">Laptop</option>  
-    <option value="Visit to NL">Visit to NL</option>                           
-</select>
-</div>
-<br/>
-   <div class="form-group">
-                        <label for="inputFirstName">Quantity</label>
-                        <input class="form-control" placeholder="Enter a number"
-                                type="text" id="inputFirstName" />
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-primary"
-                        data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
+ <!-- Add form -->
+ <div class="container">
+<div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
   
-</div>
- 
- 
- <!--  TODO Add popup  -->
-  <div class="container">
-  <!-- Trigger the modal with a button -->
-<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
-
-<div class="modal fade" tabindex="-1" id="Add"
-        data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+    
+    
+    <div class="modal-dialog modal-sm-2">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Add</h4>
+                <h5 class="modal-title">Add</h5>
             </div>
+
             <div class="modal-body">
-                <form>                 
-<label for="inputCareerLevel">Career Level</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="Internship">Internship</option>
+                <!-- The form is placed inside the body of modal -->
+                <form id="loginForm" method="post" class="form-horizontal">      
+<div class="form-group">        
+     <label for="name" class="col-xs-3 control-label">CareerLevel
+     <span class="asteriskField">
+					        *
+					       </span>
+     </label>   
+        <select class="styled-select transparent semi-square" required>
+  <option value="">Select an item</option>
+   <option value="Internship">Internship</option>
     <option value="Baby on board">Baby on board</option>
     <option value="First steps">First steps</option> 
     <option value="You are good">You are good</option> 
-    <option value="You are rock">You are rock</option>                              
+    <option value="You are rock">You are rock</option> 
 </select>
-</div>
-
-<br/>
-<label for="inputBenefitType">Benefit type</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="Fixed salary">Fixed salary</option>
-    <option value="Laptop">Laptop</option>  
-    <option value="Visit to NL">Visit to NL</option>                           
+ </div>     
+ 
+ <div class="form-group">
+ <label class="col-xs-3 control-label">Benefit type
+ <span class="asteriskField">
+					        *
+					       </span>
+ </label>
+<select class="styled-select transparent semi-square" required name="group" id="input7">
+    <option value="">Select an item</option>
+ <option value="books per year">Fixed schedule</option>
+    <option value="articles">Laptop</option>                              
 </select>
-</div>
-<br/>
-   <div class="form-group">
-                        <label for="inputFirstName">Quantity</label>
-                        <input class="form-control" placeholder="Enter a number"
-                                type="text" id="inputFirstName" />
+</div>  
+ 
+  <div class="form-group">
+                        <label class="col-xs-3 control-label">Quantity
+                        <span class="asteriskField">
+					        *
+					       </span>
+                        </label>
+                        <div class="col-xs-5">
+      <input class="form-control" id="Last Name" name="Last Name" value="" required  type="number" step="1" min="1" 
+            aria-required="true" aria-describedby="name-format" placeholder="Enter a number"/>                      
+                        </div>        
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
+                    
+                    <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-primary"
-                        data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-  
 </div>
-   
  
+ <!-- Update form -->
+ <div class="container">
+<div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+  
+    
+    
+    <div class="modal-dialog modal-sm-2">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Update</h5>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                <form id="loginForm" method="post" class="form-horizontal">      
+<div class="form-group">        
+     <label for="name" class="col-xs-3 control-label">CareerLevel</label>   
+        <select class="styled-select transparent semi-square">
+  <option value="">Select an item</option>
+   <option value="Internship">Internship</option>
+    <option value="Baby on board">Baby on board</option>
+    <option value="First steps">First steps</option> 
+    <option value="You are good">You are good</option> 
+    <option value="You are rock">You are rock</option> 
+</select>
+ </div>     
+ 
+ <div class="form-group">
+ <label class="col-xs-3 control-label">Benefit type</label>
+<select class="styled-select transparent semi-square" name="group" id="input7">
+    <option value="">Select an item</option>
+    <option value="books per year">Fixed schedule</option>
+    <option value="articles">Laptop</option>                             
+</select>
+</div>  
+ 
+  <div class="form-group">
+                        <label class="col-xs-3 control-label">Quantity</label>
+                        <div class="col-xs-5">
+      <input class="form-control" id="Last Name" name="Last Name" value=""  type="number" step="1" min="1" 
+             aria-describedby="name-format" placeholder="Enter a number"/>                      
+                        </div>        
+                    </div>
+                    
+                    <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+ </div>
  <div class="container">                  
   <ul class="pager">
     <li><a th:href="@{/index}">&lt;&lt;&lt;Home</a></li>
