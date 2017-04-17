@@ -59,12 +59,12 @@ public class User {
     private String email;
     
     // The user's career level
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="career_level_id", nullable = false)
     private CareerLevel careerLevel;
     
     // The user's group
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
@@ -90,7 +90,7 @@ public class User {
 //    private List<UserTodoAssociation> todos;
     
     // The user's todos
-    @OneToMany(mappedBy = "primaryKey.user", orphanRemoval=true,
+    @OneToMany(mappedBy = "primaryKey.user", orphanRemoval = true,
             cascade = CascadeType.ALL)
     private Set<Todo> todos = new HashSet<Todo>();
     

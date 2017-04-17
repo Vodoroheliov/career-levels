@@ -1,5 +1,8 @@
 @CHARSET "ISO-8859-1";
 
+body {
+	padding-right: 0 !important
+}
 
 .styled-select {
 /*    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0; */
@@ -278,8 +281,7 @@ font: bold 20px Times New Roman;
  
 	
 }
-<<<<<<< HEAD
-=======
+
 .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}
 .mainselection {
 /*   overflow:hidden; */
@@ -297,7 +299,6 @@ select {
     width:200px;
 /*     -webkit-appearance: none; */
 }
->>>>>>> origin/forms
 
  .t {
 /*   border-bottom: 1px dotted #000000; */

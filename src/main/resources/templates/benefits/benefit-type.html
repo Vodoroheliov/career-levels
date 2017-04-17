@@ -16,7 +16,28 @@
 <link rel = "stylesheet" type="text/css"  href = "../static/css/footer-distributed-with-address-and-phones.css" th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function changeFormValues(currentId) {
+        document.getElementById('benefitTypeIdUpdate').setAttribute(
+                'value', document.getElementById("id-" + currentId).innerHTML);
+        
+        document.getElementById('benefitNameUpdate').setAttribute(
+                'value', document.getElementById("name-" + currentId).innerHTML);
+    }
+</script>
+<script>
+function deleteBenefitType(curId, benefitTypeId) {
+      var xhttp;
+      xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "/delete-benefit-type?id="+benefitTypeId, true);
+      xhttp.send();
+      
+      var element = document.getElementById('row-' + curId);
+      element.parentNode.removeChild(element);
+    }
+</script>
 </head>
+
 <body>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -29,7 +50,7 @@
 <div class="dropdown">
   <button class="dropbtn">Administration<span class="caret"></span></button>
 
- <div class="dropdown-content">
+<div class="dropdown-content">
             <li><a th:href="@{/users/all-users}">All users</a></li>
             <li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
             <li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
@@ -37,7 +58,7 @@
             <li><a th:href="@{/todos/todo-type}">All todo types</a></li>
 <!--             <li role="separator" class="divider"></li> -->
             <li><a th:href="@{/benefits/benefit-type}">All benefit types</a></li>
- </div>
+</div>
 
 </div>
     </ul>
@@ -71,129 +92,112 @@
                     </tr>
                  </thead>
                  <tbody>
-                 <tr>
-                 <td>I did it</td>
-                 <td>Fixed salary</td>
-                 <td><a href="#"><span class = "glyphicon glyphicon-pencil" data-toggle="modal" data-target="#Update"></span></a></td>
-                 <td><a href="#"><span class = "glyphicon glyphicon-trash" ></span></a></td>
-                 </tr>
-<!--                    <tr th:each = "task:${tasks}"> -->
-<!--                     <td th:text = "${task.id}"></td> -->
-<!--                     <td th:text = "${task.name}"></td> -->
-<!--                     <td th:text = "${task.description}"></td> -->
-<!--                     <td th:text = "${#dates.format(task.dateCreated, 'dd-MM-yyyy')}"></td> -->
-<!--                     <td th:text = "${task.finished}"></td> -->
-<!--                     <td><a th:href="@{/task(id=${task.id})}"><span class = "glyphicon glyphicon-ok"></span></a></td> -->
-<!--                     <td><a th:href="@{/updateTask(id=${task.id})}"><span class = "glyphicon glyphicon-pencil"></span></a></td> -->
-<!--                     <td><a th:href="@{/deleteTask(id=${task.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td> -->
-<!--                    </tr>              -->
-                    <tr th:each = "todo : ${allFinishedTodos}">
-                      <td th:text = "${todo[1].primaryKey.careerLevel.name}"></td>
-                      <td th:text = "${todo[1].primaryKey.todoId}"></td>
-                      <td th:text = "${todo[0].name}"></td>
-                      <td th:text = "${todo[1].description}"></td>
-                      <td th:text = "${todo[1].dateOfCompletion}"></td>
-                   </tr>
+                    <tr th:id="'row-' + ${benefitTypeStat.count}" th:each = "benefitType, benefitTypeStat : ${benefitTypes}">
+                        <td th:id="'id-' + ${benefitTypeStat.count}" th:text = "${benefitType.id}"></td>
+                        <td th:id="'name-' + ${benefitTypeStat.count}" th:text = "${benefitType.name}"></td>
+                        <td><a style="cursor: pointer;">
+                            <span th:onclick="'javascript:changeFormValues(\'' + ${benefitTypeStat.count} + '\');'"
+                                    class = "glyphicon glyphicon-pencil" data-toggle="modal"
+                                    data-target="#Update"></span>
+                            </a></td>
+                        <td><a style="cursor: pointer;" th:onclick="'javascript:deleteBenefitType(\'' + ${benefitTypeStat.count} +'\',\''+ ${benefitType.id} + '\');'">
+                                <span class = "glyphicon glyphicon-trash" ></span>
+                        </a></td>
+                    </tr>
                  </tbody>
                </table>
-<!--                <div class="container"> -->
-<!--                  <ul class ="nav nav-pills"> -->
-<!--                    <li th:class="${status.index}==${pageCourantetasks}?active:''" th:each= "p, status:${pagesTasks}"> -->
-<!--                      <a th:href="@{/index(pageTasks=${status.index})}" th:text="${status.index}"></a> -->
-<!--                    </li> -->
-<!--                  </ul> -->
-<!--                </div> -->
            </div>   
         </div>
      </div>
  </div>       
  </div>
  
-  <!-- Add form -->
- <div class="container">
-<div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-  
-    
-    
-    <div class="modal-dialog modal-sm-2">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title">Add</h5>
-            </div>
+    <!-- Add form -->
+    <div class="container">
+        <div class="modal fade" id="Add" tabindex="-1" role="dialog"
+            aria-labelledby="Login" aria-hidden="true">
+            <div class="modal-dialog modal-sm-2">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title">Add</h5>
+                    </div>
 
-            <div class="modal-body">
-                <!-- The form is placed inside the body of modal -->
-                <form id="loginForm" method="post" class="form-horizontal">        
- 
- 
-  <div class="form-group">
-                        <label class="col-xs-3 control-label">Name
-                        <span class="asteriskField">
-					        *
-					       </span>
-                        </label>
-                        <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value="" required  pattern="\b((?!=|\,|\.).)+(.)\b"
-            aria-required="true" 
-            minlength="4" maxlength="16"
-            aria-describedby="name-format" placeholder="Enter a name"/>                      
-                        </div>        
-</div>
-                    
-                    <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
-                </form>
+                    <div class="modal-body">
+                        <!-- The form is placed inside the body of modal -->
+                        <form id="updateForm" method="post" class="form-horizontal"
+                                th:action="@{/create-benefit-type}" action="#">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Name
+                                    <span class="asteriskField"> * </span>
+                                </label>
+                                <div class="col-xs-5">
+                                    <input class="form-control" id="benefitName" name="benefitName"
+                                        value="" required pattern="\b((?!=|\,|\.).)+(.)\b"
+                                        aria-required="true" minlength="4" maxlength="30"
+                                        aria-describedby="name-format" placeholder="Enter a name" />
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div> 
- 
-<!-- Update form -->
- <div class="container">
-<div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-  
-    
-    
-    <div class="modal-dialog modal-sm-2">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title">Update</h5>
-            </div>
 
-            <div class="modal-body">
-                <!-- The form is placed inside the body of modal -->
-                <form id="loginForm" method="post" class="form-horizontal">        
- 
- 
-  <div class="form-group">
-                        <label class="col-xs-3 control-label">Name
-                        </label>
-                        <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value=""   pattern="\b((?!=|\,|\.).)+(.)\b" 
-            minlength="4" maxlength="16"
-            aria-describedby="name-format" placeholder="Enter a name"/>                      
-                        </div>        
-</div>
-                    
-                    <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
-                </form>
+    <!-- Update form -->
+    <div class="container">
+        <div class="modal fade" id="Update" tabindex="-1" role="dialog"
+            aria-labelledby="Login" aria-hidden="true">
+            <div class="modal-dialog modal-sm-2">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title">Update</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- The form is placed inside the body of modal -->
+                        <form id="updateForm" method="post" class="form-horizontal"
+                                th:action="@{/update-benefit-type}" action="#">
+                            <input type="hidden" name="benefitTypeId" id="benefitTypeIdUpdate"
+                                   value="" />
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Name
+                                    <span class="asteriskField"> * </span>
+                                </label>
+                                <div class="col-xs-5">
+                                    <input class="form-control" id="benefitNameUpdate" name="newBenefitName"
+                                        value="" pattern="\b((?!=|\,|\.).)+(.)\b" minlength="4"
+                                        maxlength="30" aria-describedby="name-format" required
+                                        placeholder="Enter a name" />
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div> 
    
  
  <div class="container">                  

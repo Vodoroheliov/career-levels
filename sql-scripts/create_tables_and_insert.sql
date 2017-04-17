@@ -273,7 +273,7 @@ CREATE TABLE `users` (
   `last_name` varchar(64) NOT NULL,
   `first_name` varchar(64) NOT NULL,
   `username` varchar(64) NOT NULL,
-  `password` varchar(64) DEFAULT NULL,
+  `password` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
   `career_level_id` int(20) NOT NULL,
   `group_id` int(20) NOT NULL,

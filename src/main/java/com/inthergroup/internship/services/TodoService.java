@@ -4,6 +4,9 @@ package com.inthergroup.internship.services;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
+import com.inthergroup.internship.models.CareerLevelTodo;
 import com.inthergroup.internship.models.Todo;
 import com.inthergroup.internship.models.TodoType;
 
@@ -48,4 +51,10 @@ public interface TodoService {
     List<Object[]>findCurrentTodosByUserId(Long id);
     
     List<Object[]>findAllFinishedTodosByUserId(Long id);
+    
+    List<CareerLevelTodo> findAllCareerLevelTodos();
+    
+    CareerLevelTodo findCareerLevelTodo(Long careerLevelId, Long todoTypeId);
+    
+    void deleteCareerLevelTodo(CareerLevelTodo careerLevelTodo);
 }

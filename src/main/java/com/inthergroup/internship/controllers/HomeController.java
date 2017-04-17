@@ -33,7 +33,7 @@ public class HomeController {
     @RequestMapping({"/", "/index"})
     public String index(Model model) {
 
-        // List all careerl levels
+        // List all career levels
         List<CareerLevel> careerLevels = careerLevelService.findAllByOrderByIdAsc();
         model.addAttribute("careerLevels", careerLevels);
         
@@ -53,13 +53,6 @@ public class HomeController {
             users.add(usersFromLevel);
         }
         model.addAttribute("users", users);
-        
-//        // Testing
-//        for (List<User> usersFromLevel : users) {
-//            for (User user : usersFromLevel) {
-//                System.out.println("User: " + user.getLastName());                
-//            }
-//        }
 
         // For each career level list its todos
         List<List<String>> todos = new ArrayList<List<String>>();
@@ -74,35 +67,4 @@ public class HomeController {
 
         return "index";
     }
-    
-    @RequestMapping("/users/admin")
-    public String admin() {
-        return "/users/admin";
-    }
-    @RequestMapping("/users/all-users")
-    public String users() {
-        return "/users/all-users";
-    }
-    @RequestMapping("/todos/all-tasks")
-    public String tasks() {
-        return "/todos/all-tasks";
-    }
-    @RequestMapping("/todos/todo-type")
-    public String todo_type() {
-        return "/todos/todo-type";
-    }
-    @RequestMapping("/benefits/all-benefits")
-    public String benefits() {
-        return "/benefits/all-benefits";
-    }
-   
-    @RequestMapping("/benefits/benefit-type")
-    public String benefit_type() {
-        return "/benefits/benefit-type";
-    }
-    
-    @RequestMapping("/validation")
-    public String validation() {
-        return "/validation";
-    }
-}
+} // class HomeController

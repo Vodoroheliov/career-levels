@@ -16,7 +16,52 @@
 <link rel = "stylesheet" type="text/css"  href = "../static/css/footer-distributed-with-address-and-phones.css" th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">    
+    function changeFormValues(currentId) {
+        
+        document.getElementById('oldCareerLevelId').setAttribute(
+                'value', document.getElementById("careerLevelId-" + currentId).value);
+        document.getElementById('oldBenefitTypeId').setAttribute(
+                'value', document.getElementById("benefitTypeId-" + currentId).value);
+        
+        var valueToSelect = document.getElementById("careerLevelId-" + currentId).value;
+        var careerLevelIdSelect = document.getElementById('careerLevelIdUpdate');
+        
+        for(var i, j = 0; i = careerLevelIdSelect.options[j]; j++) {
+            if(i.value == valueToSelect) {
+                careerLevelIdSelect.selectedIndex = j;
+                break;
+            }
+        }
+
+        valueToSelect = document.getElementById("benefitTypeId-" + currentId).value;
+        var benefitTypeIdSelect = document.getElementById('benefitTypeIdUpdate');
+        
+        for(var i, j = 0; i = benefitTypeIdSelect.options[j]; j++) {
+            if(i.value == valueToSelect) {
+            	benefitTypeIdSelect.selectedIndex = j;
+                break;
+            }
+        }
+        
+        document.getElementById('quantityUpdate').setAttribute(
+                'value', document.getElementById("quantity-" + currentId).innerHTML);
+    }
+</script>
+<script>
+function deleteBenefitFromCareerLevel(curId, careerLevelId, benefitTypeId) {
+      var xhttp;
+      xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "/remove-benefit-from-career-level?careerLevelId="+careerLevelId+
+              "&benefitTypeId="+benefitTypeId, true);
+      xhttp.send();
+      
+      var element = document.getElementById('row-' + curId);
+      element.parentNode.removeChild(element);
+    }
+</script>
 </head>
+
 <body>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -72,37 +117,23 @@
                     </tr>
                  </thead>
                  <tbody>
-                      <td>You are rock</td>
-                      <td>days per month work from home</td>
-                      <td>3</td>
-                      <td><a href="#"><span class = "glyphicon glyphicon-pencil" data-toggle="modal" data-target="#Update"></span></a></td>
-                      <td><a href="#"><span class = "glyphicon glyphicon-trash" ></span></a></td>
-<!--                    <tr th:each = "task:${tasks}"> -->
-<!--                     <td th:text = "${task.id}"></td> -->
-<!--                     <td th:text = "${task.name}"></td> -->
-<!--                     <td th:text = "${task.description}"></td> -->
-<!--                     <td th:text = "${#dates.format(task.dateCreated, 'dd-MM-yyyy')}"></td> -->
-<!--                     <td th:text = "${task.finished}"></td> -->
-<!--                     <td><a th:href="@{/task(id=${task.id})}"><span class = "glyphicon glyphicon-ok"></span></a></td> -->
-<!--                     <td><a th:href="@{/updateTask(id=${task.id})}"><span class = "glyphicon glyphicon-pencil"></span></a></td> -->
-<!--                     <td><a th:href="@{/deleteTask(id=${task.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td> -->
-<!--                    </tr>              -->
-                    <tr th:each = "todo : ${allFinishedTodos}">
-                      <td th:text = "${todo[1].primaryKey.careerLevel.name}"></td>
-                      <td th:text = "${todo[1].primaryKey.todoId}"></td>
-                      <td th:text = "${todo[0].name}"></td>
-                      <td th:text = "${todo[1].description}"></td>
-                      <td th:text = "${todo[1].dateOfCompletion}"></td>
-                   </tr>
+                      <tr th:id="'row-' + ${benefitStat.count}" th:each = "benefit, benefitStat : ${benefits}">
+                            <td th:text = "${benefit.primaryKey.careerLevel.name}"></td>
+                            <input type="hidden" th:id="'careerLevelId-' + ${benefitStat.count}" th:value="${benefit.primaryKey.careerLevel.id}" />
+                            <td th:text = "${benefit.primaryKey.benefitType.name}"></td>
+                            <input type="hidden" th:id="'benefitTypeId-' + ${benefitStat.count}" th:value="${benefit.primaryKey.benefitType.id}" />
+                            <td th:id="'quantity-' + ${benefitStat.count}" th:text = "${benefit.quantity}"></td>
+                            <td><a style="cursor: pointer;">
+                            <span th:onclick="'javascript:changeFormValues(\'' + ${benefitStat.count} + '\');'"
+                                    class = "glyphicon glyphicon-pencil" data-toggle="modal"
+                                    data-target="#Update"></span>
+                            </a></td>
+                            <td><a style="cursor: pointer;" th:onclick="'javascript:deleteBenefitFromCareerLevel(\'' + ${benefitStat.count} +'\',\''+ ${benefit.primaryKey.careerLevel.id} +'\',\''+ ${benefit.primaryKey.benefitType.id} + '\');'">
+                            <span class = "glyphicon glyphicon-trash"></span>
+                        </a></td>
+                        </tr>
                  </tbody>
                </table>
-<!--                <div class="container"> -->
-<!--                  <ul class ="nav nav-pills"> -->
-<!--                    <li th:class="${status.index}==${pageCourantetasks}?active:''" th:each= "p, status:${pagesTasks}"> -->
-<!--                      <a th:href="@{/index(pageTasks=${status.index})}" th:text="${status.index}"></a> -->
-<!--                    </li> -->
-<!--                  </ul> -->
-<!--                </div> -->
            </div>   
         </div>
      </div>
@@ -110,133 +141,150 @@
         
  </div>  
  
- <!-- Add form -->
- <div class="container">
-<div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-  
-    
-    
-    <div class="modal-dialog modal-sm-2">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title">Add</h5>
-            </div>
-
-            <div class="modal-body">
-                <!-- The form is placed inside the body of modal -->
-                <form id="loginForm" method="post" class="form-horizontal">      
-<div class="form-group">        
-     <label for="name" class="col-xs-3 control-label">CareerLevel
-     <span class="asteriskField">
-					        *
-					       </span>
-     </label>   
-        <select class="styled-select transparent semi-square" required>
-  <option value="">Select an item</option>
-   <option value="Internship">Internship</option>
-    <option value="Baby on board">Baby on board</option>
-    <option value="First steps">First steps</option> 
-    <option value="You are good">You are good</option> 
-    <option value="You are rock">You are rock</option> 
-</select>
- </div>     
- 
- <div class="form-group">
- <label class="col-xs-3 control-label">Benefit type
- <span class="asteriskField">
-					        *
-					       </span>
- </label>
-<select class="styled-select transparent semi-square" required name="group" id="input7">
-    <option value="">Select an item</option>
- <option value="books per year">Fixed schedule</option>
-    <option value="articles">Laptop</option>                              
-</select>
-</div>  
- 
-  <div class="form-group">
-                        <label class="col-xs-3 control-label">Quantity
-                        <span class="asteriskField">
-					        *
-					       </span>
-                        </label>
-                        <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value="" required  type="number" step="1" min="1" 
-            aria-required="true" aria-describedby="name-format" placeholder="Enter a number"/>                      
-                        </div>        
+    <!-- Add form -->
+    <div class="container">
+        <div class="modal fade" id="Add" tabindex="-1" role="dialog"
+            aria-labelledby="Login" aria-hidden="true">
+            <div class="modal-dialog modal-sm-2">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title">Add</h5>
                     </div>
-                    
-                    <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
-                </form>
+
+                    <div class="modal-body">
+                        <!-- The form is placed inside the body of modal -->
+                        <form id="addForm" th:action="@{/add-benefit-to-career-level}" action="#" 
+                                method="post" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="careerLevelId" class="col-xs-3 control-label">CareerLevel
+                                    <span class="asteriskField"> * </span>
+                                </label>
+                                <select name="careerLevelId" id="careerLevelId"
+                                        class="styled-select transparent semi-square" required>
+                                    <option value="">Select an item</option>
+                                    <option th:each="careerLevel : ${careerLevels}" 
+                                            th:value="${careerLevel.id}" 
+                                            th:text="${careerLevel.name}">Career Level</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Benefit type
+                                    <span class="asteriskField"> * </span>
+                                </label>
+                                <select name="benefitTypeId" id="benefitTypeId"
+                                        class="styled-select transparent semi-square" required>
+                                    <option value="">Select an item</option>
+                                    <option th:each="benefitType : ${benefitTypes}" 
+                                            th:value="${benefitType.id}" 
+                                            th:text="${benefitType.name}">Benefit Type</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Quantity
+                                    <span class="asteriskField"> * </span>
+                                </label>
+                                <div class="col-xs-5">
+                                    <input class="form-control"  name="quantity" id="quantity"
+                                        value="" required type="number" step="1" min="1"
+                                        aria-required="true" aria-describedby="name-format"
+                                        placeholder="Enter a number" />
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
- 
- <!-- Update form -->
- <div class="container">
-<div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-  
     
-    
-    <div class="modal-dialog modal-sm-2">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title">Update</h5>
-            </div>
+    <!-- Update form -->
+    <div class="container">
+        <div class="modal fade" id="Update" tabindex="-1" role="dialog"
+            aria-labelledby="Login" aria-hidden="true">
 
-            <div class="modal-body">
-                <!-- The form is placed inside the body of modal -->
-                <form id="loginForm" method="post" class="form-horizontal">      
-<div class="form-group">        
-     <label for="name" class="col-xs-3 control-label">CareerLevel</label>   
-        <select class="styled-select transparent semi-square">
-  <option value="">Select an item</option>
-   <option value="Internship">Internship</option>
-    <option value="Baby on board">Baby on board</option>
-    <option value="First steps">First steps</option> 
-    <option value="You are good">You are good</option> 
-    <option value="You are rock">You are rock</option> 
-</select>
- </div>     
- 
- <div class="form-group">
- <label class="col-xs-3 control-label">Benefit type</label>
-<select class="styled-select transparent semi-square" name="group" id="input7">
-    <option value="">Select an item</option>
-    <option value="books per year">Fixed schedule</option>
-    <option value="articles">Laptop</option>                             
-</select>
-</div>  
- 
-  <div class="form-group">
-                        <label class="col-xs-3 control-label">Quantity</label>
-                        <div class="col-xs-5">
-      <input class="form-control" id="Last Name" name="Last Name" value=""  type="number" step="1" min="1" 
-             aria-describedby="name-format" placeholder="Enter a number"/>                      
-                        </div>        
+
+
+            <div class="modal-dialog modal-sm-2">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title">Update</h5>
                     </div>
-                    
-                    <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
-                </form>
+
+                    <div class="modal-body">
+                        <!-- The form is placed inside the body of modal -->
+                        <form id="updateForm" th:action="@{/update-benefit-for-career-level}"
+                                method="get" class="form-horizontal">
+                            <input type="hidden" name="oldCareerLevelId" id="oldCareerLevelId"
+                                   value="" />
+                            <input type="hidden" name="oldBenefitTypeId" id="oldBenefitTypeId"
+                                   value="" />
+                            
+                            <div class="form-group">
+                                <label for="careerLevelId" class="col-xs-3 control-label">CareerLevel
+                                    <span class="asteriskField"> * </span>
+                                </label>
+                                <select name="newCareerLevelId" id="careerLevelIdUpdate"
+                                        class="styled-select transparent semi-square" required>
+                                    <option value="">Select an item</option>
+                                    <option th:each="careerLevel : ${careerLevels}" 
+                                            th:value="${careerLevel.id}" 
+                                            th:text="${careerLevel.name}">Career Level</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Benefit type
+                                    <span class="asteriskField"> * </span>
+                                </label>
+                                <select name="newBenefitTypeId" id="benefitTypeIdUpdate"
+                                        class="styled-select transparent semi-square" required>
+                                    <option value="">Select an item</option>
+                                    <option th:each="benefitType : ${benefitTypes}" 
+                                            th:value="${benefitType.id}" 
+                                            th:text="${benefitType.name}">Benefit Type</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Quantity <span
+                                    class="asteriskField"> * </span>
+                                </label>
+                                <div class="col-xs-5">
+                                    <input class="form-control"  name="quantity" id="quantityUpdate"
+                                        value="" required type="number" step="1" min="1"
+                                        aria-required="true" aria-describedby="name-format"
+                                        placeholder="Enter a number" />
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
- </div>
+    
  <div class="container">                  
   <ul class="pager">
     <li><a th:href="@{/index}">&lt;&lt;&lt;Home</a></li>
