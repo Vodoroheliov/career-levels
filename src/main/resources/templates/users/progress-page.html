@@ -25,25 +25,62 @@
 
 <!--Font Awesome (added because you use icons in your prepend/append)-->
 <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+
 <!--  jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<!-- Include Date Range Picker -->
+<!-- Bootstrap Date-Picker Plugin -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
- <script>
+<!--  <script href="/js/handlebars.js" th:src="@{/js/handlebars.js}"></script> -->
+ 
+<script>
 	$(document).ready(function(){
-		var date_input=$('input[name="date"]'); //our date input has the name "date"
+		var date_input=$('input[name="dateOfCompletion"]'); //our date input has the name "dateOfCompletion"
 		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
 		date_input.datepicker({
-			format: 'mm/dd/yyyy',
+			format: 'yyyy/mm/dd',
 			container: container,
 			todayHighlight: true,
 			autoclose: true,
 		})
 	})
 </script>
+<script type="text/javascript">    
+	function changeFormValues(currentId) {
+        document.getElementById('todoIdUpdate').setAttribute(
+        		'value', document.getElementById("todoId-" + currentId).innerHTML);
+        
+        var valueToSelect = document.getElementById("task-" + currentId).value;
+        var todoTypeIdSelect = document.getElementById('todoTypeIdUpdate');
+        
+        for(var i, j = 0; i = todoTypeIdSelect.options[j]; j++) {
+            if(i.value == valueToSelect) {
+            	todoTypeIdSelect.selectedIndex = j;
+                break;
+            }
+        }
+        
+        document.getElementById('descriptionUpdate').setAttribute(
+                'value', document.getElementById("description-" + currentId).innerHTML);
+        document.getElementById('dateOfCompletionUpdate').setAttribute(
+                'value', document.getElementById("dateOfCompletion-" + currentId).innerHTML);
+}
+</script>
+<script>
+function removeTodo(curId, userId, todoId, careerLevelId) {
+	  var xhttp;
+	  xhttp = new XMLHttpRequest();
+	  xhttp.open("GET", "/remove-todo-from-user?userId="+userId+"&todoId="+todoId
+			  +"&careerLevelId="+careerLevelId, true);
+	  xhttp.send();
+      
+      var element = document.getElementById('row-' + curId);
+      element.parentNode.removeChild(element);
+	}
+</script>
 </head>
+
 <body>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -53,9 +90,10 @@
     <ul class="nav navbar-nav">
       <li><a th:href="@{/index}">Home</a></li>
 <!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
-<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+<div class="dropdown">
+  <button class="dropbtn">Administration<span class="caret"></span></button>
+
+ <div class="dropdown-content">
             <li><a th:href="@{/users/all-users}">All users</a></li>
             <li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
             <li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
@@ -63,8 +101,9 @@
             <li><a th:href="@{/todos/todo-type}">All todo types</a></li>
 <!--             <li role="separator" class="divider"></li> -->
             <li><a th:href="@{/benefits/benefit-type}">All benefit types</a></li>
-          </ul>
-</li>
+ </div>
+
+</div>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -72,6 +111,9 @@
     </ul>
   </div>
 </nav>
+
+<!-- <span th:text="${beans.myBean.getMessage()}">MyBean value</span> -->
+<!-- <span th:text="${T(com.inthergroup.internship.beans.Helper).getMessage()}" >Static method value</span> -->
 
  <div class="jumbotron text-center ">
   <h2>
@@ -86,7 +128,7 @@
   </h3> 
   <br/>
  
- <button type="button" class="btn btn-primary1">Promote user</button>
+ <a th:href="@{/promote-user(userId=${userId})}" class="btn btn-primary1">Promote user</a>
  </div>
  
   <div class = "col-lg-6">
@@ -121,7 +163,9 @@
            <h3 class = "panel-title">
                <i class = "fa fa-money fa-fw"></i>Finished
 <!--                (<a th:href="@{/add-todo-to-user/{id}/(id=${userId})}"><span class = "glyphicon glyphicon-plus"></span> Add</a>) -->
- <button type="button" class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success" data-toggle="modal" data-target="#Add"> Add</button>
+               <button type="button"
+                       class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success"
+                       data-toggle="modal" data-target="#Add"> Add</button>
            </h3>
         </div>
          <div class = "panel-body">
@@ -133,188 +177,225 @@
                       <th>Task</th>
                       <th>Description</th>
                       <th>Date of completion</th>
-                    </tr>                 
+                    </tr>
                  </thead>
                  <tbody>
-                   <tr th:each = "todo : ${finishedTodos}">
-                      <td th:text = "${todo[1].primaryKey.todoId}"></td>
+                   <tr th:id="'row-' + ${todoStat.count}" th:each = "todo, todoStat : ${finishedTodos}">
+                      <td th:id="'todoId-' + ${todoStat.count}" th:text = "${todo[1].primaryKey.todoId}"></td>
                       <td th:text = "${todo[0].name}"></td>
-                      <td th:text = "${todo[1].description}"></td>
-                      <td th:text = "${todo[1].dateOfCompletion}"></td>
+                      <input type="hidden" th:id="'task-' + ${todoStat.count}" th:value="${todo[0].id}" />
+                      <td th:id="'description-' + ${todoStat.count}" th:text = "${todo[1].description}"></td>
+                      <td th:id="'dateOfCompletion-' + ${todoStat.count}" th:text = "${#dates.format(todo[1].dateOfCompletion, 'yyyy/mm/dd')}"></td>
 <!--                       <td><a th:href="@{/update-todo-for-user/{id}/(id=${userId},careerLevelId=${todo[1].primaryKey.careerLevel.id}, todoId=${todo[1].primaryKey.todoId})}"><span class = "glyphicon glyphicon-pencil"></span></a></td> -->
-                       <td><a href="#"><span class = "glyphicon glyphicon-pencil" data-toggle="modal" data-target="#Update"></span></a></td>
-                      <td><a th:href="@{/remove-todo-from-user(userId=${userId},todoId=${todo[1].primaryKey.todoId}, careerLevelId=${todo[1].primaryKey.careerLevel.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td>
+                       <td><a style="cursor: pointer;">
+                           <span th:onclick="'javascript:changeFormValues(\'' + ${todoStat.count} + '\');'"
+	                            class = "glyphicon glyphicon-pencil" data-toggle="modal"
+	                            data-target="#Update"></span>
+                       </a></td>
+<!--                       <td><a th:href="@{/remove-todo-from-user(userId=${userId},todoId=${todo[1].primaryKey.todoId}, careerLevelId=${todo[1].primaryKey.careerLevel.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td> -->
+                        <td><a style="cursor: pointer;" th:onclick="'javascript:removeTodo(\'' + ${todoStat.count} +'\',\''+ ${userId} +'\',\''+ ${todo[1].primaryKey.todoId} +'\',\''+ ${todo[1].primaryKey.careerLevel.id} + '\');'">
+                            <span class = "glyphicon glyphicon-trash"></span>
+                        </a></td>
                    </tr>
-                 </tbody>                               
+                 </tbody>
                </table>
         </div>
      </div>
      
   </div>
- </div> 
-
-
- <div class="container">
-  <!-- Trigger the modal with a button -->
-<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
-
-<div class="modal fade" tabindex="-1" id="Update"
-        data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm-4">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
-                </button>
-                <h4 class="modal-title">Update</h4>
-            </div>
-            <div class="modal-body">
-                <form action="https://formden.com/post/MlKtmY4x/" class="form-horizontal" method="post">
-                    <div class="form-group">
-                        <label for="inputLogin">Title</label>
-                        <input class="form-control" placeholder="Title"
-                                type="text" id="Title" readonly="readonly" />
-                    </div>              
-                    <div class="form-group">
-                        <label for="inputLastName">Description</label>
-                        <input class="form-control" placeholder="Description"
-                                type="text" id="Description" />
-                    </div>
-<label for="inputTaskType">Task type</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="books per year">books per year</option>
-    <option value="articles">articles</option>                              
-</select>
-</div>
-
-<br/>
-
-
-
-<div class="bootstrap-iso">
- <div class="container-fluid">
-  <div class="row">
-   <div class="col-md-6 col-sm-6 col-xs-12">
-     <div class="form-group ">
-      <label class="control-label col-sm-4 requiredField" for="date">
-       Date
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <br/>
-      <div class="col-sm-12">
-       <div class="input-group">
-        <div class="input-group-addon">
-         <i class="fa fa-calendar">
-         </i>
-        </div>
-        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
-       </div>
-      </div>
-     </div>
-   </div>
-  </div>
  </div>
-</div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-primary"
-                        data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-  
-</div>
-  <div class="container">
-  <!-- Trigger the modal with a button -->
-<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 
-<div class="modal fade" tabindex="-1" id="Add"
-        data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm-4">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
-                </button>
-                <h4 class="modal-title">Add</h4>
-            </div>
-            <div class="modal-body">
-                 <form action="https://formden.com/post/MlKtmY4x/" class="form-horizontal" method="post">
-                    <div class="form-group">
-                        <label for="inputLogin">Title</label>
-                        <input class="form-control" placeholder="Title"
-                                type="text" id="Title" />
-                    </div>              
-                    <div class="form-group">
-                        <label for="inputLastName">Description</label>
-                        <input class="form-control" placeholder="Description"
-                                type="text" id="Description" />
-                    </div>
-<label for="inputTaskType">Task type</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="books per year">books per year</option>
-    <option value="articles">articles</option>                              
-</select>
-</div>
+	<!-- Add form -->
+	<div class="container">
+		<!-- Trigger the modal with a button -->
+		<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 
-<br/>
+		<div class="modal fade" id="Add" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+			<div class="modal-dialog modal-sm-2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title">Add</h5>
+					</div>
 
+					<div class="modal-body">
+						<!-- The form is placed inside the body of modal -->
+						<form id="addForm"
+							th:action="@{/add-todo-to-user/{id}/(id=${userId})}" action="#"
+							class="form-horizontal" method="post">
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="todoId">Title
+									<span class="asteriskField">*</span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" placeholder="Title" type="text"
+										name="todoId" id="todoId" required
+										pattern="\b((?!=|\,|\.).)+(.)\b" aria-required="true"
+										aria-describedby="name-format" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="description">Description</label>
+								<div class="col-xs-5">
+									<input class="form-control" placeholder="Description"
+										type="text" name="description" id="description"
+										aria-required="true" aria-describedby="name-format" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="todoTypeId">Task
+									type <span class="asteriskField">*</span>
+								</label>
+								<div class="col-xs-5">
+									<select name="todoTypeId" id="todoTypeId" required>
+										<option value="">Select an item</option>
+										<option th:each="todoType : ${todoTypes}"
+											th:value="${todoType.id}" th:text="${todoType.name}">Task
+											type</option>
+									</select>
+								</div>
+							</div>
 
+							<div class="bootstrap-iso">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-md-8 col-sm-8 col-xs-12">
+											<div class="form-group ">
+												<div class="col-sm-12">
+													<label class="control-label col-sm-4 requiredField"
+														for="dateOfCompletion"> Date <span
+														class="asteriskField">*</span>
+													</label>
+													<div class="input-group">
+														<div class="input-group-addon">
+															<i class="fa fa-calendar"> </i>
+														</div>
+														<input class="form-control" id="dateOfCompletion"
+															name="dateOfCompletion" placeholder="yyyy/mm/dd"
+															type="text" required />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 
-<div class="bootstrap-iso">
- <div class="container-fluid">
-  <div class="row">
-   <div class="col-md-6 col-sm-6 col-xs-12">
-     <div class="form-group ">
-      <label class="control-label col-sm-4 requiredField" for="date">
-       Date
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <br/>
-      <div class="col-sm-12">
-       <div class="input-group">
-        <div class="input-group-addon">
-         <i class="fa fa-calendar">
-         </i>
-        </div>
-        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
-       </div>
-      </div>
-     </div>
-   </div>
-  </div>
- </div>
-</div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-primary"
-                        data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-  
-</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Add</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<!-- Update form -->
+	<div class="container">
+		<!-- Trigger the modal with a button -->
+		<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Update">Open Modal</button> -->
+
+		<div class="modal fade" id="Update" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+			<div class="modal-dialog modal-sm-2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title">Update</h5>
+					</div>
+
+					<div class="modal-body">
+						<!-- The form is placed inside the body of modal -->
+						<form id="updateForm"
+							th:action="@{/update-todo-for-user/{id}/(id=${userId})}"
+							action="#" class="form-horizontal" method="post">
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="todoId">Title</label>
+								<div class="col-xs-5">
+									<input class="form-control" placeholder="Title"
+										value="Old Value" type="text" name="todoId" id="todoIdUpdate"
+										readonly="readonly" required pattern="\b((?!=|\,|\.).)+(.)\b"
+										aria-required="true" aria-describedby="name-format" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="description">Description</label>
+								<div class="col-xs-5">
+									<input class="form-control" placeholder="Description"
+										value="Old Description" type="text" name="description"
+										id="descriptionUpdate" aria-required="true"
+										aria-describedby="name-format" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="todoTypeIdUpdate">Task
+									type <span class="asteriskField">*</span>
+								</label>
+								<div class="col-xs-5">
+									<select name="todoTypeId" id="todoTypeIdUpdate" required>
+										<option th:each="todoType : ${todoTypes}"
+											th:value="${todoType.id}" th:text="${todoType.name}">Course</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="bootstrap-iso">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-md-8 col-sm-8 col-xs-12">
+											<div class="form-group ">
+												<div class="col-sm-12">
+													<label class="control-label col-sm-4 requiredField"
+														for="dateOfCompletionUpdate"> Date <span
+														class="asteriskField">*</span>
+													</label>
+													<div class="input-group">
+														<div class="input-group-addon">
+															<i class="fa fa-calendar"> </i>
+														</div>
+														<input class="form-control" id="dateOfCompletionUpdate"
+															name="dateOfCompletion" placeholder="yyyy/mm/dd"
+															type="text" required />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit"
+									class="btn btn-primary">Update</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="container">
 		<ul class="pager">
 			<li><a th:href="@{/index}">&lt;&lt;&lt; Home</a></li>
-			<li><a th:href="@{/users/total-progress/{id}/(id=${userId})}">All finished tasks
-					&gt;&gt;&gt;</a></li>
+			<li><a th:href="@{/users/total-progress/{id}/(id=${userId})}">
+			     All finished tasks &gt;&gt;&gt;</a></li>
 		</ul>
 	</div>
+<div>
 
     <div>
 		<footer class="footer-distributed">

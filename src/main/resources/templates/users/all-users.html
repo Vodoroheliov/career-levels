@@ -16,10 +16,61 @@
 <link rel = "stylesheet" type="text/css"  href = "../static/css/footer-distributed-with-address-and-phones.css" th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">    
+    function changeFormValues(currentId) {
 
-
-
+        document.getElementById('userIdUpdate').setAttribute(
+                'value', document.getElementById("userId-" + currentId).innerHTML);
+    	
+        document.getElementById('firstNameUpdate').setAttribute(
+                'value', document.getElementById("firstName-" + currentId).innerHTML);
+        
+        document.getElementById('lastNameUpdate').setAttribute(
+                'value', document.getElementById("lastName-" + currentId).innerHTML);
+        
+        document.getElementById('usernameUpdate').setAttribute(
+                'value', document.getElementById("username-" + currentId).innerHTML);
+        
+        document.getElementById('passwordUpdate').setAttribute(
+                'value', document.getElementById("password-" + currentId).innerHTML);
+        
+        document.getElementById('emailUpdate').setAttribute(
+                'value', document.getElementById("email-" + currentId).innerHTML);
+        
+        var valueToSelect = document.getElementById("careerLevelId-" + currentId).value;
+        var careerLevelIdSelect = document.getElementById('careerLevelIdUpdate');
+        
+        for(var i, j = 0; i = careerLevelIdSelect.options[j]; j++) {
+            if(i.value == valueToSelect) {
+            	careerLevelIdSelect.selectedIndex = j;
+                break;
+            }
+        }
+        
+        valueToSelect = document.getElementById("groupId-" + currentId).value;
+        var groupIdSelect = document.getElementById('groupIdUpdate');
+        
+        for(var i, j = 0; i = groupIdSelect.options[j]; j++) {
+            if(i.value == valueToSelect) {
+            	groupIdSelect.selectedIndex = j;
+                break;
+            }
+        }
+    }
+</script>
+<script>
+function deleteUser(curId, userId) {
+      var xhttp;
+      xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "/delete-user?id="+userId, true);
+      xhttp.send();
+      
+      var element = document.getElementById('row-' + curId);
+      element.parentNode.removeChild(element);
+    }
+</script>
 </head>
+
 <body>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -29,9 +80,10 @@
     <ul class="nav navbar-nav">
       <li><a th:href="@{/index}">Home</a></li>
 <!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
-<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+<div class="dropdown">
+  <button class="dropbtn">Administration<span class="caret"></span></button>
+
+ <div class="dropdown-content">
             <li><a th:href="@{/users/all-users}">All users</a></li>
             <li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
             <li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
@@ -39,8 +91,9 @@
             <li><a th:href="@{/todos/todo-type}">All todo types</a></li>
 <!--             <li role="separator" class="divider"></li> -->
             <li><a th:href="@{/benefits/benefit-type}">All benefit types</a></li>
-          </ul>
-</li>
+ </div>
+
+</div>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -49,7 +102,7 @@
   </div>
 </nav>
 
-<div class="total_progress  ">
+<div class="total_progress">
    <div class = "column-lg-8">
      <div class = "panel panel-primary">
         <div class ="panel-heading">
@@ -58,19 +111,20 @@
 <!--                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span> -->
 <!--                  Add -->
 <!--              </a> -->
-<button type="button" class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success" data-toggle="modal" data-target="#Add"> Add</button>
-          
+                <button type="button"
+                    class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success"
+                    data-toggle="modal" data-target="#Add"> Add</button>
            </h3>
-          
         </div>
+        
          <div class = "panel-body">
            <div class = "table-responsive">
                <table class = "table table-bordered table-hover table-striped">
                  <thead>
                     <tr>
                       <th>ID</th>                      
-                      <th>Last name</th>
                       <th>First name</th>
+                      <th>Last name</th>
                       <th>Username</th>
                       <th>Email </th>
                       <th>Career Level</th>
@@ -78,219 +132,288 @@
                     </tr>
                  </thead>
                  <tbody>
-                 
-                     <tr>
-                      <td>1</td>
-                      <td>rotari</td>
-                      <td>Alex</td>
-                      <td>Rotari</td>
-                      <td>Rotari</td>
-                      <td>Rotari</td>
-                      <td>Rotari</td>
-                      <td><a href="#"><span class = "glyphicon glyphicon-pencil" data-toggle="modal" data-target="#Update"></span></a></td>
-                      <td><a href="#"><span class = "glyphicon glyphicon-trash" ></span></a></td>
-                    </tr>
-                      <tr>
-                      <td>1</td>
-                      <td>rotari</td>
-                      <td>Alex</td>
-                      <td>Rotari</td>
-                    </tr>
-                      <tr>
-                      <td>1</td>
-                      <td>rotari</td>
-                      <td>Alex</td>
-                      <td>Rotari</td>
-                    </tr>
-                      <tr>
-                      <td>1</td>
-                      <td>rotari</td>
-                      <td>Alex</td>
-                      <td>Rotari</td>
-                    </tr>
-<!--                    <tr th:each = "task:${tasks}"> -->
-<!--                     <td th:text = "${task.id}"></td> -->
-<!--                     <td th:text = "${task.name}"></td> -->
-<!--                     <td th:text = "${task.description}"></td> -->
-<!--                     <td th:text = "${#dates.format(task.dateCreated, 'dd-MM-yyyy')}"></td> -->
-<!--                     <td th:text = "${task.finished}"></td> -->
-<!--                     <td><a th:href="@{/task(id=${task.id})}"><span class = "glyphicon glyphicon-ok"></span></a></td> -->
-<!--                     <td><a th:href="@{/updateTask(id=${task.id})}"><span class = "glyphicon glyphicon-pencil"></span></a></td> -->
-<!--                     <td><a th:href="@{/deleteTask(id=${task.id})}"><span class = "glyphicon glyphicon-trash"></span></a></td> -->
-<!--                    </tr>              -->
-                    <tr th:each = "todo : ${allFinishedTodos}">
-                      <td th:text = "${todo[1].primaryKey.careerLevel.name}"></td>
-                      <td th:text = "${todo[1].primaryKey.todoId}"></td>
-                      <td th:text = "${todo[0].name}"></td>
-                      <td th:text = "${todo[1].description}"></td>
-                      <td th:text = "${todo[1].dateOfCompletion}"></td>
-                   </tr>
+                     <tr th:id="'row-' + ${userStat.count}" th:each = "user, userStat : ${users}">
+                        <td th:id="'userId-' + ${userStat.count}" th:text = "${user.id}"></td>
+                        <td th:id="'firstName-' + ${userStat.count}" th:text = "${user.firstName}"></td>
+                        <td th:id="'lastName-' + ${userStat.count}" th:text = "${user.lastName}"></td>
+                        <td th:id="'username-' + ${userStat.count}" th:text = "${user.username}"></td>
+                        <input type="hidden" th:id="'password-' + ${userStat.count}" th:value="${user.password}" />
+                        <td th:id="'email-' + ${userStat.count}" th:text = "${user.email}"></td>
+                        <td th:text = "${user.careerLevel.name}"></td>
+                        <input type="hidden" th:id="'careerLevelId-' + ${userStat.count}" th:value="${user.careerLevel.id}" />
+                        <td th:text = "${user.group.name}"></td>
+                        <input type="hidden" th:id="'groupId-' + ${userStat.count}" th:value="${user.group.id}" />
+                        <td><a style="cursor: pointer;">
+                            <span th:onclick="'javascript:changeFormValues(\'' + ${userStat.count} + '\');'"
+                                    class = "glyphicon glyphicon-pencil" data-toggle="modal"
+                                    data-target="#Update"></span>
+                        </a></td>
+                        <td><a th:href="@{/users/progress-page/{id}/(id=${user.id})}">
+                            <span class = "glyphicon glyphicon-info-sign"></span>
+                        </a></td>
+                        <td><a style="cursor: pointer;" th:onclick="'javascript:deleteUser(\'' + ${userStat.count} +'\',\''+ ${user.id} + '\');'">
+                            <span class = "glyphicon glyphicon-trash" ></span>
+                        </a></td>
+                    </tr>  
                  </tbody>
                </table>
-<!--                <div class="container"> -->
-<!--                  <ul class ="nav nav-pills"> -->
-<!--                    <li th:class="${status.index}==${pageCourantetasks}?active:''" th:each= "p, status:${pagesTasks}"> -->
-<!--                      <a th:href="@{/index(pageTasks=${status.index})}" th:text="${status.index}"></a> -->
-<!--                    </li> -->
-<!--                  </ul> -->
-<!--                </div> -->
            </div>   
         </div>
      </div>
- </div>
-        
+   </div>   
  </div>  
  
 
 
+<!-- Add form -->
+	<div class="container">
+		<div class="modal fade" id="Add" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+			<div class="modal-dialog modal-sm-2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title">Add</h5>
+					</div>
  
- <div class="container">
-  <!-- Trigger the modal with a button -->
-<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+					<div class="modal-body">
+						<!-- The form is placed inside the body of modal -->
+						<form id="addForm" th:action="@{/create-user}" action="#"
+							class="form-horizontal" method="post">
+							<div class="form-group">
+								<label class="col-xs-3 control-label">First Name <span
+									class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" id="firstName" name="firstName"
+										value="" required pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*"
+										aria-required="true" minlength="4" maxlength="16"
+										aria-describedby="name-format" title="Must begin with a letter." />
+								</div>
+							</div>
 
-<div class="modal fade" tabindex="-1" id="Update"
-        data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm-4">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
-                </button>
-                <h4 class="modal-title">Update</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="inputLogin">Last name</label>
-                        <input class="form-control" placeholder="Last name"
-                                type="text" id="inputLogin" />
-                    </div>              
-                    <div class="form-group">
-                        <label for="inputLastName">First name</label>
-                        <input class="form-control" placeholder="First name"
-                                type="text" id="inputLastName" />
-                    </div>
-                   <div class="form-group">
-                        <label for="inputFirstName">Username</label>
-                        <input class="form-control" placeholder="Username"
-                                type="text" id="inputFirstName" />
-                    </div>
-                     <div class="form-group">
-                        <label for="inputFirstName">Email</label>
-                        <input class="form-control" placeholder="First name"
-                                type="text" id="inputFirstName" />
-                    </div>
-<label for="inputCareerLevel">Career Level</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="Internship">Internship</option>
-    <option value="Baby on board">Baby on board</option>
-    <option value="First steps">First steps</option> 
-    <option value="You are good">You are good</option> 
-    <option value="You are rock">You are rock</option>                              
-</select>
-</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Last Name <span
+									class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" id="lastName" name="lastName"
+										value="" required pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*"
+										aria-required="true" aria-describedby="name-format"
+										minlength="4" maxlength="16" title="Must begin with a letter." />
+								</div>
+							</div>
 
-<br/>
-<label for="inputGroup">Group</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="admin">Admin</option>
-    <option value="user">User</option>                             
-</select>
-</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Username
+								    <span class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" id="username" name="username"
+										value="" required pattern="[0-9]*+[a-zA-z]([ '-][a-zA-Z]+)*"
+										aria-required="true" minlength="4" maxlength="16"
+										aria-describedby="name-format" />
+								</div>
+							</div>
 
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-primary"
-                        data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-  
-</div>
-  <div class="container">
-  <!-- Trigger the modal with a button -->
-<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Password
+								    <span class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" id="password" name="password"
+										value="" required pattern="[0-9]*+[a-zA-z]([ '-][a-zA-Z]+)*"
+										aria-required="true" minlength="4" maxlength="16"
+										aria-describedby="name-format"
+										type="password" />
+								</div>
+							</div>
 
-<div class="modal fade" tabindex="-1" id="Add"
-        data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
-                </button>
-                <h4 class="modal-title">Add</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="inputLogin">Last name</label>
-                        <input class="form-control" placeholder="Last name"
-                                type="text" id="inputLogin" />
-                    </div>              
-                    <div class="form-group">
-                        <label for="inputLastName">First name</label>
-                        <input class="form-control" placeholder="First name"
-                                type="text" id="inputLastName" />
-                    </div>
-                   <div class="form-group">
-                        <label for="inputFirstName">Username</label>
-                        <input class="form-control" placeholder="Username"
-                                type="text" id="inputFirstName" />
-                    </div>
-                     <div class="form-group">
-                        <label for="inputFirstName">Email</label>
-                        <input class="form-control" placeholder="First name"
-                                type="text" id="inputFirstName" />
-                    </div>
-<label for="inputCareerLevel">Career Level</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="Internship">Internship</option>
-    <option value="Baby on board">Baby on board</option>
-    <option value="First steps">First steps</option> 
-    <option value="You are good">You are good</option> 
-    <option value="You are rock">You are rock</option>                              
-</select>
-</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Email
+								    <span class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" id="email" name="email"
+										value="" required="required"
+										pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+										aria-required="true" aria-describedby="name-format"
+										placeholder="email@example.com" />
+								</div>
+							</div>
 
-<br/>
-<label for="inputGroup">Group</label>
-<div class="mainselection">
-<select name="CareerLevel" id="input7">
-    <option value="admin">Admin</option>
-    <option value="user">User</option>                             
-</select>
-</div>
+							<div class="form-group">
+								<label for="careerLevelId" class="col-xs-3 control-label">Career Level
+									<span class="asteriskField"> * </span>
+								</label>
+								<select name="careerLevelId" id="careerLevelId"
+								        class="styled-select transparent semi-square"
+								        required="required">
+									<option value="">Select an item</option>
+									<option th:each="careerLevel : ${careerLevels}" 
+			                                th:value="${careerLevel.id}" 
+			                                th:text="${careerLevel.name}">Career Level</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Group
+                                    <span class="asteriskField"> * </span>
+								</label> <select class="styled-select transparent semi-square" required
+									name="groupId" id="groupId">
+									<option value="">Select an item</option>
+									<option th:each="group : ${groups}" 
+                                            th:value="${group.id}" 
+                                            th:text="${group.name}">Group</option>
+								</select>
+							</div>
+							<!--                     <div class="form-group"> -->
+							<!--                         <div class="col-xs-5 col-xs-offset-3"> -->
+							<!--                             <button type="submit" class="btn btn-primary">Login</button> -->
+							<!--                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> -->
+							<!--                         </div> -->
+							<!--                     </div> -->
+
+							<div class="modal-footer">
+								<button type="submit"
+									class="btn btn-primary">Add</button>
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-primary"
-                        data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-  
-</div>
- 
- <div class="container">                  
+	<!-- Update form -->
+	<div class="container">
+		<div class="modal fade" id="Update" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+
+
+
+			<div class="modal-dialog modal-sm-2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title">Update</h5>
+					</div>
+
+					<div class="modal-body">
+						<!-- The form is placed inside the body of modal -->
+						<form name="updateForm" id="updateForm" action="#" th:action="@{/update-user}"
+							method="get" class="form-horizontal">
+							<input type="hidden" name="id" id="userIdUpdate"
+							        value="" />
+							<div class="form-group">
+								<label class="col-xs-3 control-label">First Name
+								    <span class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" id="firstNameUpdate"
+										name="firstName" value="" required="required"
+										pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*" minlength="4"
+										maxlength="16" aria-describedby="name-format"
+										title="Must begin with a letter." />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Last Name
+								    <span class="asteriskField"> * </span>
+							    </label>
+								<div class="col-xs-5">
+									<input class="form-control" id="lastNameUpdate" name="lastName"
+										value="" minlength="4" maxlength="16" required="required"
+										pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*"
+										aria-describedby="name-format" title="Must begin with a letter." />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Username
+								    <span class="asteriskField"> * </span>
+							    </label>
+								<div class="col-xs-5">
+									<input class="form-control" id="usernameUpdate" name="username"
+										value="" minlength="4" maxlength="16" required="required"
+										pattern="[0-9]*+[a-zA-z]([ '-][a-zA-Z]+)*"
+										aria-describedby="name-format" title="" />
+								</div>
+							</div>
+							
+							<input type="hidden" id="passwordUpdate" name="password" />
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Email
+								    <span class="asteriskField"> * </span>
+							    </label>
+								<div class="col-xs-5">
+									<input class="form-control" id="emailUpdate" name="email"
+										value="" required="required"
+										pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+										aria-describedby="name-format" placeholder="email@example.com" />
+								</div>
+							</div>
+
+
+							<div class="form-group">
+                                <label for="careerLevelId" class="col-xs-3 control-label">Career Level
+                                    <span class="asteriskField"> * </span>
+                                </label>
+                                <select name="careerLevelId" id="careerLevelIdUpdate"
+                                        class="styled-select transparent semi-square"
+                                        required="required">
+                                    <option value="">Select an item</option>
+                                    <option th:each="careerLevel : ${careerLevels}" 
+                                            th:value="${careerLevel.id}" 
+                                            th:text="${careerLevel.name}">Career Level</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Group
+                                    <span class="asteriskField"> * </span>
+                                </label> <select class="styled-select transparent semi-square" required
+                                    name="groupId" id="groupIdUpdate">
+                                    <option value="">Select an item</option>
+                                    <option th:each="group : ${groups}" 
+                                            th:value="${group.id}" 
+                                            th:text="${group.name}">Group</option>
+                                </select>
+                            </div>
+                            
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Update</button>
+								<button type="button" class="btn btn-default"
+									   data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">                  
   <ul class="pager">
     <li><a th:href="@{/index}">&lt;&lt;&lt;Home</a></li>
 <!--     <li><a href="temp.html">All finished tasks</a></li> -->
   </ul>
 </div>
 
-<div>
+
 <!-- Footer -->
+<div>
 <footer class="footer-distributed">
 
 			<div class="footer-left">

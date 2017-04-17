@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.inthergroup.internship.models.CareerLevelTodo;
 import com.inthergroup.internship.models.Todo;
 
 @Repository
@@ -65,8 +66,17 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     "where u.careerLevel.id = ct.primaryKey.careerLevel.id and u.id = :userId")
 public int findNumberOfTotalTodosByUserId(@Param("userId")Long id);
     
-    
     @Query("select count(t.primaryKey.todoId) from Todo t " +
                 "where t.primaryKey.user.id = :userId")
     public int findNumberOfFinishedTodosByUserId(@Param("userId")Long id);
+    
+    @Query("select ct from CareerLevelTodo ct")
+    public List<CareerLevelTodo> findAllCareerLevelTodos();
+    
+    @Query("select ct from CareerLevelTodo ct " +
+            "where ct.primaryKey.careerLevel.id = :careerLevelId " +
+            "and ct.primaryKey.todoType.id = :todoTypeId")
+    public CareerLevelTodo findCareerLevelTodo(
+            @Param("careerLevelId")Long careerLevelId,
+            @Param("todoTypeId")Long todoTypeId);
 }

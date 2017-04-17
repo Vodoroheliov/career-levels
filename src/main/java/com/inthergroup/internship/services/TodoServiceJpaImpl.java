@@ -1,6 +1,7 @@
 package com.inthergroup.internship.services;
 
-import java.sql.Timestamp;
+
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,12 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.inthergroup.internship.models.CareerLevel;
+import com.inthergroup.internship.models.CareerLevelTodo;
 import com.inthergroup.internship.models.Todo;
 import com.inthergroup.internship.models.TodoType;
 import com.inthergroup.internship.models.User;
 import com.inthergroup.internship.repositories.CareerLevelRepository;
+import com.inthergroup.internship.repositories.CareerLevelTodoRepository;
 import com.inthergroup.internship.repositories.TodoRepository;
 import com.inthergroup.internship.repositories.TodoTypeRepository;
 import com.inthergroup.internship.repositories.UserRepository;
@@ -36,6 +39,9 @@ public class TodoServiceJpaImpl implements TodoService {
     @Autowired
     private CareerLevelRepository careerLevelRepo;
     
+    @Autowired
+    private CareerLevelTodoRepository careerLevelTodoRepo;
+    
     // ----------------
     // Methods
     // ----------------
@@ -47,7 +53,7 @@ public class TodoServiceJpaImpl implements TodoService {
 
     @Override
     public List<TodoType> findAllTodoTypes() {
-        return this.todoTypeRepo.findAll();
+        return this.todoTypeRepo.findAllByOrderByIdAsc();
     }
 
     @Override
@@ -77,7 +83,7 @@ public class TodoServiceJpaImpl implements TodoService {
 
     @Override
     public void addTodoToUser(Long userId, String todoId, Long todoTypeId,
-            Timestamp dateOfCompletion, String description) {
+            Date dateOfCompletion, String description) {
         User user = userRepo.findOne(userId);
         user.addTodo(todoId, todoTypeId, dateOfCompletion, description);
     }
@@ -122,5 +128,20 @@ public class TodoServiceJpaImpl implements TodoService {
     @Override
     public List<Object[]> findAllFinishedTodosByUserId(Long id) {
         return this.todoRepo.findAllFinishedTodosByUserId(id);
+    }
+
+    @Override
+    public List<CareerLevelTodo> findAllCareerLevelTodos() {
+        return todoRepo.findAllCareerLevelTodos();
+    }
+
+    @Override
+    public CareerLevelTodo findCareerLevelTodo(Long careerLevelId, Long todoTypeId) {
+        return todoRepo.findCareerLevelTodo(careerLevelId, todoTypeId);
+    }
+
+    @Override
+    public void deleteCareerLevelTodo(CareerLevelTodo careerLevelTodo) {
+        careerLevelTodoRepo.delete(careerLevelTodo);
     }
 }

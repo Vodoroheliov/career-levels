@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class CareerLevel {
     @Column(nullable = false, unique = true)
     private String name;
     
-    @OneToMany(mappedBy="careerLevel")
+    @OneToMany(mappedBy="careerLevel", fetch = FetchType.LAZY)
     private List<User> users;
     
 //    // The career level's benefits

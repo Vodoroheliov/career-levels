@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.inthergroup.internship.models.BenefitType;
 import com.inthergroup.internship.models.CareerLevel;
+import com.inthergroup.internship.models.CareerLevelBenefit;
 import com.inthergroup.internship.repositories.BenefitRepository;
 import com.inthergroup.internship.repositories.CareerLevelRepository;
 
@@ -22,7 +23,7 @@ public class BenefitServiceJpaImpl implements BenefitService {
 
     @Override
     public List<BenefitType> findAll() {
-        return this.benefitRepo.findAll();
+        return this.benefitRepo.findAllByOrderByIdAsc();
     }
 
     @Override
@@ -63,5 +64,16 @@ public class BenefitServiceJpaImpl implements BenefitService {
     @Override
     public List<String> findBenefitsFromLevel(Long id) {
         return this.benefitRepo.findBenefitsFromLevel(id);
+    }
+
+    @Override
+    public List<CareerLevelBenefit> findAllCareerLevelBenefits() {
+        return benefitRepo.findAllCareerLevelBenefits();
+    }
+
+    @Override
+    public CareerLevelBenefit findCareerLevelBenefit(
+            Long careerLevelId, Long benefitTypeId) {
+        return benefitRepo.findCareerLevelBenefit(careerLevelId, benefitTypeId);
     }
 }

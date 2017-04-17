@@ -1,6 +1,7 @@
 package com.inthergroup.internship.models;
 
-import java.sql.Timestamp;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,11 +39,11 @@ public class User {
     private long id;
     
     // The user's last name
-    @Column(length = 64)
+    @Column(nullable = false, length = 64)
     private String lastName;
     
     // The user's first name
-    @Column(length = 64)
+    @Column(nullable = false, length = 64)
     private String firstName;
     
     // The user's username
@@ -54,16 +55,16 @@ public class User {
     private String password;
     
     // The user's email
-    @Column(length = 64, unique = true)
+    @Column(nullable = false, length = 64, unique = true)
     private String email;
     
     // The user's career level
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="career_level_id", nullable = false)
     private CareerLevel careerLevel;
     
     // The user's group
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
@@ -89,7 +90,7 @@ public class User {
 //    private List<UserTodoAssociation> todos;
     
     // The user's todos
-    @OneToMany(mappedBy = "primaryKey.user", orphanRemoval=true,
+    @OneToMany(mappedBy = "primaryKey.user", orphanRemoval = true,
             cascade = CascadeType.ALL)
     private Set<Todo> todos = new HashSet<Todo>();
     
@@ -292,7 +293,7 @@ public class User {
     
     // Add a todo to the user.
     // Create an association object for the relationship and set its data.
-    public void addTodo(String todoId, long todoTypeId, Timestamp dateOfCompletion,
+    public void addTodo(String todoId, long todoTypeId, Date dateOfCompletion,
             String description) {
         Todo todo = new Todo();
         todo.setUser(this);

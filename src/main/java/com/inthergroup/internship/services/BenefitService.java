@@ -3,6 +3,7 @@ package com.inthergroup.internship.services;
 import java.util.List;
 
 import com.inthergroup.internship.models.BenefitType;
+import com.inthergroup.internship.models.CareerLevelBenefit;
 
 public interface BenefitService {
     List<BenefitType> findAll();
@@ -21,4 +22,8 @@ public interface BenefitService {
     void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitTypeId);
 
     List<String> findBenefitsFromLevel(Long id);
+    
+    List<CareerLevelBenefit> findAllCareerLevelBenefits();
+    
+    CareerLevelBenefit findCareerLevelBenefit(Long careerLevelId, Long benefitTypeId);
 }

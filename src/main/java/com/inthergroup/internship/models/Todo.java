@@ -1,5 +1,6 @@
 package com.inthergroup.internship.models;
 
+import java.util.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.AssociationOverride;
@@ -12,11 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
-<<<<<<< HEAD
  * An entity Todo represents a finished task.
-=======
- * An entity Todo represents a task for a user.
->>>>>>> origin/forms
  * The Entity annotation indicates that this class is a JPA entity.
  * The Table annotation specifies the name for the table in the db.
  *
@@ -43,7 +40,7 @@ public class Todo {
     
     // additional fields
     private long todoTypeId;
-    private Timestamp dateOfCompletion;
+    private Date dateOfCompletion;
     private String description;
     
     // ---------------
@@ -95,13 +92,12 @@ public class Todo {
         this.todoTypeId = todoTypeId;
     }
 
-    // TODO Test with this column constraint:
-//    @Column(name = "date_of_completion", nullable = false)
-    public Timestamp getDateOfCompletion() {
+    @Column(name = "date_of_completion", nullable = false)
+    public Date getDateOfCompletion() {
         return dateOfCompletion;
     }
 
-    public void setDateOfCompletion(Timestamp dateOfCompletion) {
+    public void setDateOfCompletion(Date dateOfCompletion) {
         this.dateOfCompletion = dateOfCompletion;
     }
 

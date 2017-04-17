@@ -1,8 +1,12 @@
 package com.inthergroup.internship.services;
 
-import java.sql.Timestamp;
+
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
+import com.inthergroup.internship.models.CareerLevelTodo;
 import com.inthergroup.internship.models.Todo;
 import com.inthergroup.internship.models.TodoType;
 
@@ -29,7 +33,7 @@ public interface TodoService {
     Todo saveTodo(Todo todo);
     
     void addTodoToUser(Long userId, String todoId, Long todoTypeId,
-            Timestamp dateOfCompletion, String description);
+            Date dateOfCompletion, String description);
 
     void removeTodoFromUser(Long userId, String todoId, Long careerLevelId);
 
@@ -47,4 +51,10 @@ public interface TodoService {
     List<Object[]>findCurrentTodosByUserId(Long id);
     
     List<Object[]>findAllFinishedTodosByUserId(Long id);
+    
+    List<CareerLevelTodo> findAllCareerLevelTodos();
+    
+    CareerLevelTodo findCareerLevelTodo(Long careerLevelId, Long todoTypeId);
+    
+    void deleteCareerLevelTodo(CareerLevelTodo careerLevelTodo);
 }

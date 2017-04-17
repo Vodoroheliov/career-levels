@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.inthergroup.internship.models.CareerLevel;
@@ -42,18 +43,15 @@ public class UserController {
     // ------------------------
     // PUBLIC METHODS
     // ------------------------
-    
-    @RequestMapping("/all-users")
+
+    @RequestMapping("/users/all-users")
     public String allUsers(Model model) {
         model.addAttribute("users", userService.findAll());
-        return "users/all-users";
+        model.addAttribute("careerLevels", careerLevelService.findAll());
+        model.addAttribute("groups", groupService.findAll());
+        return "/users/all-users";
     }
-    
-    @RequestMapping("/show-user-form")
-    public String showUserForm() {
-        return "users/create-user";
-    }
-    
+
     @RequestMapping("/users/progress-page/{id}")
     public String progressPage(@PathVariable("id") Long id, Model model) {
         model.addAttribute("userId", id);
@@ -63,6 +61,7 @@ public class UserController {
         model.addAttribute("user", userService.findById(id));
         model.addAttribute(
                 "careerLevel", careerLevelService.findCareerLevelByUserId(id));
+        model.addAttribute("todoTypes", todoService.findAllTodoTypes());
         return "users/progress-page";
     }
 
@@ -76,28 +75,50 @@ public class UserController {
                 "careerLevel", careerLevelService.findCareerLevelByUserId(id));
         return "users/total-progress";
     }
+    
+    @RequestMapping("/promote-user")
+    public String promoteUser(Long userId) {
+        try {
+            User user = userService.findById(userId);
+            Long careerLevelId = user.getCareerLevel().getId();
+            careerLevelId++; // increment for next level
+            CareerLevel careerLevel = careerLevelService.findById(careerLevelId);
+            
+            if (careerLevel != null) {
+                user.setCareerLevel(careerLevel);
+                userService.edit(user);
+            }
+        } catch(Exception ex) {
+            return "redirect:/general-error?msg=" +
+                    "Error promoting the user: " + ex.toString();
+        }
+        
+        return "redirect:/users/progress-page/" + userId;
+    }
 
     /**
      * /create  --> Create a new user and save it in the database.
      * 
      * @return A string describing if the user is succesfully created or not.
      */
-    @RequestMapping("/create-user")
-    @ResponseBody
-    public String createUser(String lastName, String firstName, String login,
-            String password, String email, Long careerLevelId, Long groupId) {
+    @RequestMapping(value = "/create-user", method = RequestMethod.POST)
+    public String createUser(
+            String lastName, String firstName, String username, String password,
+            String email, Long careerLevelId, Long groupId) {
+        
         User user = null;
-        CareerLevel careerLevel = careerLevelService.findById(careerLevelId);
-        Group group = groupService.findById(groupId);
         try {
-            user = new User(lastName, firstName, login, password, email,
+            CareerLevel careerLevel = careerLevelService.findById(careerLevelId);
+            Group group = groupService.findById(groupId);
+            user = new User(lastName, firstName, username, password, email,
                     careerLevel, group);
             userService.create(user);
         } catch (Exception ex) {
             return "redirect:/general-error?msg=" +
                     "Error creating the user: " + ex.toString();
         }
-        return "User succesfully created! (id = " + user.getId() + ")";
+//        return "User succesfully created! (id = " + user.getId() + ")";
+        return "redirect:/users/all-users";
     }
 
     /**
@@ -107,15 +128,14 @@ public class UserController {
      * @return A string describing if the user is succesfully deleted or not.
      */
     @RequestMapping("/delete-user")
-    @ResponseBody
-    public String deleteUser(long id) {
+    public String deleteUser(Long id) {
         try {
             userService.deleteById(id);
         } catch (Exception ex) {
             return "redirect:/general-error?msg=" +
-                    "Error deleting the user by id #" + id + ": " + ex.toString();
+                    "Error deleting the user by id=" + id + ": " + ex.toString();
         }
-        return "User succesfully deleted!";
+        return "redirect:/users/all-users";
     }
 
     /**
@@ -144,27 +164,29 @@ public class UserController {
      * 
      * @return A string describing if the user is succesfully updated or not.
      */
-    @RequestMapping("/update-user")
-    @ResponseBody
-    public String updateUser(long id, String lastName, String firstName, String username,
-            String password, String email, String levelName) {
+    @RequestMapping(value = "/update-user", method = RequestMethod.GET)
+    public String updateUser(Long id, String lastName, String firstName,
+            String username, String password, String email, Long careerLevelId,
+            Long groupId) {
         try {
-            // CareerLevel careerLevel = new CareerLevel(levelName);
-            // careerLevelService.create(careerLevel);
             User user = userService.findById(id);
             user.setLastName(lastName);
             user.setFirstName(firstName);
             user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
-            // TODO Change this operation to appropriate (to comply associations)
-            user.getCareerLevel().setName(levelName);
+            
+            CareerLevel careerLevel = careerLevelService.findById(careerLevelId);
+            user.setCareerLevel(careerLevel);
+            
+            Group group = groupService.findById(groupId);
+            user.setGroup(group);
+            
             userService.create(user);
         } catch (Exception ex) {
             return "redirect:/general-error?msg=" +
                     "Error updating the user: " + ex.toString();
         }
-        return "User succesfully updated!";
+        return "redirect:/users/all-users";
     }
-
 } // class UserController
