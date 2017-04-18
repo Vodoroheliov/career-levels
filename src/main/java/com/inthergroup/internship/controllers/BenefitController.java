@@ -6,12 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.inthergroup.internship.models.BenefitType;
 import com.inthergroup.internship.models.CareerLevelBenefit;
-import com.inthergroup.internship.models.CareerLevelTodo;
-import com.inthergroup.internship.models.TodoType;
 import com.inthergroup.internship.services.BenefitService;
 import com.inthergroup.internship.services.CareerLevelService;
 
@@ -24,6 +21,9 @@ public class BenefitController {
     @Autowired
     private CareerLevelService careerLevelService;
     
+    /**
+     * Prepares data for page with all benefits list.
+     */
     @RequestMapping("/benefits/all-benefits")
     public String benefits(Model model) {
         model.addAttribute("benefits", benefitService.findAllCareerLevelBenefits());
@@ -32,12 +32,18 @@ public class BenefitController {
         return "/benefits/all-benefits";
     }
     
+    /**
+     * Prepares data for page with all benefit types list.
+     */
     @RequestMapping("/benefits/benefit-type")
     public String benefit_type(Model model) {
         model.addAttribute("benefitTypes", benefitService.findAll());
         return "/benefits/benefit-type";
     }
     
+    /**
+     * Creates new benefit type.
+     */
     @RequestMapping("/create-benefit-type")
     public String createBenefitType(String benefitName) {
         BenefitType benefit = null;
@@ -51,6 +57,11 @@ public class BenefitController {
         return "redirect:/benefits/benefit-type";
     }
     
+    /**
+     * Updates existing benefit type.
+     * @param benefitTypeId Id of benefit type to update.
+     * @param newBenefitName New name of benefit type.
+     */
     @RequestMapping("/update-benefit-type")
     public String updateBenefitType(Long benefitTypeId, String newBenefitName) {
         BenefitType benefitType = null;
@@ -65,8 +76,11 @@ public class BenefitController {
         return "redirect:/benefits/benefit-type";
     }
     
-    // You must delete benefit only after you deleted it from all
-    // users that contained it.
+    /**
+     * Deletes benefit type.
+     * 
+     * @param id Id of benefit type.
+     */
     @RequestMapping("/delete-benefit-type")
     public String deleteBenefitType(long id) {
         try {
@@ -78,6 +92,14 @@ public class BenefitController {
         return "redirect:/benefits/benefit-type";
     }
     
+    /**
+     * Adds new benefit to career level.
+     * 
+     * @param careerLevelId Id of career level.
+     * @param benefitTypeId Id of benefit type.
+     * @param quantity The number of these benefits.
+     * @return
+     */
     @RequestMapping("/add-benefit-to-career-level")
     @Transactional
     public String addBenefitToCareerLevel(long careerLevelId, long benefitTypeId,
@@ -92,6 +114,16 @@ public class BenefitController {
         return "redirect:/benefits/all-benefits";
     }
     
+    /**
+     * Updates benefit for a specific career level.
+     * 
+     * @param oldCareerLevelId Previous career level id.
+     * @param oldBenefitTypeId Previous benefit type id.
+     * @param newCareerLevelId Substitutional career level id.
+     * @param newBenefitTypeId Substitutional benefit type id.
+     * @param quantity Substitutional number of benefits.
+     * @return
+     */
     @RequestMapping(value = "/update-benefit-for-career-level", method = RequestMethod.GET)
     @Transactional
     public String updateBenefitForCareerLevel(
@@ -118,6 +150,13 @@ public class BenefitController {
         return "redirect:/benefits/all-benefits";
     }
     
+    /**
+     * Removes benefit from a specific career level.
+     * 
+     * @param careerLevelId Id of career level.
+     * @param benefitTypeId Id of benefit type.
+     * @return
+     */
     @RequestMapping("/remove-benefit-from-career-level")
     @Transactional
     public String removeBenefitFromCareerLevel(Long careerLevelId, Long benefitTypeId) {

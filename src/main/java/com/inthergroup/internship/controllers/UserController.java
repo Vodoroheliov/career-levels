@@ -16,11 +16,6 @@ import com.inthergroup.internship.services.GroupService;
 import com.inthergroup.internship.services.TodoService;
 import com.inthergroup.internship.services.UserService;
 
-/**
- * A class to test interactions with the MySQL database using the UserDao class.
- *
- * @author interns
- */
 @Controller
 public class UserController {
 
@@ -44,6 +39,12 @@ public class UserController {
     // PUBLIC METHODS
     // ------------------------
 
+    /**
+     * Prepares data for page with all users list.
+     * 
+     * @param model
+     * @return
+     */
     @RequestMapping("/users/all-users")
     public String allUsers(Model model) {
         model.addAttribute("users", userService.findAll());
@@ -52,6 +53,13 @@ public class UserController {
         return "/users/all-users";
     }
 
+    /**
+     * Prepares data for page with current progress for specific user.
+     * 
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("/users/progress-page/{id}")
     public String progressPage(@PathVariable("id") Long id, Model model) {
         model.addAttribute("userId", id);
@@ -65,6 +73,13 @@ public class UserController {
         return "users/progress-page";
     }
 
+    /**
+     * Prepares data for page with total progress for specific user.
+     * 
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("/users/total-progress/{id}")
     public String total_progress(@PathVariable("id") Long id, Model model) {
         model.addAttribute("userId", id);
@@ -76,6 +91,12 @@ public class UserController {
         return "users/total-progress";
     }
     
+    /**
+     * Increases level of user.
+     * 
+     * @param userId Id of user.
+     * @return
+     */
     @RequestMapping("/promote-user")
     public String promoteUser(Long userId) {
         try {
@@ -98,8 +119,6 @@ public class UserController {
 
     /**
      * /create  --> Create a new user and save it in the database.
-     * 
-     * @return A string describing if the user is succesfully created or not.
      */
     @RequestMapping(value = "/create-user", method = RequestMethod.POST)
     public String createUser(
@@ -125,7 +144,6 @@ public class UserController {
      * /delete-user --> Delete the user having the passed id.
      * 
      * @param id The id of the user to delete
-     * @return A string describing if the user is succesfully deleted or not.
      */
     @RequestMapping("/delete-user")
     public String deleteUser(Long id) {
@@ -160,9 +178,17 @@ public class UserController {
     }
 
     /**
-     * /update-user --> Update the user in the database.
-     * 
-     * @return A string describing if the user is succesfully updated or not.
+     *  /update-user --> Update the user in the database.
+     *  
+     * @param id User id.
+     * @param lastName New last name.
+     * @param firstName New first name.
+     * @param username New username.
+     * @param password New password.
+     * @param email New email address.
+     * @param careerLevelId New career level id.
+     * @param groupId New group id.
+     * @return
      */
     @RequestMapping(value = "/update-user", method = RequestMethod.GET)
     public String updateUser(Long id, String lastName, String firstName,

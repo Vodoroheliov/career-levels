@@ -6,6 +6,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+/**
+ * Class that represents primary key of CareerLevelBenefit entity.
+ * @author interns.
+ *
+ */
 @SuppressWarnings("serial")
 @Embeddable
 public class CareerLevelBenefitPK implements Serializable {

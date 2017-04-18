@@ -30,14 +30,16 @@ public class CareerLevelBenefit {
     // PRIVATE FIELDS
     // ----------------
     
-    // composite-id key
+    /**
+     *  composite-id key
+     */
     private CareerLevelBenefitPK primaryKey = new CareerLevelBenefitPK();
     
     // additional fields
     
     private int quantity;
     
- // ---------------
+    // ---------------
     // PUBLIC METHODS
     // ---------------
 
@@ -50,11 +52,17 @@ public class CareerLevelBenefit {
         this.primaryKey = primaryKey;
     }
     
+    /**
+     * Get required career level for this benefit.
+     */
     @Transient
     public CareerLevel getCareerLevel() {
         return getPrimaryKey().getCareerLevel();
     }
     
+    /**
+     * Set required career level for this benefit.
+     */
     public void setCareerLevel(CareerLevel careerLevel) {
         getPrimaryKey().setCareerLevel(careerLevel);
     }

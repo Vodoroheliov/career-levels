@@ -30,6 +30,12 @@ public class HomeController {
     @Autowired
     private TodoService todoService;
 
+    /**
+     * Prepares data for main page.
+     * 
+     * @param model
+     * @return
+     */
     @RequestMapping({"/", "/index"})
     public String index(Model model) {
 
@@ -62,6 +68,7 @@ public class HomeController {
         }
         model.addAttribute("todos", todos);
         
+        // Map with percent progress for corresponding user id.
         model.addAttribute(
                 "usersPercentProgress", userService.findUsersPercentProgress());
 

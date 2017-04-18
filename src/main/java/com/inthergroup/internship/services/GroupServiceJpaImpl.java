@@ -53,17 +53,4 @@ public class GroupServiceJpaImpl implements GroupService {
         User user = userRepo.findOne(userId);
         user.setGroup(group);
     }
-    
-//    @Override
-//    public void addGroupToUser(Long userId, Long groupId) {
-//        Group group = groupRepo.findOne(groupId);
-//        User user = userRepo.findOne(userId);
-//        user.addGroup(group);
-//    }
-//    
-//    public void removeGroupFromUser(Long userId, Long todoId) {
-//        Group group = groupRepo.findOne(todoId);
-//        User user = userRepo.findOne(userId);
-//        user.removeGroup(group);
-//    }
 }

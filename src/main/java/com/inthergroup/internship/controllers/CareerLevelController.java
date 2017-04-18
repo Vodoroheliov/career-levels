@@ -13,7 +13,13 @@ public class CareerLevelController {
     
     @Autowired
     private CareerLevelService careerLevelService;
-    
+
+    /**
+     * Creates new career level.
+     * 
+     * @param levelName Name of new career level.
+     * @return
+     */
     @RequestMapping("/create-career-level")
     @ResponseBody
     public String createCareerLevel(String levelName) {
@@ -28,6 +34,13 @@ public class CareerLevelController {
         return "Career Level succesfully created! (id = " + careerLevel.getId() + ")";
     }
     
+    /**
+     * Updates user's current career level.
+     * 
+     * @param userId
+     * @param careerLevelId
+     * @return
+     */
     @RequestMapping("/update-user-career-level")
     @ResponseBody
     public String updateUserCareerLevel(long userId, long careerLevelId) {
@@ -40,8 +53,12 @@ public class CareerLevelController {
         return "Succesfully updated user's career level!";
     }
     
-    // You must delete career level only after you deleted it from all
-    // users that contained it.
+    /**
+     * Deletes career level.
+     * 
+     * @param id Id of career level to delte.
+     * @return
+     */
     @RequestMapping("/delete-career-level")
     @ResponseBody
     public String deleteCareerLevel(long id) {

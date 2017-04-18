@@ -14,6 +14,11 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
+    /**
+     * Creates new group (for access control).
+     * @param groupName Name of group.
+     * @return
+     */
     @RequestMapping("/create-group")
     @ResponseBody
     public String createGroup(String groupName) {
@@ -28,6 +33,12 @@ public class GroupController {
         return "Group succesfully created! (id = " + group.getId() + ")";
     }
 
+//    /**
+//     * Adds additional group to user.
+//     * @param userId
+//     * @param groupId
+//     * @return
+//     */
 //    @RequestMapping("/add-group-to-user")
 //    @ResponseBody
 //    @Transactional
@@ -40,6 +51,13 @@ public class GroupController {
 //        return "Succesfully added todo to user!";
 //    }
     
+    /**
+     * Updates group for user.
+     * 
+     * @param userId Id of user.
+     * @param groupId Id of group to replace with.
+     * @return
+     */
     @RequestMapping("/update-user-group")
     @ResponseBody
     public String updateUserGroup(long userId, long groupId) {
@@ -52,8 +70,14 @@ public class GroupController {
         return "Succesfully updated user's group!";
     }
     
-    // You must delete group only after you deleted it from all
-    // users that contained it.
+    /**
+     * Deletes group.
+     * You must delete group only after you deleted it from all
+     * users that contained it.
+     * 
+     * @param id Id of group to delete.
+     * @return
+     */
     @RequestMapping("/delete-group")
     @ResponseBody
     public String deleteGroup(long id) {
@@ -66,6 +90,9 @@ public class GroupController {
         return "Group succesfully deleted!";
     }
     
+//    /**
+//     * Removes group from user.
+//     */
 //    @RequestMapping("/remove-group-from-user")
 //    @ResponseBody
 //    @Transactional

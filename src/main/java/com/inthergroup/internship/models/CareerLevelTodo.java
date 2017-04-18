@@ -30,7 +30,9 @@ public class CareerLevelTodo {
     // PRIVATE FIELDS
     // ----------------
     
-    // composite-id key
+    /**
+     * composite-id key
+     */
     private CareerLevelTodoPK primaryKey = new CareerLevelTodoPK();
     
     // additional fields
@@ -50,11 +52,17 @@ public class CareerLevelTodo {
         this.primaryKey = primaryKey;
     }
     
+    /**
+     * Get required career level for this todo.
+     */
     @Transient
     public CareerLevel getCareerLevel() {
         return getPrimaryKey().getCareerLevel();
     }
     
+    /**
+     * Set required career level for this todo.
+     */
     public void setCareerLevel(CareerLevel careerLevel) {
         getPrimaryKey().setCareerLevel(careerLevel);
     }
