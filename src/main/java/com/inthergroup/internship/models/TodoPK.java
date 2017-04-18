@@ -6,6 +6,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+/**
+ * Class that represents primary key of Todo entity.
+ * @author interns
+ *
+ */
 @SuppressWarnings("serial")
 @Embeddable
 public class TodoPK implements Serializable { 

@@ -1,7 +1,6 @@
 package com.inthergroup.internship.models;
 
 import java.util.Date;
-import java.sql.Timestamp;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
@@ -35,7 +34,9 @@ public class Todo {
     // PRIVATE FIELDS
     // ----------------
     
-    // composite-id key
+    /**
+     *  composite-id key
+     */
     private TodoPK primaryKey = new TodoPK();
     
     // additional fields

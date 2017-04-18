@@ -246,44 +246,42 @@ function removeTodo(curId, userId, todoId, careerLevelId) {
 										aria-required="true" aria-describedby="name-format" />
 								</div>
 							</div>
+							
 							<div class="form-group">
 								<label class="col-xs-3 control-label" for="todoTypeId">Task
 									type <span class="asteriskField">*</span>
 								</label>
-								<div class="col-xs-5">
-									<select name="todoTypeId" id="todoTypeId" required>
+								
+									<select name="todoTypeId" id="todoTypeId" class="styled-select transparent semi-square" required>
 										<option value="">Select an item</option>
 										<option th:each="todoType : ${todoTypes}"
-											th:value="${todoType.id}" th:text="${todoType.name}">Task
-											type</option>
+											th:value="${todoType.id}" th:text="${todoType.name}">Task type
+										</option>
 									</select>
-								</div>
+								
 							</div>
 
-							<div class="bootstrap-iso">
-								<div class="container-fluid">
-									<div class="row">
-										<div class="col-md-8 col-sm-8 col-xs-12">
-											<div class="form-group ">
-												<div class="col-sm-12">
-													<label class="control-label col-sm-4 requiredField"
-														for="dateOfCompletion"> Date <span
-														class="asteriskField">*</span>
-													</label>
-													<div class="input-group">
-														<div class="input-group-addon">
-															<i class="fa fa-calendar"> </i>
-														</div>
-														<input class="form-control" id="dateOfCompletion"
-															name="dateOfCompletion" placeholder="yyyy/mm/dd"
-															type="text" required />
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+	<div class="form-group ">
+     
+      <label class="col-xs-3 control-label" for="date">
+       Date
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <div class="calendar">
+       <div class="input-group">
+        <div class="input-group-addon">
+         <i class="fa fa-calendar">
+         </i>
+        </div>
+        <input class="form-control" id="dateOfCompletion"
+		name="dateOfCompletion" placeholder="yyyy/mm/dd"
+		type="text" required />
+       </div>
+       </div>
+     
+     </div>
 
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary">Add</button>
@@ -342,38 +340,35 @@ function removeTodo(curId, userId, todoId, careerLevelId) {
 								<label class="col-xs-3 control-label" for="todoTypeIdUpdate">Task
 									type <span class="asteriskField">*</span>
 								</label>
-								<div class="col-xs-5">
-									<select name="todoTypeId" id="todoTypeIdUpdate" required>
+								
+									<select name="todoTypeId" id="todoTypeIdUpdate" class="styled-select transparent semi-square" required>
 										<option th:each="todoType : ${todoTypes}"
 											th:value="${todoType.id}" th:text="${todoType.name}">Course</option>
 									</select>
-								</div>
+								
 							</div>
 
-							<div class="bootstrap-iso">
-								<div class="container-fluid">
-									<div class="row">
-										<div class="col-md-8 col-sm-8 col-xs-12">
-											<div class="form-group ">
-												<div class="col-sm-12">
-													<label class="control-label col-sm-4 requiredField"
-														for="dateOfCompletionUpdate"> Date <span
-														class="asteriskField">*</span>
-													</label>
-													<div class="input-group">
-														<div class="input-group-addon">
-															<i class="fa fa-calendar"> </i>
-														</div>
-														<input class="form-control" id="dateOfCompletionUpdate"
-															name="dateOfCompletion" placeholder="yyyy/mm/dd"
-															type="text" required />
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<div class="form-group ">
+     
+      <label class="col-xs-3 control-label" for="date">
+       Date
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <div class="calendar">
+       <div class="input-group">
+        <div class="input-group-addon">
+         <i class="fa fa-calendar">
+         </i>
+        </div>
+        <input class="form-control" id="dateOfCompletionUpdate"
+		name="dateOfCompletion" placeholder="yyyy/mm/dd"
+		type="text" required />
+       </div>
+       </div>
+     
+     </div>
 
 							<div class="modal-footer">
 								<button type="submit"

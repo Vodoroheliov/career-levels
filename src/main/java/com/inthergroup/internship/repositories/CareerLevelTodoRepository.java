@@ -8,6 +8,4 @@ import com.inthergroup.internship.models.CareerLevelTodo;
 @Repository
 public interface CareerLevelTodoRepository
         extends JpaRepository<CareerLevelTodo, Long> {
-    
-    
 }
