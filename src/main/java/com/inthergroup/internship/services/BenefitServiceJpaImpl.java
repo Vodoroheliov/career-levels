@@ -61,11 +61,21 @@ public class BenefitServiceJpaImpl implements BenefitService {
         careerLevel.removeBenefit(benefitType);
     }
 
-    @Override
-    public List<String> findBenefitsFromLevel(Long id) {
-        return this.benefitTypeRepo.findBenefitsFromLevel(id);
-    }
+//    @Override
+//    public List<BenefitType> findBenefitTypesFromLevel(Long id) {
+//        return this.benefitTypeRepo.findBenefitTypesFromLevel(id);
+//    }
+//    
+//    @Override
+//    public List<CareerLevelBenefit> findCareerLevelBenefitsFromLevel(Long id) {
+//        return benefitTypeRepo.findCareerLevelBenefitsFromLevel(id);
+//    }
 
+    @Override
+    public List<Object[]> findBenefitsFromLevel(Long id) {
+        return benefitTypeRepo.findBenefitsFromLevel(id);
+    }
+    
     @Override
     public List<CareerLevelBenefit> findAllCareerLevelBenefits() {
         return benefitTypeRepo.findAllCareerLevelBenefits();

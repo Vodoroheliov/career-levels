@@ -1,172 +1,197 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns:th = "http://www.thymeleaf.org"
-      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-<meta charset = "UTF-8"/>
-<meta http-equiv = "X-UA-Compatible" content="IE-edge"/>
-<meta name = "viewport" content="width=device-width, initial -scale =1"/>
-<meta name =  "description" content = ""/>
-<meta name = "author" content = ""/>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE-edge" />
+<meta name="viewport" content="width=device-width, initial -scale =1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
 <title>All users</title>
-<link rel="stylesheet" th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}"/>
+<link rel="stylesheet"
+	th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}" />
 
-<link rel = "stylesheet" type="text/css"  href = "../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-<link rel = "stylesheet" type="text/css"  href = "../static/css/style.css" th:href="@{/css/style.css}" />
-<link rel = "stylesheet" type="text/css"  href = "../static/css/footer-distributed-with-address-and-phones.css" th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript">    
-    function changeFormValues(currentId) {
+<link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/style.css"
+	th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../static/css/footer-distributed-with-address-and-phones.css"
+	th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function changeFormValues(currentId) {
 
-        document.getElementById('userIdUpdate').setAttribute(
-                'value', document.getElementById("userId-" + currentId).innerHTML);
-    	
-        document.getElementById('firstNameUpdate').setAttribute(
-                'value', document.getElementById("firstName-" + currentId).innerHTML);
-        
-        document.getElementById('lastNameUpdate').setAttribute(
-                'value', document.getElementById("lastName-" + currentId).innerHTML);
-        
-        document.getElementById('usernameUpdate').setAttribute(
-                'value', document.getElementById("username-" + currentId).innerHTML);
-        
-        document.getElementById('emailUpdate').setAttribute(
-                'value', document.getElementById("email-" + currentId).innerHTML);
-        
-        var valueToSelect = document.getElementById("careerLevelId-" + currentId).value;
-        var careerLevelIdSelect = document.getElementById('careerLevelIdUpdate');
-        
-        for(var i, j = 0; i = careerLevelIdSelect.options[j]; j++) {
-            if(i.value == valueToSelect) {
-            	careerLevelIdSelect.selectedIndex = j;
-                break;
-            }
-        }
-        
-        valueToSelect = document.getElementById("groupId-" + currentId).value;
-        var groupIdSelect = document.getElementById('groupIdUpdate');
-        
-        for(var i, j = 0; i = groupIdSelect.options[j]; j++) {
-            if(i.value == valueToSelect) {
-            	groupIdSelect.selectedIndex = j;
-                break;
-            }
-        }
-    }
+		document.getElementById('userIdUpdate').setAttribute('value',
+				document.getElementById("userId-" + currentId).innerHTML);
+
+		document.getElementById('firstNameUpdate').setAttribute('value',
+				document.getElementById("firstName-" + currentId).innerHTML);
+
+		document.getElementById('lastNameUpdate').setAttribute('value',
+				document.getElementById("lastName-" + currentId).innerHTML);
+
+		document.getElementById('usernameUpdate').setAttribute('value',
+				document.getElementById("username-" + currentId).innerHTML);
+
+		document.getElementById('emailUpdate').setAttribute('value',
+				document.getElementById("email-" + currentId).innerHTML);
+
+		var valueToSelect = document.getElementById("careerLevelId-"
+				+ currentId).value;
+		var careerLevelIdSelect = document
+				.getElementById('careerLevelIdUpdate');
+
+		for (var i, j = 0; i = careerLevelIdSelect.options[j]; j++) {
+			if (i.value == valueToSelect) {
+				careerLevelIdSelect.selectedIndex = j;
+				break;
+			}
+		}
+
+		valueToSelect = document.getElementById("groupId-" + currentId).value;
+		var groupIdSelect = document.getElementById('groupIdUpdate');
+
+		for (var i, j = 0; i = groupIdSelect.options[j]; j++) {
+			if (i.value == valueToSelect) {
+				groupIdSelect.selectedIndex = j;
+				break;
+			}
+		}
+	}
 </script>
 <script>
-function deleteUser(curId, userId) {
-      var xhttp;
-      xhttp = new XMLHttpRequest();
-      xhttp.open("GET", "/delete-user?id="+userId, true);
-      xhttp.send();
-      
-      var element = document.getElementById('row-' + curId);
-      element.parentNode.removeChild(element);
-    }
+	function deleteUser(curId, userId) {
+		var xhttp;
+		xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "/delete-user?id=" + userId, true);
+		xhttp.send();
+
+		var element = document.getElementById('row-' + curId);
+		element.parentNode.removeChild(element);
+	}
 </script>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" th:href="@{/index}"><img class = "logo" th:src="@{/images/logo.png}"  height="50" width="50" /></a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a th:href="@{/index}">Home</a></li>
-<!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
-<div class="dropdown">
-  <button class="dropbtn">Administration<span class="caret"></span></button>
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" th:href="@{/index}"><img class="logo"
+				th:src="@{/images/logo.png}" height="50" width="50" /></a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a th:href="@{/index}">Home</a></li>
+			<!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
+			<div class="dropdown">
+				<button class="dropbtn">
+					Administration<span class="caret"></span>
+				</button>
 
- <div class="dropdown-content">
-            <li><a th:href="@{/users/all-users}">All users</a></li>
-            <li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
-            <li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
-<!--             <li role="separator" class="divider"></li> -->
-            <li><a th:href="@{/todos/todo-type}">All todo types</a></li>
-<!--             <li role="separator" class="divider"></li> -->
-            <li><a th:href="@{/benefits/benefit-type}">All benefit types</a></li>
- </div>
+				<div class="dropdown-content">
+					<li><a th:href="@{/users/all-users}">All users</a></li>
+					<li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
+					<li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
+					<!--             <li role="separator" class="divider"></li> -->
+					<li><a th:href="@{/todos/todo-type}">All todo types</a></li>
+					<!--             <li role="separator" class="divider"></li> -->
+					<li><a th:href="@{/benefits/benefit-type}">All benefit
+							types</a></li>
+				</div>
 
-</div>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a>
-          <form th:action="@{/logout}" method="post" id="logoutForm">
-              <button type="submit" form="logoutForm" class="btn btn-link">
-                  <span class="glyphicon glyphicon-log-out"></span> Log Out
-              </button>
-          </form>
-      </a></li>
-    </ul>
-  </div>
-</nav>
+			</div>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a>
+					<form th:action="@{/logout}" method="post" id="logoutForm">
+						<button type="submit" form="logoutForm" class="btn btn-link">
+							<span class="glyphicon glyphicon-log-out"></span> Log Out
+						</button>
+					</form>
+			</a></li>
+		</ul>
+	</div>
+	</nav>
 
-<div class="total_progress">
-   <div class = "column-lg-8">
-     <div class = "panel panel-primary">
-        <div class ="panel-heading">
-           <h3 class = "panel-title"><i class = "fa fa-money fa-fw"></i>All users  
-<!--              <a class="btn1 icon-btn btn-success" href="#"> -->
-<!--                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span> -->
-<!--                  Add -->
-<!--              </a> -->
-                <button type="button"
-                    class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success"
-                    data-toggle="modal" data-target="#Add"> Add</button>
-           </h3>
-        </div>
-        
-         <div class = "panel-body">
-           <div class = "table-responsive">
-               <table class = "table table-bordered table-hover table-striped">
-                 <thead>
-                    <tr>
-                      <th>ID</th>                      
-                      <th>First name</th>
-                      <th>Last name</th>
-                      <th>Username</th>
-                      <th>Email </th>
-                      <th>Career Level</th>
-                      <th>Group</th>
-                    </tr>
-                 </thead>
-                 <tbody>
-                     <tr th:id="'row-' + ${userStat.count}" th:each = "user, userStat : ${users}">
-                        <td th:id="'userId-' + ${userStat.count}" th:text = "${user.id}"></td>
-                        <td th:id="'firstName-' + ${userStat.count}" th:text = "${user.firstName}"></td>
-                        <td th:id="'lastName-' + ${userStat.count}" th:text = "${user.lastName}"></td>
-                        <td th:id="'username-' + ${userStat.count}" th:text = "${user.username}"></td>
-                        <td th:id="'email-' + ${userStat.count}" th:text = "${user.email}"></td>
-                        <td th:text = "${user.careerLevel.name}"></td>
-                        <input type="hidden" th:id="'careerLevelId-' + ${userStat.count}" th:value="${user.careerLevel.id}" />
-                        <td th:text = "${user.group.role}"></td>
-                        <input type="hidden" th:id="'groupId-' + ${userStat.count}" th:value="${user.group.id}" />
-                        <td><a style="cursor: pointer;">
-                            <span th:onclick="'javascript:changeFormValues(\'' + ${userStat.count} + '\');'"
-                                    class = "glyphicon glyphicon-pencil" data-toggle="modal"
-                                    data-target="#Update"></span>
-                        </a></td>
-                        <td><a th:href="@{/users/progress-page/{id}/(id=${user.id})}">
-                            <span class = "glyphicon glyphicon-info-sign"></span>
-                        </a></td>
-                        <td><a style="cursor: pointer;" th:onclick="'javascript:deleteUser(\'' + ${userStat.count} +'\',\''+ ${user.id} + '\');'">
-                            <span class = "glyphicon glyphicon-trash" ></span>
-                        </a></td>
-                    </tr>  
-                 </tbody>
-               </table>
-           </div>   
-        </div>
-     </div>
-   </div>   
- </div>  
- 
+	<div class="total_progress">
+		<div class="column-lg-8">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-money fa-fw"></i>All users
+						<!--              <a class="btn1 icon-btn btn-success" href="#"> -->
+						<!--                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span> -->
+						<!--                  Add -->
+						<!--              </a> -->
+						<button type="button"
+							class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success"
+							data-toggle="modal" data-target="#Add">Add</button>
+					</h3>
+				</div>
+
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>First name</th>
+									<th>Last name</th>
+									<th>Username</th>
+									<th>Email</th>
+									<th>Career Level</th>
+									<th>Group</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:id="'row-' + ${userStat.count}"
+									th:each="user, userStat : ${users}">
+									<td th:id="'userId-' + ${userStat.count}" th:text="${user.id}"></td>
+									<td th:id="'firstName-' + ${userStat.count}"
+										th:text="${user.firstName}"></td>
+									<td th:id="'lastName-' + ${userStat.count}"
+										th:text="${user.lastName}"></td>
+									<td th:id="'username-' + ${userStat.count}"
+										th:text="${user.username}"></td>
+									<td th:id="'email-' + ${userStat.count}"
+										th:text="${user.email}"></td>
+									<td th:text="${user.careerLevel.name}"></td>
+									<input type="hidden"
+										th:id="'careerLevelId-' + ${userStat.count}"
+										th:value="${user.careerLevel.id}" />
+									<td th:text="${user.group.role}"></td>
+									<input type="hidden" th:id="'groupId-' + ${userStat.count}"
+										th:value="${user.group.id}" />
+									<td><a style="cursor: pointer;"> <span
+											th:onclick="'javascript:changeFormValues(\'' + ${userStat.count} + '\');'"
+											class="glyphicon glyphicon-pencil" data-toggle="modal"
+											data-target="#Update"></span>
+									</a></td>
+									<td><a
+										th:href="@{/users/progress-page/{id}/(id=${user.id})}"> <span
+											class="glyphicon glyphicon-info-sign"></span>
+									</a></td>
+									<td><a style="cursor: pointer;"
+										th:onclick="'javascript:deleteUser(\'' + ${userStat.count} +'\',\''+ ${user.id} + '\');'">
+											<span class="glyphicon glyphicon-trash"></span>
+									</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-<!-- Add form -->
+
+	<!-- Add form -->
 	<div class="container">
 		<div class="modal fade" id="Add" tabindex="-1" role="dialog"
 			aria-labelledby="Login" aria-hidden="true">
@@ -179,7 +204,7 @@ function deleteUser(curId, userId) {
 						</button>
 						<h5 class="modal-title">Add</h5>
 					</div>
- 
+
 					<div class="modal-body">
 						<!-- The form is placed inside the body of modal -->
 						<form id="addForm" th:action="@{/create-user}" action="#"
@@ -192,7 +217,8 @@ function deleteUser(curId, userId) {
 									<input class="form-control" id="firstName" name="firstName"
 										value="" required pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*"
 										aria-required="true" minlength="4" maxlength="30"
-										aria-describedby="name-format" title="Must begin with a letter." />
+										aria-describedby="name-format"
+										title="Must begin with a letter." />
 								</div>
 							</div>
 
@@ -209,8 +235,8 @@ function deleteUser(curId, userId) {
 							</div>
 
 							<div class="form-group">
-								<label class="col-xs-3 control-label">Username
-								    <span class="asteriskField"> * </span>
+								<label class="col-xs-3 control-label">Username <span
+									class="asteriskField"> * </span>
 								</label>
 								<div class="col-xs-5">
 									<input class="form-control" id="username" name="username"
@@ -221,25 +247,24 @@ function deleteUser(curId, userId) {
 							</div>
 
 							<div class="form-group">
-								<label class="col-xs-3 control-label">Password
-								    <span class="asteriskField"> * </span>
+								<label class="col-xs-3 control-label">Password <span
+									class="asteriskField"> * </span>
 								</label>
 								<div class="col-xs-5">
 									<input class="form-control" id="password" name="password"
 										value="" required pattern="[0-9]*+[a-zA-z]([ '-][a-zA-Z]+)*"
 										aria-required="true" minlength="4" maxlength="30"
-										aria-describedby="name-format"
-										type="password" />
+										aria-describedby="name-format" type="password" />
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-xs-3 control-label">Email
-								    <span class="asteriskField"> * </span>
+								<label class="col-xs-3 control-label">Email <span
+									class="asteriskField"> * </span>
 								</label>
 								<div class="col-xs-5">
-									<input class="form-control" id="email" name="email"
-										value="" required="required"
+									<input class="form-control" id="email" name="email" value=""
+										required="required"
 										pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 										aria-required="true" aria-describedby="name-format"
 										placeholder="email@example.com" />
@@ -247,28 +272,26 @@ function deleteUser(curId, userId) {
 							</div>
 
 							<div class="form-group">
-								<label for="careerLevelId" class="col-xs-3 control-label">Career Level
-									<span class="asteriskField"> * </span>
-								</label>
-								<select name="careerLevelId" id="careerLevelId"
-								        class="styled-select transparent semi-square"
-								        required="required">
+								<label for="careerLevelId" class="col-xs-3 control-label">Career
+									Level <span class="asteriskField"> * </span>
+								</label> <select name="careerLevelId" id="careerLevelId"
+									class="styled-select transparent semi-square"
+									required="required">
 									<option value="">Select an item</option>
-									<option th:each="careerLevel : ${careerLevels}" 
-			                                th:value="${careerLevel.id}" 
-			                                th:text="${careerLevel.name}">Career Level</option>
+									<option th:each="careerLevel : ${careerLevels}"
+										th:value="${careerLevel.id}" th:text="${careerLevel.name}">Career
+										Level</option>
 								</select>
 							</div>
 
 							<div class="form-group">
-								<label class="col-xs-3 control-label">Group
-                                    <span class="asteriskField"> * </span>
+								<label class="col-xs-3 control-label">Group <span
+									class="asteriskField"> * </span>
 								</label> <select class="styled-select transparent semi-square" required
 									name="groupId" id="groupId">
 									<option value="">Select an item</option>
-									<option th:each="group : ${groups}" 
-                                            th:value="${group.id}" 
-                                            th:text="${group.role}">Group</option>
+									<option th:each="group : ${groups}" th:value="${group.id}"
+										th:text="${group.role}">Group</option>
 								</select>
 							</div>
 							<!--                     <div class="form-group"> -->
@@ -279,8 +302,7 @@ function deleteUser(curId, userId) {
 							<!--                     </div> -->
 
 							<div class="modal-footer">
-								<button type="submit"
-									class="btn btn-primary">Add</button>
+								<button type="submit" class="btn btn-primary">Add</button>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">Cancel</button>
 							</div>
@@ -311,13 +333,12 @@ function deleteUser(curId, userId) {
 
 					<div class="modal-body">
 						<!-- The form is placed inside the body of modal -->
-						<form name="updateForm" id="updateForm" action="#" th:action="@{/update-user}"
-							method="get" class="form-horizontal">
-							<input type="hidden" name="id" id="userIdUpdate"
-							        value="" />
+						<form name="updateForm" id="updateForm" action="#"
+							th:action="@{/update-user}" method="get" class="form-horizontal">
+							<input type="hidden" name="id" id="userIdUpdate" value="" />
 							<div class="form-group">
-								<label class="col-xs-3 control-label">First Name
-								    <span class="asteriskField"> * </span>
+								<label class="col-xs-3 control-label">First Name <span
+									class="asteriskField"> * </span>
 								</label>
 								<div class="col-xs-5">
 									<input class="form-control" id="firstNameUpdate"
@@ -329,21 +350,22 @@ function deleteUser(curId, userId) {
 							</div>
 
 							<div class="form-group">
-								<label class="col-xs-3 control-label">Last Name
-								    <span class="asteriskField"> * </span>
-							    </label>
+								<label class="col-xs-3 control-label">Last Name <span
+									class="asteriskField"> * </span>
+								</label>
 								<div class="col-xs-5">
 									<input class="form-control" id="lastNameUpdate" name="lastName"
 										value="" minlength="4" maxlength="30" required="required"
 										pattern="[a-zA-z]+[0-9]*([ '-][a-zA-Z]+)*"
-										aria-describedby="name-format" title="Must begin with a letter." />
+										aria-describedby="name-format"
+										title="Must begin with a letter." />
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-xs-3 control-label">Username
-								    <span class="asteriskField"> * </span>
-							    </label>
+								<label class="col-xs-3 control-label">Username <span
+									class="asteriskField"> * </span>
+								</label>
 								<div class="col-xs-5">
 									<input class="form-control" id="usernameUpdate" name="username"
 										value="" minlength="4" maxlength="30" required="required"
@@ -353,9 +375,9 @@ function deleteUser(curId, userId) {
 							</div>
 
 							<div class="form-group">
-								<label class="col-xs-3 control-label">Email
-								    <span class="asteriskField"> * </span>
-							    </label>
+								<label class="col-xs-3 control-label">Email <span
+									class="asteriskField"> * </span>
+								</label>
 								<div class="col-xs-5">
 									<input class="form-control" id="emailUpdate" name="email"
 										value="" required="required"
@@ -366,35 +388,33 @@ function deleteUser(curId, userId) {
 
 
 							<div class="form-group">
-                                <label for="careerLevelId" class="col-xs-3 control-label">Career Level
-                                    <span class="asteriskField"> * </span>
-                                </label>
-                                <select name="careerLevelId" id="careerLevelIdUpdate"
-                                        class="styled-select transparent semi-square"
-                                        required="required">
-                                    <option value="">Select an item</option>
-                                    <option th:each="careerLevel : ${careerLevels}" 
-                                            th:value="${careerLevel.id}" 
-                                            th:text="${careerLevel.name}">Career Level</option>
-                                </select>
-                            </div>
+								<label for="careerLevelId" class="col-xs-3 control-label">Career
+									Level <span class="asteriskField"> * </span>
+								</label> <select name="careerLevelId" id="careerLevelIdUpdate"
+									class="styled-select transparent semi-square"
+									required="required">
+									<option value="">Select an item</option>
+									<option th:each="careerLevel : ${careerLevels}"
+										th:value="${careerLevel.id}" th:text="${careerLevel.name}">Career
+										Level</option>
+								</select>
+							</div>
 
-                            <div class="form-group">
-                                <label class="col-xs-3 control-label">Group
-                                    <span class="asteriskField"> * </span>
-                                </label> <select class="styled-select transparent semi-square" required
-                                    name="groupId" id="groupIdUpdate">
-                                    <option value="">Select an item</option>
-                                    <option th:each="group : ${groups}" 
-                                            th:value="${group.id}" 
-                                            th:text="${group.role}">Group</option>
-                                </select>
-                            </div>
-                            
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Group <span
+									class="asteriskField"> * </span>
+								</label> <select class="styled-select transparent semi-square" required
+									name="groupId" id="groupIdUpdate">
+									<option value="">Select an item</option>
+									<option th:each="group : ${groups}" th:value="${group.id}"
+										th:text="${group.role}">Group</option>
+								</select>
+							</div>
+
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary">Update</button>
 								<button type="button" class="btn btn-default"
-									   data-dismiss="modal">Cancel</button>
+									data-dismiss="modal">Cancel</button>
 							</div>
 						</form>
 					</div>
@@ -403,76 +423,75 @@ function deleteUser(curId, userId) {
 		</div>
 	</div>
 
-	<div class="container">                  
-  <ul class="pager">
-    <li><a th:href="@{/index}">&lt;&lt;&lt;Home</a></li>
-<!--     <li><a href="temp.html">All finished tasks</a></li> -->
-  </ul>
-</div>
+	<div class="container">
+		<ul class="pager">
+			<li><a th:href="@{/index}">&lt;&lt;&lt;Home</a></li>
+			<!--     <li><a href="temp.html">All finished tasks</a></li> -->
+		</ul>
+	</div>
 
 
-    <!-- Footer -->
-    <div>
-        <footer class="footer-distributed">
-            <div class="footer-left">
+	<!-- Footer -->
+	<div>
+		<footer class="footer-distributed">
+		<div class="footer-left">
 
-                <a href="#"><img class="logo" th:src="@{/images/logo.png}"
-                    height="100" width="100" /></a>
+			<a href="#"><img class="logo" th:src="@{/images/logo.png}"
+				height="100" width="100" /></a>
 
-                <p class="footer-links footer-company-about">
-                    <a th:href="@{/index.html}">Home</a> · <a
-                        th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
-                </p>
+			<p class="footer-links footer-company-about">
+				<a th:href="@{/index.html}">Home</a> · <a
+					th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
+			</p>
 
-                <p class="footer-company-about">Copyright &copy; 2017, ISD. All
-                    rights reserved.</p>
-            </div>
+			<p class="footer-company-about">Copyright &copy; 2017, ISD. All
+				rights reserved.</p>
+		</div>
 
-            <div class="footer-center">
+		<div class="footer-center">
 
-                <div>
-                    <i class="fa fa-map-marker"></i>
-                    <p class="footer-company-about">
-                        Str. Fierarilor 2 <br />Chisinau 2001MD, Moldova
-                    </p>
-                </div>
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p class="footer-company-about">
+					Str. Fierarilor 2 <br />Chisinau 2001MD, Moldova
+				</p>
+			</div>
 
-                <div>
-                    <i class="fa fa-phone"></i>
-                    <p class="footer-company-about">+373 22 996 170</p>
-                </div>
+			<div>
+				<i class="fa fa-phone"></i>
+				<p class="footer-company-about">+373 22 996 170</p>
+			</div>
 
-                <div>
-                    <i class="fa fa-envelope"></i>
-                    <p class="footer-company-about">
-                        <a href="mailto:isd@inthergroup.com">isd@inthergroup.com</a>
-                    </p>
-                </div>
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p class="footer-company-about">
+					<a href="mailto:isd@inthergroup.com">isd@inthergroup.com</a>
+				</p>
+			</div>
 
-            </div>
+		</div>
 
-            <div class="footer-right">
+		<div class="footer-right">
 
-                <p class="footer-company-about">
-                    <br /> About the company<br /> ISD executes Java projects. For a
-                    very reasonable price customer gains access to our team of skilled
-                    professionals.
+			<p class="footer-company-about">
+				<br /> About the company<br /> ISD executes Java projects. For a
+				very reasonable price customer gains access to our team of skilled
+				professionals.
 
-                </p>
+			</p>
 
-                <div class="footer-icons">
+			<div class="footer-icons">
 
-                    <a th:href="@{https://www.facebook.com/isdmoldova}"> <i
-                        class="fa fa-facebook"></i>
-                    </a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i
-                        class="fa fa-linkedin"></i></a> <a href="#"><i
-                        class="fa fa-github"></i></a>
+				<a th:href="@{https://www.facebook.com/isdmoldova}"> <i
+					class="fa fa-facebook"></i>
+				</a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i
+					class="fa fa-linkedin"></i></a> <a href="#"><i class="fa fa-github"></i></a>
 
-                </div>
+			</div>
 
-            </div>
+		</div>
 
-        </footer>
-    </div>
+		</footer>
+	</div>
 </body>
 </html>

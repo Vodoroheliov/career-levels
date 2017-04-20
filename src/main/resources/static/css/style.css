@@ -1,4 +1,4 @@
-@CHARSET "ISO-8859-1";
+/* @CHARSET "ISO-8859-1"; */
 
 .welcome {
 	font-size: 1.3em;
@@ -9,9 +9,7 @@
     font-style: italic;
 }
 
-/*Select box*/
 .styled-select {
-/*    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0; */
    margin-left:2.5%;
    height: 29px;
    overflow: hidden;
@@ -23,7 +21,7 @@
    border: none;
    font-size: 14px;
    height: 29px;
-   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   padding: 5px;
    width: 268px;
 }
 
@@ -33,16 +31,16 @@
    border-radius: 5px;
 }
 
-.transparent    { background-color: transparent; }
-/*Select box/*/
+.transparent{ 
+	background-color: transparent;
+	 }
 
 .arrow-down {
-  width: 100%; 
-  height: 0; 
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  
-  border-bottom: 20px solid #f00;
+	width: 100%; 
+	height: 0; 
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;  
+	border-bottom: 20px solid #f00;
 }
 .body{
 	
@@ -68,11 +66,11 @@
 	
 }
 .varf{
-	  width: 100%; 
-  height: auto; 
-  border-left: 10em solid transparent;
-  border-right: 10em solid transparent;
-  border-bottom: 5em solid #00ff80;
+	width: 100%; 
+	height: auto; 
+	border-left: 10em solid transparent;
+	border-right: 10em solid transparent;
+	border-bottom: 5em solid #00ff80;
 	
 }
 .top1{
@@ -142,13 +140,15 @@
 	width:100%;
 }
 
-.flexcroll{ width:100%;
-            height:300px;
-            overflow:scroll;
+.flexcroll{ 
+	width:100%;
+	height:300px;
+	overflow:scroll;
            }
-.flexcroll1{ width:100%;
-            height:200px;
-            overflow:scroll;
+.flexcroll1{ 
+	width:100%;
+    height:200px;
+    overflow:scroll;
            }           
            
 .flexcroll{
@@ -169,8 +169,13 @@
     scrollbar-darkshadow-color: #FFFFFF;
     scrollbar-track-color: #FFFFFF;
     scrollbar-arrow-color: #FFFFFF;
+    -webkit-scrollbar-corner: red; 
 }
-/* Let's get this party started */
+
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
 .flexcroll::-webkit-scrollbar {
     width: 12px;
 }
@@ -179,29 +184,25 @@
     background-color:transparent;
 }
  
-/* Track */
 .flexcroll::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
- /* Track */
+
 .flexcroll1::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
     -webkit-border-radius: 10px;
     border-radius: 10px;
+    
 }
- 
-/* Handle */
 .flexcroll::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    background: #f5f5f0; 
-    
+    background: #f5f5f0;     
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 
-/* Handle */
 .flexcroll1::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -211,7 +212,7 @@
 
 
 ul {
-  list-style-type: none;
+	list-style-type: none;
 }
 .guys1{
     width: 100%;
@@ -262,111 +263,79 @@ ul {
 }
 .benefits5{
 	min-height:52%;
-	background-color:#E83600;
-	
+	background-color:#E83600;	
 }
 
 
 .users{
-/* 	background-color:yellow; */
 	margin-top:10%;
-	
 	height: 29%;
     overflow: scroll;
-/* 	position:absolute; */
 }
 
-/* .users1{ */
-/* 	margin-top:60%; */
-/* } */
-
-/* .users2{ */
-/* 	margin-top:60%; */
-/* } */
-/* .users3{ */
-/* 	margin-top:60%; */
-/* } */
-/* .users4{ */
-/* 	margin-top:23%; */
-/* } */
-/* .users5{ */
-/* 	margin-top:30%; */
-/* } */
 .todos{
-/* 	background-color:gray; */
 	min-height:15%;
 	margin-top:10%;
-/* 	margin-bottom:5%; */
 	font: 14px Times New Roman;
 }
 .tod-title{
-font: bold 20px Times New Roman;
+	font: bold 20px Times New Roman;
 	color:white;
 	text-align:center;
 }
 .todos1{
-	  width: 100%;
+	width: 100%;
     height: 100px;
     background-image: url('/images/F1.1.svg');
     background-size: 100% 100%;			
-
-/* 	margin-top:50%; */
 }
 .todos2{
-	  width: 100%;
+	width: 100%;
     height: 120px;
     background-image: url('/images/F2.svg');
     background-size: 100% 100%;			
-
-/* 	margin-top:59%; */
 }
 .todos3{
-	  width: 100%;
+	width: 100%;
     height: 120px;
     background-image: url('/images/F3.svg');
     background-size: 100% 100%;			
-
-/* 	margin-top:68%; */
 }
 
 .todos4{
-	  width: 100%;
+	width: 100%;
     height: 120px;
     background-image: url('/images/F2.svg');
     background-size: 100% 100%;			
-
-/* 	margin-top:72%; */
 }
 .todos5{
-	  width: 100%;
+	width: 100%;
     height: 120px;
     background-image: url('/images/F3.svg');
     background-size: 100% 100%;			
-
-/* 	margin-top:72%; */
 }
 
 .invisible-at-first {
 	display: none;
 }
-#success_message{ display: none;}
+#success_message{
+	display: none;
+	}
 .total_progress{
-	
-	
-     display: block;  
-  margin-right: auto;  
-  margin-left: auto; 
+	display: block;  
+	margin-right: auto;  
+	margin-left: auto; 
  
 	
 }
-.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}
-.mainselection {
-/*   overflow:hidden; */
-    width:200px;
-/*     margin-left:35px; */
+.bootstrap-iso .formden_header h2, 
+.bootstrap-iso .formden_header p, 
+.bootstrap-iso form{font-family: Arial, Helvetica, sans-serif;color: black}
+.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} 
+.asteriskField{color: red;}
 
-/*     background: url("images/dropdown_arrow.png") no-repeat #fff 319px 2px; */
-    /* dropdown_arrow.png is a 31x28 image */
+.mainselection {
+    width:200px;
 }
 select {
     border:2px;
@@ -374,60 +343,60 @@ select {
     height:32px;
     border:1px solid #d8d8d8;
     width:200px;
-/*     -webkit-appearance: none; */
+    -webkit-appearance: none;
 }
 
  .t {
-/*   border-bottom: 1px dotted #000000; */
-  color: #000000; outline: none;
-  cursor: href;
-  text-decoration: none;
-  position: relative;
+	color: #000000; outline: none;
+  	cursor: href;
+  	text-decoration: none;
+  	position: relative;
 }
 .t span {
-  margin-left: -999em;
-  position: absolute;
+  	margin-left: -999em;
+  	position: absolute;
 }
 .t:hover span {
-  font-family: Calibri, Tahoma, Geneva, sans-serif;
-  position: absolute;
-/*   left: 1em; */
-  top: 2em;
-  z-index: 99;
-  margin-left: 0;
-  width:14em;
+  	font-family: Calibri, Tahoma, Geneva, sans-serif;
+  	position: absolute;  
+  	top: 2em;
+  	z-index: 99;
+  	margin-left: 0;
+  	width:14em;
 }
 .t:hover img {
-  border: 0;
-  margin: -10px 0 0 -55px;
-  float: left;
-  position: absolute;
+  	border: 0;
+  	margin: -10px 0 0 -55px;
+  	float: left;
+  	position: absolute;
 }
 
 .t:hover em {
-  font-family: Candara, Tahoma, Geneva, sans-serif;
-  font-size: 1.2em;
-  font-weight: bold;
-  display: block;
-  padding: 0.2em 0 0.6em 0;
+  	font-family: Candara, Tahoma, Geneva, sans-serif;
+  	font-size: 1.2em;
+  	font-weight: bold;
+  	display: block;
+  	padding: 0.2em 0 0.6em 0;
 }
 
-.c { padding: 0.5em 0.8em 0.8em 2em; }
-* html a:hover { background: transparent; }
-.i { background: #9FDAEE; 
-width:100%;
-border: 1px solid #2BB0D7;border-radius: 5px 5px; }
+.c {
+	padding: 0.5em 0.8em 0.8em 2em; }
+* html a:hover { 
+	background: transparent; }
+
+.i {
+	background: #9FDAEE; 
+	width:100%;
+	border: 1px solid #2BB0D7;border-radius: 5px 5px;
+	 }
 
 .dropbtn {
-/* 	margin-top:10%; */
     background-color: transparent;
     color: #777;
-/*     padding: 30px; */
     font-size: 14px;
     border: none;
     min-height: 80px;
     cursor: pointer;
-/*     margin-left:41%; */
     width:138px;
 }
 
@@ -438,7 +407,6 @@ border: 1px solid #2BB0D7;border-radius: 5px 5px; }
 
 .dropdown-content {
 	margin-top:.5%;	
-
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -456,7 +424,9 @@ border: 1px solid #2BB0D7;border-radius: 5px 5px; }
 .dropbtn:hover {
 	color: #ffffff;
 }
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+	background-color: #f1f1f1
+	}
 
 .dropdown:hover .dropdown-content {
     display: block;

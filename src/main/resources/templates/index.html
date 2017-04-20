@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" /> -->
 <!-- <meta charset="UTF-8" /> -->
@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial -scale =1" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Hello</title>
+<title>Home</title>
 <link rel="stylesheet"
 	th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}" />
 <link rel="stylesheet" type="text/css"
@@ -38,12 +38,12 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a th:href="@{/index}">Home</a></li>
-				
+
 				<div sec:authorize="hasAuthority('ADMIN')" class="dropdown">
 					<button class="dropbtn">
-					<li>Administration<span class="caret"></span></li>
+						<li>Administration<span class="caret"></span></li>
 					</button>
-					
+
 					<div class="dropdown-content">
 						<li><a th:href="@{/users/all-users}">All users</a></li>
 						<li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
@@ -51,29 +51,28 @@
 						<!--             <li role="separator" class="divider"></li> -->
 						<li><a th:href="@{/todos/todo-type}">All todo types</a></li>
 						<!--             <li role="separator" class="divider"></li> -->
-						<li><a th:href="@{/benefits/benefit-type}">All benefit types</a></li>
+						<li><a th:href="@{/benefits/benefit-type}">All benefit
+								types</a></li>
 					</div>
 				</div>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-                <li th:if="${#httpServletRequest.remoteUser != null}">
-                    <a class="welcome" th:text="'Welcome, ' + ${#httpServletRequest.remoteUser}"></a>
-                </li>
-				<li th:if="${#httpServletRequest.remoteUser == null}">
-				    <a th:href="@{/signup}"><span class="glyphicon glyphicon-user"></span>
-					Sign Up
-				</a></li>
-				<li th:if="${#httpServletRequest.remoteUser == null}">
-				    <a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span>
-				    Login
-			    </a></li>
+				<li th:if="${#httpServletRequest.remoteUser != null}"><a
+					class="welcome"
+					th:text="'Welcome, ' + ${#httpServletRequest.remoteUser}"></a></li>
+				<li th:if="${#httpServletRequest.remoteUser == null}"><a
+					th:href="@{/signup}"><span class="glyphicon glyphicon-user"></span>
+						Sign Up </a></li>
+				<li th:if="${#httpServletRequest.remoteUser == null}"><a
+					th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span>
+						Login </a></li>
 				<li><a th:if="${#httpServletRequest.remoteUser != null}">
-	                <form th:action="@{/logout}" method="post" id="logoutForm">
-	                    <button type="submit" form="logoutForm" class="btn btn-link">
-	                        <span class="glyphicon glyphicon-log-out"></span> Log Out
-	                    </button>
-	                </form>
-	            </a></li>
+						<form th:action="@{/logout}" method="post" id="logoutForm">
+							<button type="submit" form="logoutForm" class="btn btn-link">
+								<span class="glyphicon glyphicon-log-out"></span> Log Out
+							</button>
+						</form>
+				</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -92,19 +91,20 @@
 				<br />
 				<div>
 					<ul class="benefitName flexcroll">
-						<li th:each="b : ${benefits[clStat.index]}" th:text="${b}"></li>
+						<li th:each="b : ${benefits[clStat.index]}"
+							th:text="${b[0] + ' ' + b[1]}"></li>
 					</ul>
 					<div th:class="'guys guys' + ${clStat.count}"></div>
 				</div>
 			</div>
-			
-			<div th:class="'users flexcroll users' + ${clStat.count}" valign="top">
+
+			<div th:class="'users flexcroll users' + ${clStat.count}"
+				valign="top">
 				<ul class="usersName" th:each="u : ${users[clStat.index]}">
 					<a class="t" th:href="@{users/progress-page/{id}/(id=${u.id})}">
 						<li class="user" th:text="${u.firstName} + ' ' + ${u.lastName}"></li>
-						<span class="c i">
-					        <img th:src="@{/images/info.png}" alt="Info" height="48" width="48" />
-							<em>Information</em>
+						<span class="c i"> <img th:src="@{/images/info.png}"
+							alt="Info" height="48" width="48" /> <em>Information</em>
 							<div
 								th:text="'Current progress is: ' + ${usersPercentProgress['__${u.id}__']} + '%'">
 							</div>
@@ -116,7 +116,7 @@
 									<span class="sr-only">45% Complete</span>
 								</div>
 							</div>
-					   </span>
+					</span>
 					</a>
 				</ul>
 			</div>
@@ -128,7 +128,7 @@
 				<br />
 				<ul class="todosName flexcroll1">
 					<li class="task" th:each="t : ${todos[clStat.index]}"
-						th:text="${t}"></li>
+						th:text="${t[0] + ' ' + t[1]}"></li>
 				</ul>
 			</div>
 		</div>

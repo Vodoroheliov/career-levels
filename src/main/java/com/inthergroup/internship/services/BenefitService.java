@@ -53,11 +53,27 @@ public interface BenefitService {
      */
     void removeBenefitFromCareerLevel(Long careerLevelId, Long benefitTypeId);
 
+//    /**
+//     * Returns list of all benefits from a specifc career level.
+//     * @param id
+//     */
+//    List<BenefitType> findBenefitTypesFromLevel(Long id);
+//    
+//    /**
+//     * Returns list of instances of CareerLevelBenefit entity that belong to
+//     * specific career level.
+//     * @param id Career level id.
+//     */
+//    List<CareerLevelBenefit> findCareerLevelBenefitsFromLevel(Long id);
+    
     /**
-     * Returns list of all benefits from a specifc career level.
-     * @param id
+     * Returns list of arrays that consist of quantity and benefit type names
+     * for specific career level.
+     * 1st element in array - quantity.
+     * 2nd element in array - name of benefit type.
+     * @param id Career level id.
      */
-    List<String> findBenefitsFromLevel(Long id);
+    List<Object[]> findBenefitsFromLevel(Long id);
     
     /**
      * Returns all instances of CareerLevelBenefit entity.
@@ -70,4 +86,5 @@ public interface BenefitService {
      * @param benefitTypeId Id of benefit type.
      */
     CareerLevelBenefit findCareerLevelBenefit(Long careerLevelId, Long benefitTypeId);
+    
 }
