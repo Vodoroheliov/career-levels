@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8" />
@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial -scale =1" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Hello</title>
+<title>User Progress</title>
 <link rel="stylesheet"
 	th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}" />
 
@@ -94,11 +94,11 @@
 		var xhttp;
 		xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
-	        if (this.readyState == 4 && this.status == 200) {
-	        	var element = document.getElementById('row-' + curId);
-	            element.parentNode.removeChild(element);
-	        }
-	    };
+			if (this.readyState == 4 && this.status == 200) {
+				var element = document.getElementById('row-' + curId);
+				element.parentNode.removeChild(element);
+			}
+		};
 		xhttp.open("GET", "/remove-todo-from-user?userId=" + userId
 				+ "&username=" + username + "&todoId=" + todoId
 				+ "&careerLevelId=" + careerLevelId, true);
@@ -117,7 +117,7 @@
 		<ul class="nav navbar-nav">
 			<li><a th:href="@{/index}">Home</a></li>
 			<!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
-			<div class="dropdown">
+			<div sec:authorize="hasAuthority('ADMIN')" class="dropdown">
 				<button class="dropbtn">
 					Administration<span class="caret"></span>
 				</button>
@@ -136,12 +136,12 @@
 			</div>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-            <li><a>
-                <form th:action="@{/logout}" method="post" id="logoutForm">
-				    <button type="submit" form="logoutForm" class="btn btn-link">
-				        <span class="glyphicon glyphicon-log-out"></span> Log Out
-			        </button>
-		        </form>
+			<li><a>
+					<form th:action="@{/logout}" method="post" id="logoutForm">
+						<button type="submit" form="logoutForm" class="btn btn-link">
+							<span class="glyphicon glyphicon-log-out"></span> Log Out
+						</button>
+					</form>
 			</a></li>
 		</ul>
 	</div>
@@ -159,9 +159,9 @@
 			Current level: <span th:text="${careerLevel.name}" th:remove="tag">career
 				level name</span>
 		</h3>
-		<br />
-		<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/promote-user(userId=${userId})}"
-			class="btn btn-primary1">Promote user</a>
+		<br /> <a sec:authorize="hasAuthority('ADMIN')"
+			th:href="@{/promote-user(userId=${userId})}" class="btn btn-primary1">Promote
+			user</a>
 	</div>
 
 	<div class="col-lg-6">
@@ -197,7 +197,7 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<i class="fa fa-money fa-fw"></i>Finished
-<!-- 					               (<a th:href="@{/add-todo-to-user/{id}/(id=${userId})}"><span class = "glyphicon glyphicon-plus"></span> Add</a>) -->
+					<!-- 					               (<a th:href="@{/add-todo-to-user/{id}/(id=${userId})}"><span class = "glyphicon glyphicon-plus"></span> Add</a>) -->
 					<span th:if="${#httpServletRequest.remoteUser == username}">
 						<button type="button"
 							class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success"
@@ -228,12 +228,14 @@
 									th:text="${todo[1].description}"></td>
 								<td th:id="'dateOfCompletion-' + ${todoStat.count}"
 									th:text="${#dates.format(todo[1].dateOfCompletion, 'yyyy/mm/dd')}"></td>
-								<td th:if="${#httpServletRequest.remoteUser == username}"><a style="cursor: pointer;"> <span
+								<td th:if="${#httpServletRequest.remoteUser == username}"><a
+									style="cursor: pointer;"> <span
 										th:onclick="'javascript:changeFormValues(\'' + ${todoStat.count} + '\');'"
 										class="glyphicon glyphicon-pencil" data-toggle="modal"
 										data-target="#Update"></span>
 								</a></td>
-								<td th:if="${#httpServletRequest.remoteUser == username}"><a style="cursor: pointer;"
+								<td th:if="${#httpServletRequest.remoteUser == username}"><a
+									style="cursor: pointer;"
 									th:onclick="'javascript:removeTodo(\'' + ${todoStat.count} +'\',\''+ ${userId} +'\',\''+ ${#httpServletRequest.remoteUser} +'\',\''+ ${todo[1].primaryKey.todoId} +'\',\''+ ${todo[1].primaryKey.careerLevel.id} + '\');'">
 										<span class="glyphicon glyphicon-trash"></span>
 								</a></td>
@@ -268,10 +270,11 @@
 						<form id="addForm"
 							th:action="@{/add-todo-to-user/{id}/(id=${userId})}" action="#"
 							class="form-horizontal" method="post">
-							
+
 							<!-- Pass username -->
-							<input type="hidden" name="username" th:value="${#httpServletRequest.remoteUser}" />
-							
+							<input type="hidden" name="username"
+								th:value="${#httpServletRequest.remoteUser}" />
+
 							<div class="form-group">
 								<label class="col-xs-3 control-label" for="todoId">Title
 									<span class="asteriskField">*</span>
@@ -315,7 +318,7 @@
 										<div class="input-group-addon">
 											<i class="fa fa-calendar"> </i>
 										</div>
-										<input class="form-control" id="dateOfCompletion"
+										<input class="form-control1" id="dateOfCompletion"
 											name="dateOfCompletion" placeholder="yyyy/mm/dd" type="text"
 											required />
 									</div>
@@ -357,10 +360,11 @@
 						<form id="updateForm"
 							th:action="@{/update-todo-for-user/{id}/(id=${userId})}"
 							action="#" class="form-horizontal" method="post">
-							
+
 							<!-- Pass username -->
-                            <input type="hidden" name="username" th:value="${#httpServletRequest.remoteUser}" />
-                            
+							<input type="hidden" name="username"
+								th:value="${#httpServletRequest.remoteUser}" />
+
 							<div class="form-group">
 								<label class="col-xs-3 control-label" for="todoId">Title</label>
 								<div class="col-xs-5">
@@ -391,7 +395,7 @@
 
 							</div>
 
-							<div class="form-group ">
+							<div class="form-group">
 
 								<label class="col-xs-3 control-label" for="date"> Date <span
 									class="asteriskField"> * </span>
@@ -401,7 +405,7 @@
 										<div class="input-group-addon">
 											<i class="fa fa-calendar"> </i>
 										</div>
-										<input class="form-control" id="dateOfCompletionUpdate"
+										<input class="form-control1" id="dateOfCompletionUpdate"
 											name="dateOfCompletion" placeholder="yyyy/mm/dd" type="text"
 											required />
 									</div>
@@ -430,66 +434,65 @@
 	</div>
 
 	<div>
-        <footer class="footer-distributed">
-            <div class="footer-left">
+		<footer class="footer-distributed">
+		<div class="footer-left">
 
-                <a href="#"><img class="logo" th:src="@{/images/logo.png}"
-                    height="100" width="100" /></a>
+			<a href="#"><img class="logo" th:src="@{/images/logo.png}"
+				height="100" width="100" /></a>
 
-                <p class="footer-links footer-company-about">
-                    <a th:href="@{/index.html}">Home</a> · <a
-                        th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
-                </p>
+			<p class="footer-links footer-company-about">
+				<a th:href="@{/index.html}">Home</a> · <a
+					th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
+			</p>
 
-                <p class="footer-company-about">Copyright &copy; 2017, ISD. All
-                    rights reserved.</p>
-            </div>
+			<p class="footer-company-about">Copyright &copy; 2017, ISD. All
+				rights reserved.</p>
+		</div>
 
-            <div class="footer-center">
+		<div class="footer-center">
 
-                <div>
-                    <i class="fa fa-map-marker"></i>
-                    <p class="footer-company-about">
-                        Str. Fierarilor 2 <br />Chisinau 2001MD, Moldova
-                    </p>
-                </div>
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p class="footer-company-about">
+					Str. Fierarilor 2 <br />Chisinau 2001MD, Moldova
+				</p>
+			</div>
 
-                <div>
-                    <i class="fa fa-phone"></i>
-                    <p class="footer-company-about">+373 22 996 170</p>
-                </div>
+			<div>
+				<i class="fa fa-phone"></i>
+				<p class="footer-company-about">+373 22 996 170</p>
+			</div>
 
-                <div>
-                    <i class="fa fa-envelope"></i>
-                    <p class="footer-company-about">
-                        <a href="mailto:isd@inthergroup.com">isd@inthergroup.com</a>
-                    </p>
-                </div>
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p class="footer-company-about">
+					<a href="mailto:isd@inthergroup.com">isd@inthergroup.com</a>
+				</p>
+			</div>
 
-            </div>
+		</div>
 
-            <div class="footer-right">
+		<div class="footer-right">
 
-                <p class="footer-company-about">
-                    <br /> About the company<br /> ISD executes Java projects. For a
-                    very reasonable price customer gains access to our team of skilled
-                    professionals.
+			<p class="footer-company-about">
+				<br /> About the company<br /> ISD executes Java projects. For a
+				very reasonable price customer gains access to our team of skilled
+				professionals.
 
-                </p>
+			</p>
 
-                <div class="footer-icons">
+			<div class="footer-icons">
 
-                    <a th:href="@{https://www.facebook.com/isdmoldova}"> <i
-                        class="fa fa-facebook"></i>
-                    </a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i
-                        class="fa fa-linkedin"></i></a> <a href="#"><i
-                        class="fa fa-github"></i></a>
+				<a th:href="@{https://www.facebook.com/isdmoldova}"> <i
+					class="fa fa-facebook"></i>
+				</a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i
+					class="fa fa-linkedin"></i></a> <a href="#"><i class="fa fa-github"></i></a>
 
-                </div>
+			</div>
 
-            </div>
+		</div>
 
-        </footer>
-    </div>
+		</footer>
+	</div>
 </body>
 </html>

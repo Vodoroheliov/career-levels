@@ -84,13 +84,15 @@ public interface TodoService {
      * @param todoTypeId Todo type id.
      */
     void removeTodoFromCareerLevel(Long careerLevelId, Long todoTypeId);
-
+    
     /**
-     * Returns a list with the names of all todos from a specific career level.
-     * @param id
-     * @return
+     * Returns list of arrays that consist of quantity and todo type names
+     * for specific career level.
+     * 1st element in array - quantity.
+     * 2nd element in array - name of todo type.
+     * @param id Career level id.
      */
-    List<String> findTodosFromLevel(Long id);
+    List<Object[]> findTodosFromLevel(Long id);
     
     /**
      * Returns a list of all finished todos for a specific user that correspond

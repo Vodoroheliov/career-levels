@@ -111,8 +111,8 @@ public class TodoServiceJpaImpl implements TodoService {
     }
 
     @Override
-    public List<String> findTodosFromLevel(Long id) {
-        return this.todoRepo.findTodosFromLevel(id);
+    public List<Object[]> findTodosFromLevel(Long id) {
+        return todoTypeRepo.findTodosFromLevel(id);
     }
 
     @Override
