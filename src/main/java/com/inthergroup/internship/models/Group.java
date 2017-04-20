@@ -1,5 +1,6 @@
 package com.inthergroup.internship.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -34,13 +35,13 @@ public class Group {
     private long id;
     
     @Column(nullable = false, unique = true)
-    private String name;
+    private String role;
     
     /**
      * Users belonging to this group.
      */
     @OneToMany(mappedBy="group")
-    private List<User> users;
+    private List<User> users = new ArrayList<User>();
 
     // ------------------------
     // PUBLIC METHODS
@@ -55,12 +56,12 @@ public class Group {
     }
     
     public Group(String name) {
-        this.name = name;
+        this.role = name;
     }
 
     public Group(long id, String name) {
         this.id = id;
-        this.name = name;
+        this.role = name;
     }
     
     // Getter and setter methods
@@ -73,12 +74,12 @@ public class Group {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
     
     public List<User> getUsers() {

@@ -17,4 +17,9 @@ public class GeneralErrorController {
         model.addAttribute("message", msg);
         return "/errors/error";
     }
+    
+    @RequestMapping("/unauthorized")
+    public String unauthorized() {
+        return "/errors/unauthorized";
+    }
 }

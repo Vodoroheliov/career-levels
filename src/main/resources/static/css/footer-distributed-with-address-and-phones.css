@@ -7,7 +7,7 @@
 	text-align: left;
 	font: bold 16px sans-serif;
 
-	padding: 55px 50px;
+	padding: 17px 50px;
 	margin-top: 80px;
 }
 
@@ -68,11 +68,11 @@
 	background-color:  #33383b;
 	color: #ffffff;
 	font-size: 25px;
-	width: 38px;
+	width: 30px;
 	height: 38px;
 	border-radius: 50%;
 	text-align: center;
-	line-height: 42px;
+	line-height: 40px;
 	margin: 10px 15px;
 	vertical-align: middle;
 }
@@ -110,7 +110,7 @@
 
 .footer-distributed .footer-company-about{
 	line-height: 20px;
-	color:  #92999f;
+	color:  #ffffff;
 	font-size: 13px;
 	font-weight: normal;
 	margin: 0;
@@ -130,8 +130,8 @@
 
 .footer-distributed .footer-icons a{
 	display: inline-block;
-	width: 35px;
-	height: 35px;
+	width: 24px;
+	height: 26px;
 	cursor: pointer;
 	background-color:  #33383b;
 	border-radius: 2px;
@@ -139,9 +139,9 @@
 	font-size: 20px;
 	color: #ffffff;
 	text-align: center;
-	line-height: 35px;
+	line-height: 25px;
 
-	margin-right: 3px;
+	margin-right: 35px;
 	margin-bottom: 5px;
 }
 

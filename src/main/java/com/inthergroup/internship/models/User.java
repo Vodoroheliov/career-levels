@@ -19,7 +19,7 @@ import javax.persistence.Table;
 
 /**
  * An entity User composed by eight fields (id, lastName, firstName, username,
- * password, email, careerLevel, group).
+ * passwordHash, email, careerLevel, group).
  * The Entity annotation indicates that this class is a JPA entity.
  * The Table annotation specifies the name for the table in the db.
  *
@@ -60,10 +60,11 @@ public class User {
     private String username;
     
     /**
-     *  The user's password
+     *  The user's passwordHash
      */
     @Column(length = 64)
-    private String password;
+    private String passwordHash
+    ;
     
     /**
      *  The user's email
@@ -83,7 +84,7 @@ public class User {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
-    private Group group;
+    private Group group = new Group();
     
     /**
      *  The user's todos
@@ -96,19 +97,22 @@ public class User {
     // PUBLIC METHODS
     // ------------------------
     
-    public User() { }
+    public User() {
+        this.careerLevel = new CareerLevel();
+        this.group = new Group();
+    }
     
     public User(long id) {
         this.id = id;
     }
     
-    public User(String lastName, String firstName, String username, String password,
+    public User(String lastName, String firstName, String username, String passwordHash,
             String email, CareerLevel careerLevel, Group group) {
         super();
         this.lastName = lastName;
         this.firstName = firstName;
         this.username = username;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.email = email;
         this.careerLevel = careerLevel;
         this.group = group;
@@ -148,12 +152,12 @@ public class User {
         this.username = login;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getEmail() {

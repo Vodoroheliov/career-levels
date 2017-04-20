@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -122,11 +123,18 @@ public class TodoController {
     @Transactional
     public String addTodoToUser(
             @PathVariable("id") Long id,
+            @RequestParam("username") String username,
             @RequestParam("todoId") String todoId,
             @RequestParam("description") String description,
             @RequestParam("todoTypeId") Long todoTypeId,
             @RequestParam("dateOfCompletion") @DateTimeFormat(pattern="yyyy/mm/dd")
                     Date dateOfCompletion) {
+        
+        // Check if current user has permission
+        User user = userService.findByUsername(username);
+        if (id != user.getId()) {
+            return "/errors/unauthorized";
+        }
         
         if (description == "") {
             description = null;
@@ -158,11 +166,18 @@ public class TodoController {
     @Transactional
     public String updateTodoForUser(
             @PathVariable("id") Long id,
+            @RequestParam("username") String username,
             @RequestParam("todoId") String todoId,
             @RequestParam("description") String description,
             @RequestParam("todoTypeId") Long todoTypeId,
             @RequestParam("dateOfCompletion") @DateTimeFormat(pattern="yyyy/mm/dd")
                     Date dateOfCompletion) {
+        
+        // Check if current user has permission
+        User user = userService.findByUsername(username);
+        if (id != user.getId()) {
+            return "/errors/unauthorized";
+        }
         
         if (description == "") {
             description = null;
@@ -171,7 +186,7 @@ public class TodoController {
             dateOfCompletion = new Date();
         }
         try {
-            User user = userService.findById(id);
+//            User user = userService.findById(id);
             Todo todo = todoService.findTodo(id, user.getCareerLevel().getId(),
                     todoId);
             todo.setDescription(description);
@@ -195,8 +210,16 @@ public class TodoController {
      */
     @RequestMapping(value = "/remove-todo-from-user", method = RequestMethod.GET)
     @Transactional
-    public String removeTodoFromUser(Long userId, String todoId,
+    public String removeTodoFromUser(Long userId, String username, String todoId,
             Long careerLevelId) {
+        
+        // Check if current user has permission
+        User user = userService.findByUsername(username);
+        if (userId != user.getId()) {
+//            return "/errors/unauthorized";
+            throw new AccessDeniedException("You have no permission to delete this.");
+        }
+        
         try {
             todoService.removeTodoFromUser(userId, todoId, careerLevelId);
         } catch (Exception ex) {
