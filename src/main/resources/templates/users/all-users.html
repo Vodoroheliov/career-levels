@@ -107,6 +107,9 @@
 			</div>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
+	        <li th:if="${#httpServletRequest.remoteUser != null}"><a
+                    class="welcome"
+                    th:text="'Welcome, ' + ${#httpServletRequest.remoteUser}"></a></li>
 			<li><a>
 					<form th:action="@{/logout}" method="post" id="logoutForm">
 						<button type="submit" form="logoutForm" class="btn btn-link">

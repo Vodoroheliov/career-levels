@@ -23,26 +23,46 @@
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<a class="navbar-brand" th:href="@{/index}"><img class="logo"
-				th:src="@{/images/logo.png}" height="50" width="50" /></a>
-		</div>
-		<ul class="nav navbar-nav">
-			<li><a th:href="@{/index}">Home</a></li>
-			<!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
-			<li><a th:href="@{#}">Something 1</a></li>
-			<!--       <li class="active"><a th:href="@{/users/total-progress}">Total progress</a></li> -->
-			<li class="active"><a th:href="@{#}">Something 2</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#"><span class="glyphicon glyphicon-user"></span>
-					Sign Up</a></li>
-			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-					Login</a></li>
-		</ul>
-	</div>
-	</nav>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/index}"><img class="logo"
+                th:src="@{/images/logo.png}" height="50" width="50" /></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a th:href="@{/index}">Home</a></li>
+            <!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
+            <div sec:authorize="hasAuthority('ADMIN')" class="dropdown">
+                <button class="dropbtn">
+                    Administration<span class="caret"></span>
+                </button>
+
+                <div class="dropdown-content">
+                    <li><a th:href="@{/users/all-users}">All users</a></li>
+                    <li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
+                    <li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
+                    <!--             <li role="separator" class="divider"></li> -->
+                    <li><a th:href="@{/todos/todo-type}">All todo types</a></li>
+                    <!--             <li role="separator" class="divider"></li> -->
+                    <li><a th:href="@{/benefits/benefit-type}">All benefit
+                            types</a></li>
+                </div>
+
+            </div>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li th:if="${#httpServletRequest.remoteUser != null}"><a
+                    class="welcome"
+                    th:text="'Welcome, ' + ${#httpServletRequest.remoteUser}"></a></li>
+            <li><a>
+                    <form th:action="@{/logout}" method="post" id="logoutForm">
+                        <button type="submit" form="logoutForm" class="btn btn-link">
+                            <span class="glyphicon glyphicon-log-out"></span> Log Out
+                        </button>
+                    </form>
+            </a></li>
+        </ul>
+    </div>
+    </nav>
 
 	<div class="jumbotron text-center">
 		<h2>
