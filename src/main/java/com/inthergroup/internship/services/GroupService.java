@@ -10,6 +10,11 @@ public interface GroupService {
      * Returns a list of all instances of Group entity.
      */
     List<Group> findAll();
+    
+    /**
+     * Finds by role and returns instance of Group entity.
+     */
+    Group findByRole(String role);
 
     /**
      * Returns a specific instance of Group entity.

@@ -25,6 +25,11 @@ public class GroupServiceJpaImpl implements GroupService {
     public List<Group> findAll() {
         return this.groupRepo.findAll();
     }
+    
+    @Override
+    public Group findByRole(String role) {
+        return this.groupRepo.findByRole(role);
+    }
 
     @Override
     public Group findById(Long id) {
@@ -53,4 +58,5 @@ public class GroupServiceJpaImpl implements GroupService {
         User user = userRepo.findOne(userId);
         user.setGroup(group);
     }
+
 }

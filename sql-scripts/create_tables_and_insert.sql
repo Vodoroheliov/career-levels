@@ -256,14 +256,13 @@ drop table if exists groups;
 
   create table `groups` (
   `id` int(20) not null AUTO_INCREMENT,
-  `name` varchar(64) not null,
+  `role` varchar(64) not null,
   PRIMARY KEY (`id`),
-  UNIQUE (`name`)
-  
+  UNIQUE (`role`)
 );
 
-INSERT INTO `groups` (`id`, `name`) VALUES (1,'user');
-INSERT INTO `groups` (`id`, `name`) VALUES (2,'admin');
+INSERT INTO `groups` (`id`, `role`) VALUES (1,'USER');
+INSERT INTO `groups` (`id`, `role`) VALUES (2,'ADMIN');
 
 
 drop table if exists `users`;
@@ -273,7 +272,7 @@ CREATE TABLE `users` (
   `last_name` varchar(64) NOT NULL,
   `first_name` varchar(64) NOT NULL,
   `username` varchar(64) NOT NULL,
-  `password` varchar(64) NOT NULL,
+  `password_hash` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
   `career_level_id` int(20) NOT NULL,
   `group_id` int(20) NOT NULL,
@@ -281,14 +280,16 @@ CREATE TABLE `users` (
    UNIQUE (`username`, `email`)
 );
 
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (1,'Doe', 'John','john123', 'doe1111', 'john@mail.com', 1, 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (2,'Public', 'Mary', 'public123', 'mary111', 'mary@mail.com', 2, 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (3,'Queue', 'Susan', 'queue1111', 'susan123', 'susan@mail.com', 3, 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (4,'Jackson', 'Michael', 'jackson1111', 'michael123', 'michael@mail.com', 4, 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (5,'Smith', 'John', 'smith1111', 'john123', 'john@mail.com', 5, 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (6,'Smith', 'James','smith123', 'james1111', 'james@mail.com', 1, 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (7,'Sweater', 'Peter', 'sweater123', 'peter111', 'sweater@mail.com', 2, 1);
-INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password`, `email`, `career_level_id`, `group_id`) VALUES (8,'Black', 'Arnold', 'arnold1111', 'black123', 'black@mail.com', 1, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (1,'Goodman', 'John','admin', '$2a$10$y4tU2GY6BGz6/B.qMbs.6eBetMOHW2SkNhnOOq/y/Id5NaTYW37DO', 'goodman@gmail.com', 1, 2);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (2,'Ivanov', 'Alexandr','user', '$2a$10$xZV57Td6nvKOnTsW986XO.j2dr10gow506U1.fC1u0aJMB6XtJG6C', 'ivanov@gmail.com', 2, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (3,'Doe', 'John','john123', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'john@mail.com', 1, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (4,'Public', 'Mary', 'public123', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'mary@mail.com', 2, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (5,'Queue', 'Susan', 'queue1111', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'susan@mail.com', 3, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (6,'Jackson', 'Michael', 'jackson1111', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'michael@mail.com', 4, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (7,'Smith', 'John', 'smith1111', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'john@mail.com', 5, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (8,'Smith', 'James','smith123', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'james@mail.com', 1, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (9,'Sweater', 'Peter', 'sweater123', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'sweater@mail.com', 2, 1);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `username`, `password_hash`, `email`, `career_level_id`, `group_id`) VALUES (10,'Black', 'Arnold', 'arnold1111', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'black@mail.com', 1, 1);
 
 
 drop table if exists `career_levels`;

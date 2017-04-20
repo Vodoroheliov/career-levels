@@ -1,5 +1,6 @@
 package com.inthergroup.internship.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,7 +45,7 @@ public class CareerLevel {
      * Users that belong to this career level.
      */
     @OneToMany(mappedBy="careerLevel", fetch = FetchType.LAZY)
-    private List<User> users;
+    private List<User> users = new ArrayList<User>();
     
     /**
      *  Benefits for a specific level
@@ -71,8 +72,7 @@ public class CareerLevel {
     // PUBLIC METHODS
     // ------------------------
 
-    public CareerLevel() {
-    }
+    public CareerLevel() { }
 
     public CareerLevel(long id) {
         this.id = id;

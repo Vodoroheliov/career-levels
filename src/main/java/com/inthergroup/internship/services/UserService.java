@@ -16,6 +16,12 @@ public interface UserService {
      * @param id User id.
      */
     User findById(Long id);
+    
+    /**
+     * Returns instance of User entity using his username.
+     * @param username Username.
+     */
+    User findByUsername(String username);
 
     /**
      * Saves instance of User entity.
