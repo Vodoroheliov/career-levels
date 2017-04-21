@@ -1,0 +1,505 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE-edge" />
+<meta name="viewport" content="width=device-width, initial -scale =1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>User Progress</title>
+<link rel="stylesheet"
+	th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/style.css"
+	th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../static/css/footer-distributed-with-address-and-phones.css"
+	th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/javascript"
+	href="../static/js/date.js" th:href="@{/static/js/date.js}" />
+<!--formden.js communicates with FormDen server to validate fields and submit via AJAX -->
+<script type="text/javascript"
+	src="https://formden.com/static/cdn/formden.js"></script>
+
+<!-- Special version of Bootstrap that is isolated to content wrapped in .bootstrap-iso -->
+<link rel="stylesheet"
+	href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+<!--Font Awesome (added because you use icons in your prepend/append)-->
+<link rel="stylesheet"
+	href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+<!--  jQuery -->
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+<!--  <script href="/js/handlebars.js" th:src="@{/js/handlebars.js}"></script> -->
+
+<script>
+	$(document).ready(
+			function() {
+				var date_input = $('input[name="dateOfCompletion"]'); //our date input has the name "dateOfCompletion"
+				var container = $('.bootstrap-iso form').length > 0 ? $(
+						'.bootstrap-iso form').parent() : "body";
+				date_input.datepicker({
+					format : 'yyyy/mm/dd',
+					container : container,
+					todayHighlight : true,
+					autoclose : true,
+				})
+			})
+</script>
+<script type="text/javascript">
+	function changeFormValues(currentId) {
+		document.getElementById('todoIdUpdate').setAttribute('value',
+				document.getElementById("todoId-" + currentId).innerHTML);
+
+		var valueToSelect = document.getElementById("task-" + currentId).value;
+		var todoTypeIdSelect = document.getElementById('todoTypeIdUpdate');
+
+		for (var i, j = 0; i = todoTypeIdSelect.options[j]; j++) {
+			if (i.value == valueToSelect) {
+				todoTypeIdSelect.selectedIndex = j;
+				break;
+			}
+		}
+
+		document.getElementById('descriptionUpdate').setAttribute('value',
+				document.getElementById("description-" + currentId).innerHTML);
+		document
+				.getElementById('dateOfCompletionUpdate')
+				.setAttribute(
+						'value',
+						document
+								.getElementById("dateOfCompletion-" + currentId).innerHTML);
+	}
+</script>
+<script>
+	function removeTodo(curId, userId, username, todoId, careerLevelId) {
+		var xhttp;
+		xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var element = document.getElementById('row-' + curId);
+				element.parentNode.removeChild(element);
+			}
+		};
+		xhttp.open("GET", "/remove-todo-from-user?userId=" + userId
+				+ "&username=" + username + "&todoId=" + todoId
+				+ "&careerLevelId=" + careerLevelId, true);
+		xhttp.send();
+	}
+</script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" th:href="@{/index}"><img class="logo"
+				th:src="@{/images/logo.png}" height="50" width="50" /></a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a th:href="@{/index}">Home</a></li>
+			<!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
+			<div sec:authorize="hasAuthority('ADMIN')" class="dropdown">
+				<button class="dropbtn">
+					Administration<span class="caret"></span>
+				</button>
+
+				<div class="dropdown-content">
+					<li><a th:href="@{/users/all-users}">All users</a></li>
+					<li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
+					<li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
+					<!--             <li role="separator" class="divider"></li> -->
+					<li><a th:href="@{/todos/todo-type}">All todo types</a></li>
+					<!--             <li role="separator" class="divider"></li> -->
+					<li><a th:href="@{/benefits/benefit-type}">All benefit
+							types</a></li>
+				</div>
+
+			</div>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+	        <li th:if="${#httpServletRequest.remoteUser != null}"><a
+                    class="welcome"
+                    th:text="'Welcome, ' + ${#httpServletRequest.remoteUser}"></a></li>
+			<li><a>
+					<form th:action="@{/logout}" method="post" id="logoutForm">
+						<button type="submit" form="logoutForm" class="btn btn-link">
+							<span class="glyphicon glyphicon-log-out"></span> Log Out
+						</button>
+					</form>
+			</a></li>
+		</ul>
+	</div>
+	</nav>
+
+	<!-- <span th:text="${beans.myBean.getMessage()}">MyBean value</span> -->
+	<!-- <span th:text="${T(com.inthergroup.internship.beans.Helper).getMessage()}" >Static method value</span> -->
+
+	<div class="jumbotron text-center ">
+		<h2>
+			Progress of <span th:text="${user.firstName + ' ' + user.lastName}"
+				th:remove="tag">lastName firstName</span>
+		</h2>
+		<h3>
+			Current level: <span th:text="${careerLevel.name}" th:remove="tag">career
+				level name</span>
+		</h3>
+		<br /> <a sec:authorize="hasAuthority('ADMIN')"
+			th:href="@{/promote-user(userId=${userId})}" class="btn btn-primary1">Promote
+			user</a>
+	</div>
+
+	<div class="col-lg-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-money fa-fw"></i>Todo
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Quantity</th>
+								<th>Name</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="todo : ${todos}">
+								<td th:text="${todo[1].quantity}"></td>
+								<td th:text="${todo[0].name}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-money fa-fw"></i>Finished
+					<!-- 					               (<a th:href="@{/add-todo-to-user/{id}/(id=${userId})}"><span class = "glyphicon glyphicon-plus"></span> Add</a>) -->
+					<span th:if="${#httpServletRequest.remoteUser == username}">
+						<button type="button"
+							class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success"
+							data-toggle="modal" data-target="#Add">Add</button>
+					</span>
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Todo Id</th>
+								<th>Task</th>
+								<th>Description</th>
+								<th>Date of completion</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:id="'row-' + ${todoStat.count}"
+								th:each="todo, todoStat : ${finishedTodos}">
+								<td th:id="'todoId-' + ${todoStat.count}"
+									th:text="${todo[1].primaryKey.todoId}"></td>
+								<td th:text="${todo[0].name}"></td>
+								<input type="hidden" th:id="'task-' + ${todoStat.count}"
+									th:value="${todo[0].id}" />
+								<td th:id="'description-' + ${todoStat.count}"
+									th:text="${todo[1].description}"></td>
+								<td th:id="'dateOfCompletion-' + ${todoStat.count}"
+									th:text="${#dates.format(todo[1].dateOfCompletion, 'yyyy/mm/dd')}"></td>
+								<td th:if="${#httpServletRequest.remoteUser == username}"><a
+									style="cursor: pointer;"> <span
+										th:onclick="'javascript:changeFormValues(\'' + ${todoStat.count} + '\');'"
+										class="glyphicon glyphicon-pencil" data-toggle="modal"
+										data-target="#Update"></span>
+								</a></td>
+								<td th:if="${#httpServletRequest.remoteUser == username}"><a
+									style="cursor: pointer;"
+									th:onclick="'javascript:removeTodo(\'' + ${todoStat.count} +'\',\''+ ${userId} +'\',\''+ ${#httpServletRequest.remoteUser} +'\',\''+ ${todo[1].primaryKey.todoId} +'\',\''+ ${todo[1].primaryKey.careerLevel.id} + '\');'">
+										<span class="glyphicon glyphicon-trash"></span>
+								</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Add form -->
+	<div class="container">
+		<!-- Trigger the modal with a button -->
+		<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+
+		<div class="modal fade" id="Add" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+			<div class="modal-dialog modal-sm-2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title">Add</h5>
+					</div>
+
+					<div class="modal-body">
+						<!-- The form is placed inside the body of modal -->
+						<form id="addForm"
+							th:action="@{/add-todo-to-user/{id}/(id=${userId})}" action="#"
+							class="form-horizontal" method="post">
+
+							<!-- Pass username -->
+							<input type="hidden" name="username"
+								th:value="${#httpServletRequest.remoteUser}" />
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="todoId">Title
+									<span class="asteriskField">*</span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" placeholder="Title" type="text"
+										name="todoId" id="todoId" required
+										pattern="\b((?!=|\,|\.).)+(.)\b" aria-required="true"
+										aria-describedby="name-format" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="description">Description</label>
+								<div class="col-xs-5">
+									<input class="form-control" placeholder="Description"
+										type="text" name="description" id="description"
+										aria-required="true" aria-describedby="name-format" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="todoTypeId">Task
+									type <span class="asteriskField">*</span>
+								</label> 
+							 <div class="col-xs-5 selectContainer">	
+								<select name="todoTypeId" id="todoTypeId"
+									class="form-control" required>
+									<option value="">Select an item</option>
+									<option th:each="todoType : ${todoTypes}"
+										th:value="${todoType.id}" th:text="${todoType.name}">Task
+										type</option>
+								</select>
+ 							 </div>
+							</div>
+
+							<div class="form-group ">
+
+								<label class="col-xs-3 control-label" for="date"> Date <span
+									class="asteriskField"> * </span>
+								</label>
+								<div class="calendar">
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"> </i>
+										</div>
+										<input class="form-control1" id="dateOfCompletion"
+											name="dateOfCompletion" placeholder="yyyy/mm/dd" type="text"
+											required />
+									</div>
+								</div>
+
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Add</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Update form -->
+	<div class="container">
+		<!-- Trigger the modal with a button -->
+		<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Update">Open Modal</button> -->
+
+		<div class="modal fade" id="Update" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+			<div class="modal-dialog modal-sm-2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title">Update</h5>
+					</div>
+
+					<div class="modal-body">
+						<!-- The form is placed inside the body of modal -->
+						<form id="updateForm"
+							th:action="@{/update-todo-for-user/{id}/(id=${userId})}"
+							action="#" class="form-horizontal" method="post">
+
+							<!-- Pass username -->
+							<input type="hidden" name="username"
+								th:value="${#httpServletRequest.remoteUser}" />
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="todoId">Title</label>
+								<div class="col-xs-5">
+									<input class="form-control" placeholder="Title"
+										value="Old Value" type="text" name="todoId" id="todoIdUpdate"
+										readonly="readonly" required pattern="\b((?!=|\,|\.).)+(.)\b"
+										aria-required="true" aria-describedby="name-format" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="description">Description</label>
+								<div class="col-xs-5">
+									<input class="form-control" placeholder="Description"
+										value="Old Description" type="text" name="description"
+										id="descriptionUpdate" aria-required="true"
+										aria-describedby="name-format" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label" for="todoTypeIdUpdate">Task
+									type <span class="asteriskField">*</span>
+								</label> 
+							  <div class="col-xs-5 selectContainer">		
+								<select name="todoTypeId" id="todoTypeIdUpdate"
+									class="form-control" required>
+									<option th:each="todoType : ${todoTypes}"
+										th:value="${todoType.id}" th:text="${todoType.name}">Course</option>
+								</select>
+							 </div>
+							</div>
+
+							<div class="form-group">
+
+								<label class="col-xs-3 control-label" for="date"> Date <span
+									class="asteriskField"> * </span>
+								</label>
+								<div class="calendar">
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"> </i>
+										</div>
+										<input class="form-control1" id="dateOfCompletionUpdate"
+											name="dateOfCompletion" placeholder="yyyy/mm/dd" type="text"
+											required />
+									</div>
+								</div>
+
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Update</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<ul class="pager">
+			<li><a th:href="@{/index}">&lt;&lt;&lt; Home</a></li>
+			<li><a th:href="@{/users/total-progress/{id}/(id=${userId})}">
+					All finished tasks &gt;&gt;&gt;</a></li>
+		</ul>
+	</div>
+
+	<div>
+		<footer class="footer-distributed">
+		<div class="footer-left">
+
+			<a href="#"><img class="logo" th:src="@{/images/logo.png}"
+				height="100" width="100" /></a>
+
+			<p class="footer-links footer-company-about">
+				<a th:href="@{/index.html}">Home</a> · <a
+					th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
+			</p>
+
+			<p class="footer-company-about">Copyright &copy; 2017, ISD. All
+				rights reserved.</p>
+		</div>
+
+		<div class="footer-center">
+
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p class="footer-company-about">
+					Str. Fierarilor 2 <br />Chisinau 2001MD, Moldova
+				</p>
+			</div>
+
+			<div>
+				<i class="fa fa-phone"></i>
+				<p class="footer-company-about">+373 22 996 170</p>
+			</div>
+
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p class="footer-company-about">
+					<a href="mailto:isd@inthergroup.com">isd@inthergroup.com</a>
+				</p>
+			</div>
+
+		</div>
+
+		<div class="footer-right">
+
+			<p class="footer-company-about">
+				<br /> About the company<br /> ISD executes Java projects. For a
+				very reasonable price customer gains access to our team of skilled
+				professionals.
+
+			</p>
+
+			<div class="footer-icons">
+
+				<a th:href="@{https://www.facebook.com/isdmoldova}"> <i
+					class="fa fa-facebook"></i>
+				</a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i
+					class="fa fa-linkedin"></i></a> <a href="#"><i class="fa fa-github"></i></a>
+
+			</div>
+
+		</div>
+
+		</footer>
+	</div>
+</body>
+</html>

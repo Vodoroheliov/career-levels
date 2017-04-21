@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE-edge" />
+<meta name="viewport" content="width=device-width, initial -scale =1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>All tasks</title>
+<link rel="stylesheet"
+	th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/style.css"
+	th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../static/css/footer-distributed-with-address-and-phones.css"
+	th:href="@{/css/footer-distributed-with-address-and-phones.css}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function changeFormValues(currentId) {
+
+		document.getElementById('oldCareerLevelId').setAttribute('value',
+				document.getElementById("careerLevelId-" + currentId).value);
+		document.getElementById('oldTodoTypeId').setAttribute('value',
+				document.getElementById("todoTypeId-" + currentId).value);
+
+		var valueToSelect = document.getElementById("careerLevelId-"
+				+ currentId).value;
+		var careerLevelIdSelect = document
+				.getElementById('careerLevelIdUpdate');
+
+		for (var i, j = 0; i = careerLevelIdSelect.options[j]; j++) {
+			if (i.value == valueToSelect) {
+				careerLevelIdSelect.selectedIndex = j;
+				break;
+			}
+		}
+
+		valueToSelect = document.getElementById("todoTypeId-" + currentId).value;
+		var todoTypeIdSelect = document.getElementById('todoTypeIdUpdate');
+
+		for (var i, j = 0; i = todoTypeIdSelect.options[j]; j++) {
+			if (i.value == valueToSelect) {
+				todoTypeIdSelect.selectedIndex = j;
+				break;
+			}
+		}
+
+		document.getElementById('quantityUpdate').setAttribute('value',
+				document.getElementById("quantity-" + currentId).innerHTML);
+	}
+</script>
+<script>
+	function deleteTodoFromCareerLevel(curId, careerLevelId, todoTypeId) {
+		var xhttp;
+		xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "/remove-todo-from-career-level?careerLevelId="
+				+ careerLevelId + "&todoTypeId=" + todoTypeId, true);
+		xhttp.send();
+
+		var element = document.getElementById('row-' + curId);
+		element.parentNode.removeChild(element);
+	}
+</script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" th:href="@{/index}"><img class="logo"
+				th:src="@{/images/logo.png}" height="50" width="50" /></a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a th:href="@{/index}">Home</a></li>
+			<!--       <li ><a th:href="@{/users/progress-page}">User progress</a> -->
+			<div class="dropdown">
+				<button class="dropbtn">
+					Administration<span class="caret"></span>
+				</button>
+
+				<div class="dropdown-content">
+					<li><a th:href="@{/users/all-users}">All users</a></li>
+					<li><a th:href="@{/todos/all-tasks}">All tasks</a></li>
+					<li><a th:href="@{/benefits/all-benefits}">All benefits</a></li>
+					<!--             <li role="separator" class="divider"></li> -->
+					<li><a th:href="@{/todos/todo-type}">All todo types</a></li>
+					<!--             <li role="separator" class="divider"></li> -->
+					<li><a th:href="@{/benefits/benefit-type}">All benefit
+							types</a></li>
+				</div>
+
+			</div>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+		    <li th:if="${#httpServletRequest.remoteUser != null}"><a
+                    class="welcome"
+                    th:text="'Welcome, ' + ${#httpServletRequest.remoteUser}"></a></li>
+			<li><a>
+					<form th:action="@{/logout}" method="post" id="logoutForm">
+						<button type="submit" form="logoutForm" class="btn btn-link">
+							<span class="glyphicon glyphicon-log-out"></span> Log Out
+						</button>
+					</form>
+			</a></li>
+		</ul>
+	</div>
+	</nav>
+
+	<div class="total_progress  ">
+		<div class="column-lg-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-money fa-fw"></i>All tasks
+						<!--              <a class="btn1 icon-btn btn-success" href="#"> -->
+						<!--                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span> -->
+						<!--                  Add -->
+						<!--              </a> -->
+						<button type="button"
+							class="btn1 icon-btn btn-success glyphicon btn-glyphicon glyphicon-plus img-circle text-success"
+							data-toggle="modal" data-target="#Add">Add</button>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped">
+							<thead>
+								<tr>
+									<th>Career Level</th>
+									<th>Todo Type</th>
+									<th>Quantity</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:id="'row-' + ${todoStat.count}"
+									th:each="todo, todoStat : ${todos}">
+									<td th:text="${todo.primaryKey.careerLevel.name}"></td>
+									<input type="hidden"
+										th:id="'careerLevelId-' + ${todoStat.count}"
+										th:value="${todo.primaryKey.careerLevel.id}" />
+									<td th:text="${todo.primaryKey.todoType.name}"></td>
+									<input type="hidden" th:id="'todoTypeId-' + ${todoStat.count}"
+										th:value="${todo.primaryKey.todoType.id}" />
+									<td th:id="'quantity-' + ${todoStat.count}"
+										th:text="${todo.quantity}"></td>
+									<td><a style="cursor: pointer;"> <span
+											th:onclick="'javascript:changeFormValues(\'' + ${todoStat.count} + '\');'"
+											class="glyphicon glyphicon-pencil" data-toggle="modal"
+											data-target="#Update"></span>
+									</a></td>
+									<td><a style="cursor: pointer;"
+										th:onclick="'javascript:deleteTodoFromCareerLevel(\'' + ${todoStat.count} +'\',\''+ ${todo.primaryKey.careerLevel.id} +'\',\''+ ${todo.primaryKey.todoType.id} + '\');'">
+											<span class="glyphicon glyphicon-trash"></span>
+									</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add form -->
+	<div class="container">
+		<div class="modal fade" id="Add" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+			<div class="modal-dialog modal-sm-2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title">Add</h5>
+					</div>
+
+					<div class="modal-body">
+						<!-- The form is placed inside the body of modal -->
+						<form id="addForm" th:action="@{/add-todo-to-career-level}"
+							action="#" method="post" class="form-horizontal">
+							
+							<div class="form-group">
+								<label for="name" class="col-xs-3 control-label">CareerLevel
+									<span class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5 selectContainer">
+								 <select name="careerLevelId" id="careerLevelId"
+									class="form-control" required>
+									<option value="">Select an item</option>
+									<option th:each="careerLevel : ${careerLevels}"
+										th:value="${careerLevel.id}" th:text="${careerLevel.name}">Career
+										Level</option>
+								</select>
+							 </div>	
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Todo type <span
+									class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5 selectContainer">
+								 <select name="todoTypeId" id="todoTypeId"
+									class="form-control" required>
+									<option value="">Select an item</option>
+									<option th:each="todoType : ${todoTypes}"
+										th:value="${todoType.id}" th:text="${todoType.name}">Todo
+										Type</option>
+								</select>
+							  </div>	
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Quantity <span
+									class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" name="quantity" id="quantity"
+										value="" required type="number" step="1" min="1"
+										aria-required="true" aria-describedby="name-format"
+										placeholder="Enter a number" />
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Add</button>
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Update form -->
+	<div class="container">
+		<div class="modal fade" id="Update" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+
+
+
+			<div class="modal-dialog modal-sm-2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title">Update</h5>
+					</div>
+
+					<div class="modal-body">
+						<!-- The form is placed inside the body of modal -->
+						<form id="updateForm" th:action="@{/update-todo-for-career-level}"
+							method="get" class="form-horizontal">
+							<input type="hidden" name="oldCareerLevelId"
+								id="oldCareerLevelId" value="" /> <input type="hidden"
+								name="oldTodoTypeId" id="oldTodoTypeId" value="" />
+
+							<div class="form-group">
+								<label for="careerLevelId" class="col-xs-3 control-label">CareerLevel
+									<span class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5 selectContainer">
+								 <select name="newCareerLevelId" id="careerLevelIdUpdate"
+									class="form-control" required>
+									<option value="">Select an item</option>
+									<option th:each="careerLevel : ${careerLevels}"
+										th:value="${careerLevel.id}" th:text="${careerLevel.name}">Career
+										Level</option>
+								</select>
+							  </div>	
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Todo type <span
+									class="asteriskField"> * </span>
+								</label> 
+								<div class="col-xs-5 selectContainer">
+								<select name="newTodoTypeId" id="todoTypeIdUpdate"
+									class="form-control" required>
+									<option value="">Select an item</option>
+									<option th:each="todoType : ${todoTypes}"
+										th:value="${todoType.id}" th:text="${todoType.name}">Todo
+										Type</option>
+								</select>
+							  </div>	
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Quantity <span
+									class="asteriskField"> * </span>
+								</label>
+								<div class="col-xs-5">
+									<input class="form-control" name="quantity" id="quantityUpdate"
+										value="" required type="number" step="1" min="1"
+										aria-required="true" aria-describedby="name-format"
+										placeholder="Enter a number" />
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Add</button>
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<ul class="pager">
+			<li><a th:href="@{/index}">&lt;&lt;&lt;Home</a></li>
+			<!--     <li><a href="temp.html">All finished tasks</a></li> -->
+		</ul>
+	</div>
+
+	<div>
+		<footer class="footer-distributed">
+		<div class="footer-left">
+
+			<a href="#"><img class="logo" th:src="@{/images/logo.png}"
+				height="100" width="100" /></a>
+
+			<p class="footer-links footer-company-about">
+				<a th:href="@{/index.html}">Home</a> · <a
+					th:href="@{http://isd-soft.com/tech_blog/}">Blog</a>
+			</p>
+
+			<p class="footer-company-about">Copyright &copy; 2017, ISD. All
+				rights reserved.</p>
+		</div>
+
+		<div class="footer-center">
+
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p class="footer-company-about">
+					Str. Fierarilor 2 <br />Chisinau 2001MD, Moldova
+				</p>
+			</div>
+
+			<div>
+				<i class="fa fa-phone"></i>
+				<p class="footer-company-about">+373 22 996 170</p>
+			</div>
+
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p class="footer-company-about">
+					<a href="mailto:isd@inthergroup.com">isd@inthergroup.com</a>
+				</p>
+			</div>
+
+		</div>
+
+		<div class="footer-right">
+
+			<p class="footer-company-about">
+				<br /> About the company<br /> ISD executes Java projects. For a
+				very reasonable price customer gains access to our team of skilled
+				professionals.
+
+			</p>
+
+			<div class="footer-icons">
+
+				<a th:href="@{https://www.facebook.com/isdmoldova}"> <i
+					class="fa fa-facebook"></i>
+				</a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i
+					class="fa fa-linkedin"></i></a> <a href="#"><i class="fa fa-github"></i></a>
+
+			</div>
+
+		</div>
+
+		</footer>
+	</div>
+</body>
+</html>
