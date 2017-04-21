@@ -130,6 +130,9 @@ INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `da
 INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(2, 1, 'I did it!', 1, '2017-04-09 20:27:49', 'It was very interesting.');
 INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(2, 2, 'Tracking report', 4, '2017-04-09 19:37:07', 'Interesting report.');
 INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(2, 2, 'trial period', 2, '2017-04-09 18:29:03', 'Doing stuff.');
+INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(4, 2, 'trial period', 2, '2017-04-09 18:29:03', 'Doing stuff.');
+INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(4, 2, 'Good book', 3, '2017-04-09 18:29:03', 'Learned a lot.');
+INSERT INTO `todos`(`user_id`, `career_level_id`, `todo_id`, `todo_type_id`, `date_of_completion`, `description`) VALUES(9, 2, 'trial period', 2, '2017-04-09 18:29:03', 'Doing stuff.');
 
 
 drop table if exists `career_levels_todos`;
