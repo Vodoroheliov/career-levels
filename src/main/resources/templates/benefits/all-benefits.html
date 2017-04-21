@@ -188,25 +188,31 @@
 							<div class="form-group">
 								<label for="careerLevelId" class="col-xs-3 control-label">CareerLevel
 									<span class="asteriskField"> * </span>
-								</label> <select name="careerLevelId" id="careerLevelId"
-									class="styled-select transparent semi-square" required>
+								</label>
+								<div class="col-xs-5 selectContainer">
+								 <select name="careerLevelId" id="careerLevelId"
+									class="form-control" required>
 									<option value="">Select an item</option>
 									<option th:each="careerLevel : ${careerLevels}"
 										th:value="${careerLevel.id}" th:text="${careerLevel.name}">Career
 										Level</option>
 								</select>
+							  </div>	
 							</div>
 
 							<div class="form-group">
 								<label class="col-xs-3 control-label">Benefit type <span
 									class="asteriskField"> * </span>
-								</label> <select name="benefitTypeId" id="benefitTypeId"
-									class="styled-select transparent semi-square" required>
+								</label>
+								<div class="col-xs-5 selectContainer">
+								 <select name="benefitTypeId" id="benefitTypeId"
+									class="form-control" required>
 									<option value="">Select an item</option>
 									<option th:each="benefitType : ${benefitTypes}"
 										th:value="${benefitType.id}" th:text="${benefitType.name}">Benefit
 										Type</option>
 								</select>
+							  </div>	
 							</div>
 
 							<div class="form-group">
@@ -262,25 +268,31 @@
 							<div class="form-group">
 								<label for="careerLevelId" class="col-xs-3 control-label">CareerLevel
 									<span class="asteriskField"> * </span>
-								</label> <select name="newCareerLevelId" id="careerLevelIdUpdate"
-									class="styled-select transparent semi-square" required>
+								</label>
+								<div class="col-xs-5 selectContainer">
+								 <select name="newCareerLevelId" id="careerLevelIdUpdate"
+									class="form-control" required>
 									<option value="">Select an item</option>
 									<option th:each="careerLevel : ${careerLevels}"
 										th:value="${careerLevel.id}" th:text="${careerLevel.name}">Career
 										Level</option>
 								</select>
+							  </div>	
 							</div>
 
 							<div class="form-group">
 								<label class="col-xs-3 control-label">Benefit type <span
 									class="asteriskField"> * </span>
-								</label> <select name="newBenefitTypeId" id="benefitTypeIdUpdate"
-									class="styled-select transparent semi-square" required>
+								</label> 
+								<div class="col-xs-5 selectContainer">
+								<select name="newBenefitTypeId" id="benefitTypeIdUpdate"
+									class="form-control" required>
 									<option value="">Select an item</option>
 									<option th:each="benefitType : ${benefitTypes}"
 										th:value="${benefitType.id}" th:text="${benefitType.name}">Benefit
 										Type</option>
 								</select>
+							  </div>	
 							</div>
 
 							<div class="form-group">

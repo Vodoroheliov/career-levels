@@ -301,14 +301,16 @@
 							<div class="form-group">
 								<label class="col-xs-3 control-label" for="todoTypeId">Task
 									type <span class="asteriskField">*</span>
-								</label> <select name="todoTypeId" id="todoTypeId"
-									class="styled-select transparent semi-square" required>
+								</label> 
+							 <div class="col-xs-5 selectContainer">	
+								<select name="todoTypeId" id="todoTypeId"
+									class="form-control" required>
 									<option value="">Select an item</option>
 									<option th:each="todoType : ${todoTypes}"
 										th:value="${todoType.id}" th:text="${todoType.name}">Task
 										type</option>
 								</select>
-
+ 							 </div>
 							</div>
 
 							<div class="form-group ">
@@ -390,12 +392,14 @@
 							<div class="form-group">
 								<label class="col-xs-3 control-label" for="todoTypeIdUpdate">Task
 									type <span class="asteriskField">*</span>
-								</label> <select name="todoTypeId" id="todoTypeIdUpdate"
-									class="styled-select transparent semi-square" required>
+								</label> 
+							  <div class="col-xs-5 selectContainer">		
+								<select name="todoTypeId" id="todoTypeIdUpdate"
+									class="form-control" required>
 									<option th:each="todoType : ${todoTypes}"
 										th:value="${todoType.id}" th:text="${todoType.name}">Course</option>
 								</select>
-
+							 </div>
 							</div>
 
 							<div class="form-group">
