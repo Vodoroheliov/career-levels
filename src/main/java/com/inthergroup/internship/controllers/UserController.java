@@ -75,16 +75,12 @@ public class UserController {
                 newUser.setUsername(signupForm.getUsername());
                 newUser.setPasswordHash(hashPwd);
                 
-                System.out.println("finding career level:");
                 CareerLevel careerLevel = careerLevelService.findById((long) 1); // id=1 for career level "Internship"
-                System.out.println("career level name:" + careerLevel.getName());
                 newUser.setCareerLevel(careerLevel);
                 
-                System.out.println("finding group:");
                 Group group = groupService.findByRole("USER");
                 newUser.setGroup(group);
                 
-                System.out.println("finding user:");
                 if (userService.findByUsername(signupForm.getUsername()) == null) {
                     userService.create(newUser);
                 } else {

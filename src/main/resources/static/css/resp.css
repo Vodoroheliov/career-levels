@@ -1,0 +1,17 @@
+.one-fifth{
+	width:40%;
+	
+}
+
+.one-fifth-second{
+	margin:0;
+	
+}
+
+.one-fifth-last{
+	clear: both;
+	float:none;
+	width:auto;
+	padding: 20px 0 0 0;
+	
+}
