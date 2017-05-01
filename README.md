@@ -19,9 +19,9 @@ This project was developed using: [Eclipse IDE](https://eclipse.org/) and [MySQL
    2. Browse to the location of extracted project.
    3. Click Finish.
 5. Install [MySQL server (Workbench)](https://dev.mysql.com/downloads/workbench/)
-6. In sql-scripts folder run `create_tables_and_insert.sql`.
+6. From MySQL Workbench run `create_tables_and_insert.sql` file located in sql-scripts folder (File -> Run SQL Script...).
 7. Before running application configure your application.properties file to set up your database:
-   check your database name (MySQL), Replace the user name and password of your database.
+   check your database name (MySQL), replace the user name and password of your database.
    For example:
       * `# Connection url for the database "internship"`
       * `spring.datasource.url = jdbc:mysql://localhost:3306/internship?useSSL=false`
